@@ -1,0 +1,15 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {query} from '../lib/db.mjs';
+import {classificationDefaults} from '../lib/classifier.mjs';
+const root=new URL('../',import.meta.url);
+const settings={title:'Comunidad Sanantes',subtitle:'El Podcast del Cáncer',intro:'Un espacio para aprender, escuchar y acompañarnos.',accent:'#d65337',donationGoal:'1000000',donationTitle:'Hagamos posible el próximo episodio',donationUrl:'',welcomePoints:'10',referralPoints:'20',autoPublish:'1',...classificationDefaults,classificationEnabled:'1',privacyContact:'',privacyText:''};
+const all=await query('SELECT videos.*,media_labels.relevance FROM videos LEFT JOIN media_labels ON media_labels.video_id=videos.id ORDER BY videos.featured DESC,videos.published_at DESC');
+const sources=await query('SELECT * FROM sources');
+const me={id:'preview',name:'Vista previa',role:'admin'};
+const data={settings,donated:0,sources,videos:all.filter(v=>v.status==='published').map(v=>({...v,source_name:sources.find(s=>s.id===v.source_id)?.name,own:sources.find(s=>s.id===v.source_id)?.own})),posts:[],me};
+const admin={settings,sources,videos:all,posts:[],users:[],donations:[],audit:[],classifierReady:true};
+const offline=`const previewData=${JSON.stringify(data).replaceAll('<','\\u003c')};const previewAdmin=${JSON.stringify(admin).replaceAll('<','\\u003c')};const realFetch=window.fetch;window.fetch=async(url,options={})=>{if(String(url).startsWith('/api/')){const key=String(url).slice(5);let result;if((options.method||'GET')!=='GET')return new Response(JSON.stringify({error:'Vista previa de solo lectura. Esta acción estará disponible en el sitio desplegado.'}),{status:400});if(key==='public')result=previewData;else if(key==='admin')result=previewAdmin;else if(key==='community')result={me:previewData.me,ledger:[],total:0};else result={error:'Disponible al desplegar el sitio.'};return new Response(JSON.stringify(result),{status:result.error?400:200})}return realFetch(url,options)};`;
+let html=await readFile(new URL('public/index.html',root),'utf8');const css=await readFile(new URL('public/styles.css',root),'utf8');const js=await readFile(new URL('public/app.js',root),'utf8');
+html=html.replace('<link rel="stylesheet" href="/styles.css">',`<style>${css}\n.preview-notice{padding:10px 20px;background:#fff0d8;color:#6a4b1a;font:14px sans-serif;position:relative;z-index:40;margin-left:237px}.shell main{min-height:70vh}@media(max-width:650px){.preview-notice{margin-left:0}}</style>`).replace('<script src="/app.js" type="module"></script>','').replace('<link rel="icon" href="/favicon.svg">','').replace('<body>','<body><div class="preview-notice">Vista previa · Catálogo real · Administración de solo lectura · El registro y las operaciones requieren desplegar el sitio.</div>').replace('</body>',`<script type="module">${offline}\n${js.replaceAll('</script','<\\/script')}</script></body>`);
+await writeFile(new URL('../../Vista-previa-Sanantes.html',import.meta.url),html);
+console.log('Vista previa generada.');

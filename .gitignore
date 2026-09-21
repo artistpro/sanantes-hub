@@ -1,0 +1,9 @@
+.env*
+!.env.example
+.vercel
+*.sqlite*
+node_modules
+test-results
+.budget_ledger.json
+scratch/
+*.zip

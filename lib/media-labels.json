@@ -1,0 +1,1152 @@
+[
+  {
+    "video_id": "od-e8bef32d7863c85e871d1af79fa2c86a45a53a63",
+    "fingerprint": "04e7e0493affceda758561f120008e76e0e23a207deea0c575fdb2ca813f3d55",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.91,\"probabilities\":{\"community\":0,\"emotional\":0.07,\"interviews\":0,\"breathing\":0,\"care\":0,\"music\":0,\"other\":0,\"research\":0.93}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "od-3662c74ff926759632b1bf93eb45b3f28554462a",
+    "fingerprint": "8a903ff2fa8a594b3f6edb45eed45ce9f9b02db8694e9865b6bef0b873664df9",
+    "category": "emotional",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"emotional\",\"confidence\":1,\"probabilities\":{\"emotional\":1,\"interviews\":0,\"care\":0,\"breathing\":0,\"community\":0,\"research\":0,\"other\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "yt-9z0uFJWjuvQ",
+    "fingerprint": "b792e23e77b6312421f75d8cda1bb768cc4b8e965c9c6add965213b4628965e9",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"care\":0,\"interviews\":0,\"other\":0,\"community\":0,\"emotional\":0,\"breathing\":0,\"music\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "yt-SE44Xu8DBmI",
+    "fingerprint": "74d80287bcc8c6c515f503652c93a104b0bee1d021166d59b7acb0bf129ff497",
+    "category": "emotional",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"emotional\",\"confidence\":0.98,\"probabilities\":{\"breathing\":0,\"interviews\":0,\"community\":0,\"research\":0.01,\"other\":0,\"emotional\":0.99,\"care\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "yt-8G_MBVsmr8Q",
+    "fingerprint": "7791abdae1c7621cca4faf8645e131d31c240a0a1bb31a49784ba90a58bd9f11",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.82,\"probabilities\":{\"music\":0,\"care\":0,\"community\":0,\"interviews\":0,\"breathing\":0.01,\"emotional\":0.15,\"other\":0,\"research\":0.84}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "yt-OHXrI0E0Ewo",
+    "fingerprint": "20ac5c1e3997c254f0fde499f4df940c410fb93a1141af95e1dba1b013e38473",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.5,\"probabilities\":{\"other\":0,\"research\":0.56,\"music\":0,\"emotional\":0,\"breathing\":0.44,\"interviews\":0,\"care\":0,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "yt-pWN9r8WPN9o",
+    "fingerprint": "960f24d19645f7743e436a133605b5e7cba4f399f5f21cafd219a2888a45cd66",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.35,\"probabilities\":{\"care\":0,\"emotional\":0.42,\"research\":0,\"music\":0.44,\"interviews\":0,\"other\":0,\"breathing\":0.14,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "od-daf1fcbb73b18cd8a0059a660975c732c451d6dc",
+    "fingerprint": "3a4570d22893a039f5d601dd83eace09e776bf03f255b55bf5387e49d59e76d4",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.53,\"probabilities\":{\"interviews\":0,\"research\":0.59,\"breathing\":0.41,\"community\":0,\"other\":0,\"emotional\":0,\"care\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "yt-rp8r49WFOkU",
+    "fingerprint": "749208dc20ee852c8e60ca4abbabc61a723042050d9e8b239e2dd9ea6c1a78ec",
+    "category": "emotional",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"emotional\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"community\":0,\"breathing\":0,\"other\":0,\"music\":0,\"emotional\":1,\"care\":0,\"research\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:25"
+  },
+  {
+    "video_id": "od-03b0a12be335d0d879c724826456548f42e21c88",
+    "fingerprint": "c594edcdda2383d4465937591a821db608ba987bf9f9c59118c20f9f1dcf98ce",
+    "category": "emotional",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"emotional\",\"confidence\":0.54,\"probabilities\":{\"research\":0.4,\"interviews\":0,\"music\":0,\"breathing\":0,\"other\":0,\"emotional\":0.6,\"community\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:30"
+  },
+  {
+    "video_id": "yt-IQpcTpaFVK8",
+    "fingerprint": "11aeca93e92c3acc6d618bc4b2c21c22a5c0908cd6fe7567328f696b5e0138f4",
+    "category": "emotional",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"emotional\",\"confidence\":0.7,\"probabilities\":{\"emotional\":0.74,\"research\":0.26,\"breathing\":0,\"community\":0,\"care\":0,\"interviews\":0,\"other\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:35"
+  },
+  {
+    "video_id": "od-d6538af2bc68082985ce30247d88f8ee0413dca9",
+    "fingerprint": "15119e5e176d913e242869e18b73b424542d0cb262298dc3aa62777e205e2cbc",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.99,\"probabilities\":{\"other\":0,\"community\":0,\"care\":0,\"emotional\":0,\"research\":0,\"music\":1,\"interviews\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:35"
+  },
+  {
+    "video_id": "od-b89b88a3016a37c69f30cc860e7260489bbc4324",
+    "fingerprint": "b6a1eac54bd9aa133d0c6107fef070f052919875986eb6234594906260963fe7",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.98,\"probabilities\":{\"emotional\":0,\"interviews\":0,\"care\":0,\"breathing\":0,\"community\":0.01,\"research\":0.99,\"other\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:35"
+  },
+  {
+    "video_id": "yt-x6opH-XK98I",
+    "fingerprint": "afedf59da9afd5acc6e674bf212cc62c87e4fed1c5af7fee84763c1677928fe6",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.99,\"probabilities\":{\"care\":0,\"emotional\":0.01,\"research\":0,\"breathing\":0,\"interviews\":0,\"music\":0.99,\"other\":0,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:35"
+  },
+  {
+    "video_id": "yt-VChTote173E",
+    "fingerprint": "7407bb3775513ffeb2beca451174183d97d21cdfa11c8958453a5c2c580fef6a",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.99,\"probabilities\":{\"research\":0.99,\"care\":0,\"breathing\":0,\"music\":0,\"other\":0,\"community\":0.01,\"interviews\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:35"
+  },
+  {
+    "video_id": "yt-QVgriDQ1iOY",
+    "fingerprint": "aa721259105a589c42345f62cf2c938cde693e6453adf2781917c44ea71ef4db",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.99,\"probabilities\":{\"breathing\":0,\"interviews\":0,\"community\":0,\"care\":0,\"research\":0,\"other\":0,\"music\":1,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:41"
+  },
+  {
+    "video_id": "yt-G_4quR2xW5Q",
+    "fingerprint": "26df85013772a418f99fbc04f439ef5109ae4b6a7fda2e31098ac1484ce54c9f",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"care\":0,\"interviews\":0,\"research\":0,\"music\":1,\"other\":0,\"community\":0,\"emotional\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:41"
+  },
+  {
+    "video_id": "od-75baeb75a03e0f700fbe1fa6cc9a3f69ba4d24f2",
+    "fingerprint": "33ed67f89e9b3e176dd6b1db5a8fc412e3c1b035d3ecee6a8c22aa0fc817a238",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.66,\"probabilities\":{\"breathing\":0,\"emotional\":0.02,\"other\":0.11,\"interviews\":0,\"music\":0.01,\"care\":0.04,\"community\":0.12,\"research\":0.7}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.72,\"probabilities\":{\"off_topic\":0,\"relevant\":0.8200000000000001,\"uncertain\":0.18}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:41"
+  },
+  {
+    "video_id": "yt-b0v-n5eutdQ",
+    "fingerprint": "054ff210109d62bbf7ede229fd8133ec4d802840088f9311f0da35219622bb2d",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.96,\"probabilities\":{\"community\":0,\"breathing\":0,\"care\":0,\"interviews\":0,\"research\":0,\"music\":0.97,\"emotional\":0.03,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:41"
+  },
+  {
+    "video_id": "yt-DCw6ViSP0bA",
+    "fingerprint": "24b76c8bf7044af083f24514938d5a87d362c28680a52f3bbe510bfcd2be784d",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.98,\"probabilities\":{\"other\":0,\"breathing\":0,\"research\":0,\"community\":0,\"care\":0,\"interviews\":0,\"music\":0.98,\"emotional\":0.02}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:41"
+  },
+  {
+    "video_id": "od-fc30672e0678d966325f387a2fba1041f457ebed",
+    "fingerprint": "55b281dd2b34f3f15c249842a42429c28470dd10c2ead754634c0eadaace55b5",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"community\":0,\"other\":0,\"breathing\":0,\"music\":1,\"emotional\":0,\"care\":0,\"research\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:45"
+  },
+  {
+    "video_id": "od-5f90938854f18db0f15c9700fe0ab4e2c3e8a2f0",
+    "fingerprint": "54ae6b59040af50e5080d5b74939f60e4b32ea3601eb7fb980386ca44ec54639",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"community\":0,\"interviews\":0,\"breathing\":0,\"other\":0,\"research\":0,\"music\":1,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:45"
+  },
+  {
+    "video_id": "od-31a14be1e2c421ec59a364396e6a0bcebd0d51b1",
+    "fingerprint": "6ff3287b12cf57acff390af49e1be603afb2f63c55db30be6f9a85938b4bb556",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"research\":0,\"interviews\":0,\"music\":1,\"breathing\":0,\"other\":0,\"emotional\":0,\"community\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:45"
+  },
+  {
+    "video_id": "yt-Pz-fWWjI5UQ",
+    "fingerprint": "718df22ea3c386eaa5f3282fdaa05e661da5b63e9cc8d2f8e0e6df517a026ff3",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.99,\"probabilities\":{\"research\":0,\"interviews\":0,\"breathing\":0,\"music\":0.99,\"other\":0,\"community\":0,\"care\":0,\"emotional\":0.01}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:45"
+  },
+  {
+    "video_id": "od-731554d74acf457f9c712e8bd9b59ca7392fa7a0",
+    "fingerprint": "41de295b91e8db832c223048d2a380554199286fd16070eb3bb4815f15aa62b0",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"other\":0,\"emotional\":0,\"care\":0,\"music\":1,\"interviews\":0,\"community\":0,\"research\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:45"
+  },
+  {
+    "video_id": "od-4406172673f4a7221699b192705fccf9675e3b0f",
+    "fingerprint": "f6652b93d6fc36123f19c1dc59a87ec5f7daec089194d55c3152ff450c29c65a",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"research\":0,\"breathing\":0,\"community\":0,\"care\":0,\"emotional\":0,\"other\":0,\"music\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:49"
+  },
+  {
+    "video_id": "od-0e0322e97f2cd8799e6f5ca91868fec0ee724042",
+    "fingerprint": "cf92dcbae6cdd8c80789db8d1209988c969c04507beb1345648691ccddc002c9",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"community\":0,\"emotional\":0,\"interviews\":0,\"breathing\":0,\"other\":0,\"research\":0,\"music\":1,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:49"
+  },
+  {
+    "video_id": "od-43229a340553020cbd2de261a59c80af1600ec2d",
+    "fingerprint": "2ed9933685ec0e97fbd0f430164c458242c59ee49f30bf4c33d2d28c75842301",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.9,\"probabilities\":{\"breathing\":0.05,\"emotional\":0.03,\"other\":0,\"interviews\":0,\"music\":0.92,\"care\":0,\"community\":0,\"research\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:49"
+  },
+  {
+    "video_id": "od-2d77891415659e0f4eb9599650d02fe928f0861f",
+    "fingerprint": "f62b6a524e36ad4c6cd613bec26bdbece2148430b2f508268e24993b9b38d08a",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"other\":0,\"interviews\":0,\"breathing\":0,\"research\":0,\"care\":0,\"emotional\":0,\"music\":1,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:49"
+  },
+  {
+    "video_id": "yt-wvuBiYs5vDI",
+    "fingerprint": "e9e594bb10921f7d8bd3520c8e513b022060439f95fc8a9e58adad273e2c131e",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.99,\"probabilities\":{\"breathing\":0,\"emotional\":0.01,\"community\":0,\"other\":0,\"research\":0,\"music\":0.99,\"interviews\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"relevant\":0.99,\"uncertain\":0,\"off_topic\":0.01}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:49"
+  },
+  {
+    "video_id": "od-9c7862357f9ae94f7eab0661ed69e534ad993909",
+    "fingerprint": "56629300f752a111452c9532e0ef64ccad4a9a2058037dd6663fe1d8f87511f0",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":1,\"probabilities\":{\"care\":0,\"music\":1,\"community\":0,\"interviews\":0,\"breathing\":0,\"other\":0,\"research\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:55"
+  },
+  {
+    "video_id": "od-a14273cead44bf4b87b69500235bc4eac5692ff1",
+    "fingerprint": "7b90e07d65f319e68113ca4c6b3a28826e0089819209c21aa3dd7b4962645beb",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"interviews\":0,\"music\":0,\"care\":0,\"emotional\":0,\"research\":1,\"other\":0,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:54"
+  },
+  {
+    "video_id": "yt-cjGTW3pxPFc",
+    "fingerprint": "0fe3e84eec5c07ed0746d1c1736ea1a4c68c4839839b4f2e8c9a584e2431f8d3",
+    "category": "community",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"community\",\"confidence\":0.99,\"probabilities\":{\"other\":0,\"emotional\":0,\"research\":0.01,\"community\":0.99,\"interviews\":0,\"care\":0,\"music\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.92,\"probabilities\":{\"off_topic\":0.04,\"uncertain\":0.01,\"relevant\":0.95}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:54"
+  },
+  {
+    "video_id": "od-9cb3fb0e1d43947d7d94d88051813fd81597b8a6",
+    "fingerprint": "e472b2e37441141379690cd2ea66131fad844e1c32dfe7a0aa4fb7a034396e06",
+    "category": "community",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"community\",\"confidence\":0.96,\"probabilities\":{\"research\":0.03,\"interviews\":0,\"music\":0,\"breathing\":0,\"other\":0.01,\"emotional\":0,\"community\":0.96,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.67,\"probabilities\":{\"off_topic\":0.01,\"uncertain\":0.21,\"relevant\":0.78}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:55"
+  },
+  {
+    "video_id": "od-3a75ac2fcb642569e376273db0082724d3c8e670",
+    "fingerprint": "98e02d5b6915bb3833f89cce95d691e1bdf7f4656f95fe56de3b63f78526eed1",
+    "category": "music",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"music\",\"confidence\":0.92,\"probabilities\":{\"other\":0,\"community\":0,\"research\":0,\"interviews\":0,\"music\":0.93,\"emotional\":0.05,\"breathing\":0.02,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:58:55"
+  },
+  {
+    "video_id": "od-0a7858cd69808861f2d4d34262472bacb4528aa9",
+    "fingerprint": "55234b6e3e0b64d6809785146fdc2f8ff63bbc08eb0605f89c5cc7b078a594bc",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"care\":0,\"emotional\":0,\"other\":0,\"breathing\":0,\"interviews\":0,\"music\":0,\"research\":1,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:00"
+  },
+  {
+    "video_id": "od-d9f98f73b3c8d99cb74a7f05eb78e686bd3f7f42",
+    "fingerprint": "9abcaaaf119b306d4945494e84af6c25c2ec77056e392e795976df30453c3bde",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.97,\"probabilities\":{\"music\":0,\"breathing\":0,\"community\":0,\"research\":0.97,\"emotional\":0,\"interviews\":0,\"other\":0.03,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.89,\"probabilities\":{\"off_topic\":0.06,\"uncertain\":0.01,\"relevant\":0.93}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:00"
+  },
+  {
+    "video_id": "od-a7a519e0c25351fac0e60e39b02b993d2836d197",
+    "fingerprint": "2e7b710ba729e84eaa52963cdae7196ff8ff53ff7afee28c9669d31910633377",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"other\":0,\"emotional\":0,\"interviews\":0,\"music\":0,\"care\":0,\"research\":1,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:00"
+  },
+  {
+    "video_id": "od-44e6df891814c3908c184bda03328c8799f8bdeb",
+    "fingerprint": "75019dda6e7c32e96206c3fb5d9975e2029b0424ac9d8a11e23547bbfa42f8b0",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.98,\"probabilities\":{\"care\":0.02,\"emotional\":0,\"research\":0.98,\"music\":0,\"other\":0,\"community\":0,\"interviews\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.98,\"probabilities\":{\"relevant\":0.99,\"uncertain\":0,\"off_topic\":0.01}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:00"
+  },
+  {
+    "video_id": "od-aa67ad516295af65319e8330ca6db7f14a79c5d0",
+    "fingerprint": "30564a66fa80ab10864c756a368cd47d4394ed5eb0b094b9d95ffe973cefe31f",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"community\":0,\"breathing\":0,\"care\":0,\"interviews\":0,\"research\":1,\"music\":0,\"emotional\":0,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:00"
+  },
+  {
+    "video_id": "od-2b6bd00a0ad2431b9116889ac095e0d198a99c1e",
+    "fingerprint": "381953aac5df3aed3ffd9ac12b55bdb0a9850a29bce95fbe7ca1d6126db187e8",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"music\":0,\"research\":1,\"community\":0,\"interviews\":0,\"care\":0,\"breathing\":0,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:04"
+  },
+  {
+    "video_id": "od-9143b7ba34fa6ded6269e7786f89329fc5561085",
+    "fingerprint": "6bf38c4c5534f1811630a725dbf88bd6b48ee5b029f9562a3a102b09b5de01d4",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"music\":0,\"research\":1,\"breathing\":0,\"interviews\":0,\"community\":0,\"care\":0,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:04"
+  },
+  {
+    "video_id": "od-044350ae0b9f75ddc8dad2af0ee64642e92c583b",
+    "fingerprint": "1c93c0306c160d9a6bd2a253fcbf7ecdc249c113470c9d888e58d49c5ffcfd05",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"research\":1,\"breathing\":0,\"care\":0,\"other\":0,\"interviews\":0,\"emotional\":0,\"community\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:04"
+  },
+  {
+    "video_id": "od-4d5d02c27359ce254c49157b18212408278b31b6",
+    "fingerprint": "1dcb2fa2b0ec3896de52d8d2a64625276344d972f2c29eff655499cc0b34f24e",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.57,\"probabilities\":{\"research\":0.62,\"care\":0.38,\"breathing\":0,\"music\":0,\"emotional\":0,\"community\":0,\"other\":0,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.75,\"probabilities\":{\"uncertain\":0.02,\"off_topic\":0.15,\"relevant\":0.83}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:04"
+  },
+  {
+    "video_id": "od-0e85da87a68b31fdd30708448cb3a925adf61ca3",
+    "fingerprint": "74f3c0368572e7447bdd13460abfefe704a59ec816d63654262d84e68cb19b0f",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"community\":0,\"breathing\":0,\"care\":0,\"research\":1,\"emotional\":0,\"other\":0,\"music\":0,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:04"
+  },
+  {
+    "video_id": "od-7be21500268a6b5a05149ace94b71d0dd1741ecc",
+    "fingerprint": "a83f7248de15bad2a0e60cd9a2bae3001815640605ddd2110357d517144b5c8a",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"music\":0,\"breathing\":0,\"research\":1,\"interviews\":0,\"community\":0,\"care\":0,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:08"
+  },
+  {
+    "video_id": "od-40f3f0e9948a7e499ddfc578dfbbb5dec9619a23",
+    "fingerprint": "c6621d991d50032d0e6404a1e038c5843d984a49f4d89e178cda7b9eb5b62758",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.93,\"probabilities\":{\"care\":0.06,\"interviews\":0,\"other\":0,\"community\":0,\"emotional\":0,\"music\":0,\"breathing\":0,\"research\":0.94}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:09"
+  },
+  {
+    "video_id": "od-9ed3e257df77af9c91ba85fbb1c4bdce7ca71e57",
+    "fingerprint": "8882a02700b93d2e29327a4901f51f06b155ff24455d4bc6be5e0479ddae8085",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"music\":0,\"community\":0,\"emotional\":0,\"interviews\":0,\"other\":0,\"breathing\":0,\"research\":1,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:09"
+  },
+  {
+    "video_id": "od-12d8d588c21b5befe457ea7c14148af989a5ed79",
+    "fingerprint": "c24c1fa6880338ef2fe30b6bda8545a72bce10456b083d16c9a2677939a2feee",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"research\":1,\"interviews\":0,\"music\":0,\"breathing\":0,\"other\":0,\"emotional\":0,\"community\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:08"
+  },
+  {
+    "video_id": "od-adfc01f58ed52a22f2dc5211ed2720487b4ec700",
+    "fingerprint": "d99c8d7973e443a0fe34cee31d1c848599a680530a933455bbe9bc36336a3d76",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"care\":0,\"interviews\":0,\"other\":0,\"community\":0,\"emotional\":0,\"music\":0,\"breathing\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:08"
+  },
+  {
+    "video_id": "od-8918f32d8ee9ab06f1f6c9b892c61488e3226af7",
+    "fingerprint": "c8061f75edcfc6194166c4ecdb44bbdaf14f49c9d3abcb0d889b996076a69492",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.48,\"probabilities\":{\"emotional\":0,\"community\":0,\"interviews\":0,\"breathing\":0,\"other\":0,\"research\":0.55,\"music\":0,\"care\":0.45}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:13"
+  },
+  {
+    "video_id": "od-79dc2756587ee434c98378fb94298aca744f19da",
+    "fingerprint": "b686a81c718161f3426038c6a3b4b6af4b39c4d722c1f8239909d340c254763b",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"music\":0,\"breathing\":0,\"research\":1,\"interviews\":0,\"community\":0,\"care\":0,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:13"
+  },
+  {
+    "video_id": "od-1b55d2aa39965d3cd1087aa6ca58247909a08412",
+    "fingerprint": "f903e6f7b02c93bfd17f4d1a5c8089ecda73aec9474cd275d0be3d46f1bc6c28",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"music\":0,\"interviews\":0,\"emotional\":0,\"community\":0,\"breathing\":0,\"research\":1,\"other\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:13"
+  },
+  {
+    "video_id": "yt-g7hcFHya-4M",
+    "fingerprint": "63f93420273a9ea18fdb983d0f594f33fad47579550e11e731717b4c17a721ac",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"care\":0,\"research\":1,\"breathing\":0,\"interviews\":0,\"music\":0,\"other\":0,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:13"
+  },
+  {
+    "video_id": "od-6a1403c59d1e07c73d0a7b8971434b9f90dfa2ab",
+    "fingerprint": "0ce745c74e61ccecf88a2774a8e746f7e58e3cfdfa9c13816bc883a8d04899fc",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"other\":0,\"emotional\":0,\"research\":1,\"community\":0,\"interviews\":0,\"care\":0,\"music\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:13"
+  },
+  {
+    "video_id": "od-4dd1ff3bcfee6acba37b5c1bec4205d2521b4e04",
+    "fingerprint": "c8d85502e3c96bc6dc9d9df303868bf83217ef064435bea67d521bda4f727279",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"other\":0,\"breathing\":0,\"research\":1,\"community\":0,\"care\":0,\"interviews\":0,\"music\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:17"
+  },
+  {
+    "video_id": "od-be1f4cba006db19b226fef1aa7f889f2c2c54ba9",
+    "fingerprint": "c3dfe28c6c61d685ae73f4024af44b11ebc973363bca77743b394ca5d386f10e",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"other\":0,\"emotional\":0,\"research\":1,\"community\":0,\"interviews\":0,\"care\":0,\"music\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:17"
+  },
+  {
+    "video_id": "od-3363264f346d61658be728875876ecc177a38519",
+    "fingerprint": "835a5e97653abede0646237c78db970608711df64aa228832eb3130308c7f577",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"emotional\":0,\"other\":0,\"interviews\":0,\"music\":0,\"care\":0,\"community\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:17"
+  },
+  {
+    "video_id": "od-a4c7cf39a909f367d15162786bc4d947dda5d7d3",
+    "fingerprint": "d71676ea196ac0c25a7f18233b3c32da62975c5607a37cbbe6629f8e799d4750",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.94,\"probabilities\":{\"community\":0,\"emotional\":0,\"interviews\":0,\"care\":0.05,\"breathing\":0,\"music\":0,\"other\":0,\"research\":0.95}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:17"
+  },
+  {
+    "video_id": "od-0c10c0560a336eff19c8a08d5a7b16c275f8d315",
+    "fingerprint": "15a416d361dd9fd26c6300cbd19fe5fa77c40bd91b7f723a2f7bdd77cfef2552",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"community\":0,\"breathing\":0,\"care\":0,\"research\":1,\"emotional\":0,\"other\":0,\"music\":0,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:17"
+  },
+  {
+    "video_id": "od-d3c79259d46f9cd7b89e92aac345c07c28eff011",
+    "fingerprint": "2670abf86021b443ce31d1837a9ab353ffb6a5f63b5718f9fa05790a5b7c0a3f",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"research\":1,\"breathing\":0,\"interviews\":0,\"community\":0,\"music\":0,\"other\":0,\"emotional\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:21"
+  },
+  {
+    "video_id": "od-ef13334018c2b76849d30edc7f7d35d6a54a89fc",
+    "fingerprint": "29052e1b2af77cc654653f0c3c7fa0e339afd2d521636ee3a348a11400901568",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"care\":0,\"interviews\":0,\"other\":0,\"community\":0,\"emotional\":0,\"music\":0,\"breathing\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:21"
+  },
+  {
+    "video_id": "od-5f6438cc200f40ef8f1d75a021fcd39ba8265fc9",
+    "fingerprint": "3c690d17fe988557597cbd6c4d9002cef0ba894a8b914792d8f50209692cac9e",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"other\":0,\"community\":0,\"care\":0,\"emotional\":0,\"research\":1,\"music\":0,\"interviews\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:21"
+  },
+  {
+    "video_id": "od-82ca61003e8e096991a1978504378cf9ce100020",
+    "fingerprint": "9c0e679fa4dde0e8b921007c2a6bfc794c288db6c4be0f5d495adc4cd10e1495",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"emotional\":0,\"community\":0,\"other\":0,\"research\":1,\"music\":0,\"interviews\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:21"
+  },
+  {
+    "video_id": "od-eae4572a86ea911c8128f659e200c5df4c7e8c35",
+    "fingerprint": "cba988f8fd296f4ef65fc8edac892df3bfe88ae9dd7e6d67514313e6899a9578",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.93,\"probabilities\":{\"research\":0.94,\"other\":0,\"emotional\":0.01,\"interviews\":0.05,\"community\":0,\"music\":0,\"care\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:21"
+  },
+  {
+    "video_id": "fd877927-3a39-4945-a08c-533b1f39510d",
+    "fingerprint": "e70c59d646a83db4999238637844cf8841f830305200a81fecb60f0f6eb147d9",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"other\":0,\"research\":1,\"emotional\":0,\"interviews\":0,\"music\":0,\"community\":0,\"care\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:26"
+  },
+  {
+    "video_id": "236f270e-42ed-4233-b4cc-792030689652",
+    "fingerprint": "90558bad0b0a37ab0f13cf38919729eea170a4144192bbca73fafe9e2899f243",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"community\":0,\"breathing\":0,\"care\":0,\"music\":0,\"emotional\":0,\"other\":0,\"research\":1,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:26"
+  },
+  {
+    "video_id": "od-c40c8ad607df07df160a7165a4d4a56026a8d106",
+    "fingerprint": "ae9df37743436912ef93075653d167029d9f86d9aa6ac12715e23a1ece70f114",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"community\":0,\"music\":0,\"research\":1,\"other\":0,\"care\":0,\"breathing\":0,\"emotional\":0,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:26"
+  },
+  {
+    "video_id": "od-74a9265f330c5b1dfce64a7fa3853171fe4d44a4",
+    "fingerprint": "fba58774812357ecab23d50ce614e91c688fa5bfed775011e76cddbf8b4020c4",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"care\":0,\"emotional\":0,\"research\":1,\"music\":0,\"other\":0,\"community\":0,\"interviews\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:26"
+  },
+  {
+    "video_id": "3779e29e-09a9-4475-bfb0-586d7ba46bbc",
+    "fingerprint": "cfca58f482dbd6398c433f66bac0d9b6b198804523d81c6117c9e7aca0f6b3da",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"community\":0,\"interviews\":0,\"breathing\":0,\"other\":0,\"research\":1,\"music\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:26"
+  },
+  {
+    "video_id": "78c2d182-2504-46a0-8c48-a1ccd997d283",
+    "fingerprint": "d1774fdd1b404187ecd7da2bca8057032674ece3b9f23e284d0c97d90c25ed04",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.88,\"probabilities\":{\"music\":0,\"community\":0,\"other\":0,\"breathing\":0,\"care\":0.1,\"interviews\":0,\"research\":0.9,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:30"
+  },
+  {
+    "video_id": "58576f9e-7c36-437c-8dec-ba91a9bac9fd",
+    "fingerprint": "2273bee34b2de23ca8c168f3b449397e9f2589f76bf16efc6769aa1df10c3334",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"community\":0,\"emotional\":0,\"research\":1,\"breathing\":0,\"music\":0,\"other\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:30"
+  },
+  {
+    "video_id": "85952b42-2664-4552-9372-b87e5cbd2795",
+    "fingerprint": "df3670d411f56b508a2c579757a3f4d48815f710e29fffee3e6c85155a1a8358",
+    "category": "research",
+    "relevance": "off_topic",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"care\":0,\"emotional\":0,\"research\":1,\"music\":0,\"other\":0,\"community\":0,\"interviews\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"off_topic\",\"confidence\":0.54,\"probabilities\":{\"relevant\":0.19,\"uncertain\":0.11,\"off_topic\":0.7}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 1220,
+    "updated_at": "2026-09-20 17:21:38"
+  },
+  {
+    "video_id": "f61b69b1-a78b-4909-9dbd-5edfe897a56b",
+    "fingerprint": "9f2998cf9155d7e1522e3532536c86f61b024355328d1267455e0a499b09c992",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.99,\"probabilities\":{\"breathing\":0,\"care\":0,\"community\":0,\"other\":0,\"research\":1,\"interviews\":0,\"music\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:30"
+  },
+  {
+    "video_id": "cf835e74-4466-4302-97cf-1a15200299de",
+    "fingerprint": "86b0af88ae950b7b308856d1cbed7e699f576485a564e5f624bea46468ba1eda",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"research\":1,\"music\":0,\"care\":0,\"interviews\":0,\"other\":0,\"community\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.64,\"probabilities\":{\"off_topic\":0.18,\"uncertain\":0.06,\"relevant\":0.76}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:30"
+  },
+  {
+    "video_id": "5da6d505-144e-46d8-b7b9-4e9b8d1bed01",
+    "fingerprint": "3e12838112611eab1690c5a0834b8d26acc1fb7445c2ffd7fe0b8f0381876d50",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.94,\"probabilities\":{\"other\":0.05,\"interviews\":0,\"breathing\":0,\"research\":0.95,\"care\":0,\"emotional\":0,\"music\":0,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:35"
+  },
+  {
+    "video_id": "a83b0373-8539-484b-9719-e6c5b9e7b893",
+    "fingerprint": "0e910b7c5379a0a4475a0cdeb687497393f537af30c2e5496ee0f33b3ed8ee94",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"emotional\":0,\"other\":0,\"interviews\":0,\"music\":0,\"care\":0,\"community\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.84,\"probabilities\":{\"off_topic\":0.02,\"relevant\":0.9,\"uncertain\":0.08}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:35"
+  },
+  {
+    "video_id": "a3820c00-c39c-4fa2-88f7-fae2725ebd5d",
+    "fingerprint": "da484e8712253869c50d5c89eed300c41e559384e6757406346d696d96a0eef9",
+    "category": "interviews",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"interviews\",\"confidence\":0.88,\"probabilities\":{\"other\":0,\"music\":0,\"community\":0,\"care\":0,\"research\":0.11,\"emotional\":0,\"breathing\":0,\"interviews\":0.89}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:35"
+  },
+  {
+    "video_id": "e098b664-a78c-4523-b35f-65474f92c485",
+    "fingerprint": "19ed0f5aed9d71aca8bbe1c9a11ea020f998fc9669357bba2c886fbd14beb93e",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.96,\"probabilities\":{\"interviews\":0,\"care\":0.03,\"other\":0,\"community\":0,\"emotional\":0,\"breathing\":0,\"music\":0,\"research\":0.97}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:35"
+  },
+  {
+    "video_id": "6925d467-4fd0-4993-be4d-39e6f1a728c6",
+    "fingerprint": "4a3869517f0326298dc9919b5b34ea119f051c41f14e87b3061a1f7b896432b0",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.97,\"probabilities\":{\"other\":0,\"breathing\":0,\"research\":0.97,\"care\":0.03,\"community\":0,\"interviews\":0,\"music\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.97,\"probabilities\":{\"relevant\":0.98,\"uncertain\":0,\"off_topic\":0.02}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:30"
+  },
+  {
+    "video_id": "2e3b6d2a-71a8-4a31-a060-da00c2739917",
+    "fingerprint": "99eace6849e205ab241a2a779743b541801b764f5c299d9a28a24e7bcd1c766d",
+    "category": "breathing",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"breathing\",\"confidence\":0.77,\"probabilities\":{\"research\":0.2,\"interviews\":0,\"breathing\":0.8,\"community\":0,\"other\":0,\"music\":0,\"emotional\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:39"
+  },
+  {
+    "video_id": "97f07dc8-8037-4759-9476-bd42cfcfe2a6",
+    "fingerprint": "45b8842777f7b294980e5a0708adac04c9765e966a5b1f67536d4afd7a42d8d2",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"research\":1,\"interviews\":0,\"music\":0,\"breathing\":0,\"other\":0,\"emotional\":0,\"community\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:35"
+  },
+  {
+    "video_id": "dfb0d94a-735c-4fef-bc4b-5a8f60aa7c6f",
+    "fingerprint": "e8864f3c611cd82972f3b21a026e8088b6eef8362f1c162419ae11b2df88818e",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"research\":1,\"interviews\":0,\"music\":0,\"breathing\":0,\"other\":0,\"emotional\":0,\"community\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:39"
+  },
+  {
+    "video_id": "8d0451af-6487-43cb-b108-c5570c4994ac",
+    "fingerprint": "b9871f8dc787b0b80d3e4fab2ecd9a682e5d3299506fb2340b522a9ae4b295a5",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"interviews\":0,\"community\":0,\"research\":1,\"care\":0,\"other\":0,\"music\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:39"
+  },
+  {
+    "video_id": "331d9000-d80a-488b-b267-48c52646ea21",
+    "fingerprint": "bf351158d4fa020b926328cb3c748ae238f9c64ba1507b7e77250837fab7e6e6",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.92,\"probabilities\":{\"interviews\":0,\"community\":0,\"breathing\":0.07,\"other\":0,\"music\":0,\"emotional\":0,\"care\":0,\"research\":0.93}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"uncertain\":0,\"relevant\":0.99,\"off_topic\":0.01}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:39"
+  },
+  {
+    "video_id": "6bd60309-5f82-4b8f-8bc3-2b0dda3e5456",
+    "fingerprint": "d72033aba7b52f22ce93d427360fe700d30871b527d61d86b31ff484cd0a8c0a",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"music\":0,\"interviews\":0,\"emotional\":0,\"community\":0,\"breathing\":0,\"research\":1,\"other\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.97,\"probabilities\":{\"off_topic\":0.01,\"uncertain\":0,\"relevant\":0.99}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:44"
+  },
+  {
+    "video_id": "241aee2c-fa92-4e6b-9435-dc58a2520297",
+    "fingerprint": "a82c70ba30fe2c2089259c8a54c0f68ca8a9c115443a084432ffc42ec6cac92f",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"care\":0,\"other\":0,\"music\":0,\"breathing\":0,\"emotional\":0,\"community\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:44"
+  },
+  {
+    "video_id": "2b71415d-c519-4bd7-93b7-f94a0efa490b",
+    "fingerprint": "d581e0aa45fe180f6ff4eb8e0187a77c89601464246b944304b55579067f204c",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.93,\"probabilities\":{\"research\":0.94,\"care\":0.01,\"breathing\":0,\"music\":0,\"community\":0,\"emotional\":0,\"other\":0.03,\"interviews\":0.02}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.35,\"probabilities\":{\"uncertain\":0.13,\"off_topic\":0.3,\"relevant\":0.57}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:39"
+  },
+  {
+    "video_id": "caa30e53-317f-4152-9833-830728520173",
+    "fingerprint": "248fde6a3cfe2e0f74898764a127dc161c5a25a97113e504e2e9b12e4ac25342",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"emotional\":0,\"other\":0,\"research\":1,\"breathing\":0,\"interviews\":0,\"community\":0,\"care\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:44"
+  },
+  {
+    "video_id": "fa9614c0-5ba3-4946-b733-a61dbb9806b6",
+    "fingerprint": "2d7c33e6206348c6f7e8aaa10b69d18eca4fd47c2be3c616f2a15f5b46045fb5",
+    "category": "interviews",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"interviews\",\"confidence\":0.43,\"probabilities\":{\"other\":0,\"interviews\":0.51,\"breathing\":0,\"research\":0.49,\"care\":0,\"emotional\":0,\"music\":0,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:44"
+  },
+  {
+    "video_id": "c976de29-e6ee-4cd5-80cf-67eae6991295",
+    "fingerprint": "4eaadd4e93d8d0d030313411f21a7e5109b26cedcb863fb269c63d0e7c9c7c33",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.98,\"probabilities\":{\"emotional\":0,\"community\":0,\"other\":0,\"care\":0.01,\"breathing\":0,\"research\":0.99,\"interviews\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:49"
+  },
+  {
+    "video_id": "07831eac-56cf-4b9b-864b-b96dab5500c0",
+    "fingerprint": "04adb3d820738324c999f207d31a3381a9444efb6f9c2f5a7461b0679007e37d",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"music\":0,\"community\":0,\"other\":0,\"breathing\":0,\"care\":0,\"research\":1,\"interviews\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:44"
+  },
+  {
+    "video_id": "a4b26893-129b-43ce-8185-da8c0f3d7f9e",
+    "fingerprint": "e0c205364a9e512748bd6d1c35d0a581b41c6dcefe7ed88be5bc8c556c401d4a",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"research\":1,\"interviews\":0,\"breathing\":0,\"other\":0,\"community\":0,\"music\":0,\"emotional\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.97,\"probabilities\":{\"uncertain\":0.01,\"off_topic\":0.02,\"relevant\":0.97}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:48"
+  },
+  {
+    "video_id": "5cc65487-e044-470e-b209-7e82da63fb4c",
+    "fingerprint": "80fe6c761c796ca30cddbffa2bb06ed31bde52cba9877c533c9dae1061a16ba0",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"community\":0,\"other\":0,\"breathing\":0,\"music\":0,\"emotional\":0,\"care\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:49"
+  },
+  {
+    "video_id": "48915c3f-733c-41f9-9e42-3463a52c24c4",
+    "fingerprint": "0f3157ea631fee4c1b2c626008a8dc72aedf628bb6d823fb70b91903f68f5c66",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"community\":0,\"emotional\":0,\"research\":1,\"breathing\":0,\"music\":0,\"other\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.77,\"probabilities\":{\"relevant\":0.85,\"off_topic\":0.13,\"uncertain\":0.02}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:49"
+  },
+  {
+    "video_id": "91f52b58-647d-4fbb-a0f2-be5f3f5c5439",
+    "fingerprint": "6a358c13d12b5d1bbe53a6ae583e40c45f328600499d72473ef72f8095389e32",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"breathing\":0,\"community\":0,\"music\":0,\"other\":0,\"emotional\":0,\"care\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:53"
+  },
+  {
+    "video_id": "7165be96-9e18-4d32-bfff-0f2fbb8aa439",
+    "fingerprint": "2d09e4aa526928235ead215c8441d3309eef39093e171a15e2be450f2d9b1f2b",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"community\":0,\"other\":0,\"breathing\":0,\"music\":0,\"emotional\":0,\"care\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:53"
+  },
+  {
+    "video_id": "9667483a-6c00-4c36-bbc5-2d5f44740b64",
+    "fingerprint": "84199363f04a59634dbd734a82859865257faf04aabfa650838176cfe89a5ca4",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"interviews\":0,\"music\":0,\"care\":0,\"emotional\":0,\"research\":1,\"other\":0,\"community\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:48"
+  },
+  {
+    "video_id": "a39c7bf6-a2a3-4565-8a82-0b52566e5d94",
+    "fingerprint": "d148e2ea6214653924b1f57a7220f08ea8835d5d82801edcc6029d8efb6e4ee6",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"music\":0,\"community\":0,\"research\":1,\"other\":0,\"care\":0,\"breathing\":0,\"emotional\":0,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:53"
+  },
+  {
+    "video_id": "c6f629fc-611f-42f9-b87b-e82748a0ea48",
+    "fingerprint": "c4337a738e6b2a77294ee90681073b827826d21af69caaf958f11c8d4cf1d458",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"community\":0,\"research\":1,\"other\":0,\"music\":0,\"interviews\":0,\"care\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:53"
+  },
+  {
+    "video_id": "a80a872a-bcc8-4bb8-a53c-ae997e213c7b",
+    "fingerprint": "eb696dceaa9533c5e63d1cbf8c4b84071666d33bb5d86cf9f4724ada456831a3",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"other\":0,\"research\":1,\"music\":0,\"community\":0,\"interviews\":0,\"care\":0,\"breathing\":0,\"emotional\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:57"
+  },
+  {
+    "video_id": "5125f04b-01e9-4b17-b0a4-6e166341e834",
+    "fingerprint": "7c77c80ddac9d3762e265291cd52944eea1469df938428a69df2d777da4bd4a5",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"care\":0,\"other\":0,\"community\":0,\"emotional\":0,\"breathing\":0,\"music\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.96,\"probabilities\":{\"off_topic\":0,\"relevant\":0.98,\"uncertain\":0.02}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:53"
+  },
+  {
+    "video_id": "46c6dad7-682a-4289-8f0d-3e05272f3a21",
+    "fingerprint": "879b9bad66c49686a8ce156bdb6bcf3e16069ea6743beee5e2769c483b32cf8d",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"interviews\":0,\"community\":0,\"emotional\":0,\"breathing\":0,\"research\":1,\"music\":0,\"other\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"off_topic\":0,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:57"
+  },
+  {
+    "video_id": "bb365216-3b99-46b7-b576-3475af8f1fc9",
+    "fingerprint": "64d637993ac0ddf826def05bcbdb851779d5aa74f63d4876057a433f719dbc9d",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"interviews\":0,\"community\":0,\"research\":1,\"other\":0,\"emotional\":0,\"music\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:57"
+  },
+  {
+    "video_id": "0cdebdaa-60c4-421c-9465-02d3080e90ea",
+    "fingerprint": "93b227a4ad9a5b75d8165e744eef0e938877fca857dec184f92829a87755e125",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.98,\"probabilities\":{\"care\":0,\"music\":0,\"other\":0,\"research\":0.98,\"emotional\":0,\"community\":0.02,\"interviews\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"uncertain\":0,\"relevant\":0.99,\"off_topic\":0.01}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:58"
+  },
+  {
+    "video_id": "22bd3011-57f1-471b-9617-c4563875b8bd",
+    "fingerprint": "a0f2b3f1449d27591f88a7fff66ff50905af40d69887a0a552e7199df4cb5521",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"music\":0,\"breathing\":0,\"community\":0,\"research\":1,\"interviews\":0,\"emotional\":0,\"care\":0,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:02"
+  },
+  {
+    "video_id": "yt-ksxQMV-7xIY",
+    "fingerprint": "eca70f523c42af549c62ec5be6100ed5dc2ffc3bc29f47ae0cf3c74f66e3f63b",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.73,\"probabilities\":{\"community\":0,\"breathing\":0,\"care\":0.23,\"research\":0.76,\"interviews\":0,\"music\":0,\"emotional\":0,\"other\":0.01}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.79,\"probabilities\":{\"off_topic\":0.1,\"uncertain\":0.05,\"relevant\":0.85}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:02"
+  },
+  {
+    "video_id": "aefdce79-daf4-4181-9bd9-ce588f064d40",
+    "fingerprint": "a4ca7063b9df304e157d285deb4ba551dfe95cc67d7131dc1e152350a4ba7a0f",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"research\":1,\"care\":0,\"breathing\":0,\"music\":0,\"emotional\":0,\"community\":0,\"other\":0,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"uncertain\":0,\"off_topic\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 17:59:57"
+  },
+  {
+    "video_id": "48e8200d-fe6d-49a2-adeb-f4441dd92291",
+    "fingerprint": "536b0b76679cfed70400522230e08cf97d59fc0c5d1109a9384dda6da4f91826",
+    "category": "interviews",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"interviews\",\"confidence\":0.85,\"probabilities\":{\"emotional\":0,\"breathing\":0,\"interviews\":0.88,\"research\":0.12,\"other\":0,\"care\":0,\"community\":0,\"music\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"uncertain\":0,\"relevant\":1,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:02"
+  },
+  {
+    "video_id": "f02d016c-3b19-4aaf-ad25-83316d4ac66f",
+    "fingerprint": "9e60aeb1cacfdd8c07fc0f0e09b1f6d85ab33a8fcce1c88adb61cd1667cd0854",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"community\":0,\"emotional\":0,\"breathing\":0,\"music\":0,\"other\":0,\"interviews\":0,\"care\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:03"
+  },
+  {
+    "video_id": "fb0af2ba-3226-4628-9923-84d0510288af",
+    "fingerprint": "acfdd3483db250364d83c56b53d01a225a094f9af1c8836a378f75e9929371db",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"breathing\":0,\"emotional\":0,\"other\":0,\"interviews\":0,\"care\":0,\"music\":0,\"community\":0,\"research\":1}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"relevant\":1,\"uncertain\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:07"
+  },
+  {
+    "video_id": "2c942044-49d5-40a0-9f74-ac75aabb4edb",
+    "fingerprint": "f243484eea54148faa65636edb60bff03d4ae608fda780239b6a5c52578c5d83",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.96,\"probabilities\":{\"music\":0,\"breathing\":0,\"community\":0,\"research\":0.97,\"interviews\":0,\"emotional\":0,\"care\":0.03,\"other\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.99,\"probabilities\":{\"off_topic\":0.01,\"uncertain\":0,\"relevant\":0.99}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:08"
+  },
+  {
+    "video_id": "9bc1e704-0bd3-4945-8e2e-08756433e402",
+    "fingerprint": "ca29bccdef9f298c1a2830f5bde6ffd3add41d3d30098740e307eb9d3a6aff3f",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"care\":0,\"emotional\":0,\"research\":1,\"music\":0,\"other\":0,\"community\":0,\"interviews\":0,\"breathing\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"relevant\":1,\"uncertain\":0,\"off_topic\":0}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:08"
+  },
+  {
+    "video_id": "65951d2b-88eb-4b79-8b8c-c67afaa00cca",
+    "fingerprint": "641bb767d8f1c3aab482f51025fb9816d9012cda6c5b1b3fb350db619a5708bb",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":1,\"probabilities\":{\"music\":0,\"breathing\":0,\"community\":0,\"research\":1,\"emotional\":0,\"interviews\":0,\"other\":0,\"care\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":1,\"probabilities\":{\"off_topic\":0,\"uncertain\":0,\"relevant\":1}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:07"
+  },
+  {
+    "video_id": "5d316872-07c0-47c6-b603-21229ec9a9d4",
+    "fingerprint": "585eb00fe67423bb6751fc951c8b9bbe91bd4b5cf3f7db8e13d20d45f3c8764c",
+    "category": "research",
+    "relevance": "relevant",
+    "response": "{\"category\":{\"type\":\"choice\",\"choice\":\"research\",\"confidence\":0.93,\"probabilities\":{\"other\":0,\"music\":0,\"community\":0.06,\"care\":0,\"research\":0.94,\"emotional\":0,\"breathing\":0,\"interviews\":0}},\"relevance\":{\"type\":\"choice\",\"choice\":\"relevant\",\"confidence\":0.98,\"probabilities\":{\"off_topic\":0.01,\"uncertain\":0.01,\"relevant\":0.98}}}",
+    "model": "jev-1.13.0",
+    "input_tokens": 0,
+    "updated_at": "2026-09-20 18:00:02"
+  }
+]

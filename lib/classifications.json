@@ -1,0 +1,1946 @@
+[
+  {
+    "fingerprint": "24acccf9ff83006883c9d33bef566ca901fddf4f57b2bca5e54f8f2836b82edb",
+    "video_id": "od-e8bef32d7863c85e871d1af79fa2c86a45a53a63",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.8,\"probabilities\":{\"live\":0,\"review\":0.13,\"video\":0.87}}",
+    "input_tokens": 801,
+    "created_at": "2026-09-20 05:02:22"
+  },
+  {
+    "fingerprint": "f269d53de047e31c628d49a443d0bf78eeeb6da21de8d26c4e18e94dade2344a",
+    "video_id": "od-3662c74ff926759632b1bf93eb45b3f28554462a",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.75,\"probabilities\":{\"live\":0,\"video\":0.84,\"review\":0.16}}",
+    "input_tokens": 860,
+    "created_at": "2026-09-20 05:02:26"
+  },
+  {
+    "fingerprint": "0cae1d89d0e31c27e84bbdec07e184a1126dcb9951fdf80fc0c362c20ed5635d",
+    "video_id": "od-daf1fcbb73b18cd8a0059a660975c732c451d6dc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.79,\"probabilities\":{\"review\":0.14,\"live\":0,\"video\":0.86}}",
+    "input_tokens": 807,
+    "created_at": "2026-09-20 05:02:30"
+  },
+  {
+    "fingerprint": "7c376c5428025be9de10d9895829e2bdd15496ef985d0e62aaccdf4d49f65436",
+    "video_id": "od-03b0a12be335d0d879c724826456548f42e21c88",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.76,\"probabilities\":{\"video\":0.84,\"review\":0.16,\"live\":0}}",
+    "input_tokens": 790,
+    "created_at": "2026-09-20 05:03:19"
+  },
+  {
+    "fingerprint": "17b6246d1afe1a8178687ba0c13317d040d85d86a091b29f2da5792c9f4e1415",
+    "video_id": "od-d6538af2bc68082985ce30247d88f8ee0413dca9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.24,\"probabilities\":{\"video\":0.49,\"review\":0.36,\"live\":0.15}}",
+    "input_tokens": 1620,
+    "created_at": "2026-09-20 05:03:24"
+  },
+  {
+    "fingerprint": "fb11a0767c9101ad0e201212a381f96e6b8153916e0f1dcc238f3361e621bb62",
+    "video_id": "od-b89b88a3016a37c69f30cc860e7260489bbc4324",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.28,\"probabilities\":{\"video\":0.48,\"review\":0.52,\"live\":0}}",
+    "input_tokens": 951,
+    "created_at": "2026-09-20 05:03:28"
+  },
+  {
+    "fingerprint": "ff391ec2d6edef556e28ad97eb97b27804e675942943f0d1d0289c2b89cb5599",
+    "video_id": "od-75baeb75a03e0f700fbe1fa6cc9a3f69ba4d24f2",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.77,\"probabilities\":{\"live\":0,\"review\":0.85,\"video\":0.15}}",
+    "input_tokens": 523,
+    "created_at": "2026-09-20 05:03:32"
+  },
+  {
+    "fingerprint": "bcc955ff9af8752d19d5f7f82816095d3b462fac3024815b7824ae9bc49e24a9",
+    "video_id": "od-5f90938854f18db0f15c9700fe0ab4e2c3e8a2f0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.56,\"probabilities\":{\"review\":0.27,\"live\":0.02,\"video\":0.71}}",
+    "input_tokens": 1668,
+    "created_at": "2026-09-20 05:03:37"
+  },
+  {
+    "fingerprint": "9fe434148b3d9e6440d5ecc06b9219fad62c95faaec41669923a0ce6ed626fa9",
+    "video_id": "od-731554d74acf457f9c712e8bd9b59ca7392fa7a0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.41,\"probabilities\":{\"live\":0.16,\"review\":0.23,\"video\":0.61}}",
+    "input_tokens": 1659,
+    "created_at": "2026-09-20 05:03:41"
+  },
+  {
+    "fingerprint": "b1f031c6694e14932369c0539a0377ab2f1a6f14a5db56414c6a7fc09d45ed66",
+    "video_id": "od-fc30672e0678d966325f387a2fba1041f457ebed",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.37,\"probabilities\":{\"review\":0.27,\"live\":0.15,\"video\":0.58}}",
+    "input_tokens": 1656,
+    "created_at": "2026-09-20 05:03:45"
+  },
+  {
+    "fingerprint": "c5d593060477986d59f6b716ec9f874f31b6fc6fc6f14af7e561315957468207",
+    "video_id": "od-31a14be1e2c421ec59a364396e6a0bcebd0d51b1",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.46,\"probabilities\":{\"live\":0.1,\"video\":0.65,\"review\":0.25}}",
+    "input_tokens": 1667,
+    "created_at": "2026-09-20 05:03:51"
+  },
+  {
+    "fingerprint": "973164ea8ef4fc6a454caade05832742ad3304049392da1799131ced8fba4a3d",
+    "video_id": "od-2d77891415659e0f4eb9599650d02fe928f0861f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.36,\"probabilities\":{\"video\":0.57,\"review\":0.26,\"live\":0.17}}",
+    "input_tokens": 1657,
+    "created_at": "2026-09-20 05:03:56"
+  },
+  {
+    "fingerprint": "5e80398e5ec2e7af99cfdb712653be762275be34fcfd26e80a5fe5e342047ab7",
+    "video_id": "od-0e0322e97f2cd8799e6f5ca91868fec0ee724042",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.31,\"probabilities\":{\"live\":0.11,\"review\":0.34,\"video\":0.54}}",
+    "input_tokens": 1647,
+    "created_at": "2026-09-20 05:04:00"
+  },
+  {
+    "fingerprint": "3c56f3772aa017696e5b3249032e87498db71ad2e10cbe19c18e6a16e647ae13",
+    "video_id": "od-4406172673f4a7221699b192705fccf9675e3b0f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.39,\"probabilities\":{\"live\":0.11,\"review\":0.3,\"video\":0.59}}",
+    "input_tokens": 1658,
+    "created_at": "2026-09-20 05:04:05"
+  },
+  {
+    "fingerprint": "89198ab5394413c90d519aaa44fabb3f408a7118e6bdb5c72c2fe059a026b7cd",
+    "video_id": "od-43229a340553020cbd2de261a59c80af1600ec2d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.02,\"probabilities\":{\"live\":0.33,\"review\":0.33,\"video\":0.33999999999999997}}",
+    "input_tokens": 1642,
+    "created_at": "2026-09-20 05:04:09"
+  },
+  {
+    "fingerprint": "d7efc4bba4e0edbdc0aa94a2583aa398d5ef4ed78da587ff92c971b93e026633",
+    "video_id": "od-3a75ac2fcb642569e376273db0082724d3c8e670",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.8,\"probabilities\":{\"video\":0.86,\"live\":0.01,\"review\":0.13}}",
+    "input_tokens": 1156,
+    "created_at": "2026-09-20 05:05:32"
+  },
+  {
+    "fingerprint": "bdbfa3ff7e6c2336b1d1fb1488f3ec8ad8656d7e12a3d2fd087c9bf4e51a16f9",
+    "video_id": "od-9c7862357f9ae94f7eab0661ed69e534ad993909",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.91,\"probabilities\":{\"review\":0.06,\"video\":0.94,\"live\":0}}",
+    "input_tokens": 973,
+    "created_at": "2026-09-20 05:05:32"
+  },
+  {
+    "fingerprint": "d877d99fe0c5bab78e86e7663186471fcacc18e0b0c610fa952ebb07343a0e8b",
+    "video_id": "od-9cb3fb0e1d43947d7d94d88051813fd81597b8a6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.25,\"probabilities\":{\"live\":0,\"review\":0.5,\"video\":0.5}}",
+    "input_tokens": 561,
+    "created_at": "2026-09-20 05:05:33"
+  },
+  {
+    "fingerprint": "e5130fb6578780715f6822c7f9f9a4a65ad2e06451275bfb62eaf05a339f4458",
+    "video_id": "od-aa67ad516295af65319e8330ca6db7f14a79c5d0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.83,\"probabilities\":{\"live\":0,\"review\":0.11,\"video\":0.89}}",
+    "input_tokens": 792,
+    "created_at": "2026-09-20 05:05:37"
+  },
+  {
+    "fingerprint": "8bb9bdb897b8f626054c0c4e8632421419b52d6fba5159a39650d8413c7012de",
+    "video_id": "od-0a7858cd69808861f2d4d34262472bacb4528aa9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.84,\"probabilities\":{\"video\":0.9,\"review\":0.1,\"live\":0}}",
+    "input_tokens": 983,
+    "created_at": "2026-09-20 05:05:37"
+  },
+  {
+    "fingerprint": "aab846a6c158ebc0019d4f07dce89ccbf659826abe08c67f7dfcba68fe600aef",
+    "video_id": "od-a14273cead44bf4b87b69500235bc4eac5692ff1",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.8,\"probabilities\":{\"live\":0,\"review\":0.13,\"video\":0.87}}",
+    "input_tokens": 891,
+    "created_at": "2026-09-20 05:05:37"
+  },
+  {
+    "fingerprint": "ef9e69494f657ec6fff4e826d2b776d968ba3b8aaca12a975f9fd5f0d24b4fe7",
+    "video_id": "od-a7a519e0c25351fac0e60e39b02b993d2836d197",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.59,\"probabilities\":{\"video\":0.73,\"live\":0,\"review\":0.27}}",
+    "input_tokens": 1313,
+    "created_at": "2026-09-20 05:05:37"
+  },
+  {
+    "fingerprint": "0347774d4c186c2d458ce9acedb4a385bcf560c22acdc5c162464c5cd11cc7f7",
+    "video_id": "od-4d5d02c27359ce254c49157b18212408278b31b6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.88,\"probabilities\":{\"live\":0,\"video\":0.92,\"review\":0.08}}",
+    "input_tokens": 897,
+    "created_at": "2026-09-20 05:05:37"
+  },
+  {
+    "fingerprint": "56b7acfa26eaf45a5a2f59695f866096b55ca18827de4b442642a20c82f5eae2",
+    "video_id": "od-0e85da87a68b31fdd30708448cb3a925adf61ca3",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.9,\"probabilities\":{\"review\":0.07,\"video\":0.93,\"live\":0}}",
+    "input_tokens": 900,
+    "created_at": "2026-09-20 05:05:37"
+  },
+  {
+    "fingerprint": "455ec01c7bee0ff6b2aaf1042724d726f0e264db6591f067b9fb1823749fbfd5",
+    "video_id": "od-2b6bd00a0ad2431b9116889ac095e0d198a99c1e",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.93,\"probabilities\":{\"review\":0.05,\"live\":0,\"video\":0.95}}",
+    "input_tokens": 835,
+    "created_at": "2026-09-20 05:05:37"
+  },
+  {
+    "fingerprint": "ed37b3de0d2202f5cfcbf27ae195d0224a06b00c85389127c22012a1a9fcac35",
+    "video_id": "od-44e6df891814c3908c184bda03328c8799f8bdeb",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.26,\"probabilities\":{\"live\":0,\"video\":0.49,\"review\":0.51}}",
+    "input_tokens": 887,
+    "created_at": "2026-09-20 05:05:41"
+  },
+  {
+    "fingerprint": "e94aea8bab6cf8b3153c7b38e20c5eebebb162a637768b29a4b070f5cccd2abc",
+    "video_id": "od-d9f98f73b3c8d99cb74a7f05eb78e686bd3f7f42",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.73,\"probabilities\":{\"live\":0,\"video\":0.82,\"review\":0.18}}",
+    "input_tokens": 1045,
+    "created_at": "2026-09-20 05:05:41"
+  },
+  {
+    "fingerprint": "e9f3355e8d2c5d454c7344860258b5570ee99c2637db5cbf7a97dd82f02090ca",
+    "video_id": "od-044350ae0b9f75ddc8dad2af0ee64642e92c583b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.74,\"probabilities\":{\"live\":0,\"review\":0.17,\"video\":0.83}}",
+    "input_tokens": 995,
+    "created_at": "2026-09-20 05:05:42"
+  },
+  {
+    "fingerprint": "9ca777a2cd62f098e936b0ff2ac7d9ec4fc7090d933d21f6d49cd134f6089544",
+    "video_id": "od-40f3f0e9948a7e499ddfc578dfbbb5dec9619a23",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.77,\"probabilities\":{\"review\":0.15,\"video\":0.85,\"live\":0}}",
+    "input_tokens": 872,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "3eb8026968c945c0cb333dbe850a2c3ac4b808d85bed59ccdbd81f3dbf9c22dc",
+    "video_id": "od-12d8d588c21b5befe457ea7c14148af989a5ed79",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.61,\"probabilities\":{\"video\":0.74,\"live\":0,\"review\":0.26}}",
+    "input_tokens": 903,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "82def50d7a1a6f82ba72144ba840c0bc29f658bb8311ce184f5f1116f441247e",
+    "video_id": "od-9143b7ba34fa6ded6269e7786f89329fc5561085",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.78,\"probabilities\":{\"live\":0,\"review\":0.15,\"video\":0.85}}",
+    "input_tokens": 957,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "856eefafa0d86af06956afd59f3f3620353848a5e322e3caf32dea8cac08c240",
+    "video_id": "od-adfc01f58ed52a22f2dc5211ed2720487b4ec700",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.9,\"probabilities\":{\"live\":0,\"video\":0.9400000000000001,\"review\":0.06}}",
+    "input_tokens": 870,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "02d632fbd04e9d011a706a0f27829fdd16ef92578e1c9ea66298f2c56ba2c7fc",
+    "video_id": "od-1b55d2aa39965d3cd1087aa6ca58247909a08412",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.87,\"probabilities\":{\"live\":0,\"video\":0.91,\"review\":0.09}}",
+    "input_tokens": 812,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "7d2f3ace4a4412a7c45399d9fd5e375bc9d7f29c6f9a8b43aed61234a9c7da54",
+    "video_id": "od-79dc2756587ee434c98378fb94298aca744f19da",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.87,\"probabilities\":{\"live\":0,\"video\":0.91,\"review\":0.09}}",
+    "input_tokens": 898,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "1fdf90402803f130f14fffe39313a74fef1a00ab932472e4601ddc26e594cd1d",
+    "video_id": "od-8918f32d8ee9ab06f1f6c9b892c61488e3226af7",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.87,\"probabilities\":{\"live\":0,\"review\":0.09,\"video\":0.91}}",
+    "input_tokens": 763,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "3b929116f2c5e90fd21effa4ced6048d3c1ab5fa6095b698788bddf0ca934544",
+    "video_id": "od-7be21500268a6b5a05149ace94b71d0dd1741ecc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.68,\"probabilities\":{\"review\":0.21,\"video\":0.79,\"live\":0}}",
+    "input_tokens": 816,
+    "created_at": "2026-09-20 05:05:50"
+  },
+  {
+    "fingerprint": "d90e7ff39384989fa9958483f127891e2181d4a76908b7eb9c28ba06d9ddf8a6",
+    "video_id": "od-9ed3e257df77af9c91ba85fbb1c4bdce7ca71e57",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.89,\"probabilities\":{\"live\":0,\"video\":0.93,\"review\":0.07}}",
+    "input_tokens": 836,
+    "created_at": "2026-09-20 05:05:50"
+  },
+  {
+    "fingerprint": "fa9e28f803c2c259fd53c3fc696905c002cd51ab18cf0fe809a2c7d2ec145db1",
+    "video_id": "od-4dd1ff3bcfee6acba37b5c1bec4205d2521b4e04",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.34,\"probabilities\":{\"review\":0.44,\"video\":0.56,\"live\":0}}",
+    "input_tokens": 887,
+    "created_at": "2026-09-20 05:05:50"
+  },
+  {
+    "fingerprint": "7167444f5a7e1eefcdc4f29ab98da5329930b1337db6c896d946b701eb21d4f9",
+    "video_id": "od-0c10c0560a336eff19c8a08d5a7b16c275f8d315",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.81,\"probabilities\":{\"live\":0,\"video\":0.87,\"review\":0.13}}",
+    "input_tokens": 961,
+    "created_at": "2026-09-20 05:05:50"
+  },
+  {
+    "fingerprint": "e30a2f109de91291551230599d3d43c83daa59a09c0aa494ecfaf2f156f991f0",
+    "video_id": "od-6a1403c59d1e07c73d0a7b8971434b9f90dfa2ab",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.88,\"probabilities\":{\"review\":0.08,\"live\":0,\"video\":0.92}}",
+    "input_tokens": 799,
+    "created_at": "2026-09-20 05:05:51"
+  },
+  {
+    "fingerprint": "8b254e50568788eed68434c4fdd3dcdb2cba8b1b8c259b9e088b9e790dc79e12",
+    "video_id": "od-a4c7cf39a909f367d15162786bc4d947dda5d7d3",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.84,\"probabilities\":{\"live\":0,\"video\":0.89,\"review\":0.11}}",
+    "input_tokens": 898,
+    "created_at": "2026-09-20 05:05:51"
+  },
+  {
+    "fingerprint": "5d9c7bfd00afb6cd005c796c002c8a077f267e8be1c84b0e724cb21a20ae4af1",
+    "video_id": "od-be1f4cba006db19b226fef1aa7f889f2c2c54ba9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.41,\"probabilities\":{\"review\":0.39,\"live\":0,\"video\":0.61}}",
+    "input_tokens": 806,
+    "created_at": "2026-09-20 05:05:54"
+  },
+  {
+    "fingerprint": "828a74f490936c18512edf3a59266edfd68f560283528e6dd979e417aca74e43",
+    "video_id": "od-eae4572a86ea911c8128f659e200c5df4c7e8c35",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.92,\"probabilities\":{\"review\":0.05,\"live\":0,\"video\":0.95}}",
+    "input_tokens": 1265,
+    "created_at": "2026-09-20 05:05:55"
+  },
+  {
+    "fingerprint": "5b6e1bc767c7cea78d7d84d9067f2075ababc8716dfa9d8ed0cb8bcf107b47ff",
+    "video_id": "od-d3c79259d46f9cd7b89e92aac345c07c28eff011",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.91,\"probabilities\":{\"live\":0,\"video\":0.94,\"review\":0.06}}",
+    "input_tokens": 1298,
+    "created_at": "2026-09-20 05:05:55"
+  },
+  {
+    "fingerprint": "010d5c514e65e241729957cddda4d213ebc938bc47e95b03b1de3d8005e6c7e1",
+    "video_id": "od-3363264f346d61658be728875876ecc177a38519",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.5,\"probabilities\":{\"live\":0,\"review\":0.33,\"video\":0.67}}",
+    "input_tokens": 661,
+    "created_at": "2026-09-20 05:05:55"
+  },
+  {
+    "fingerprint": "84b8ebadb59ff3ca41204c84327c9e843adcb7f6d64ce49afcd8b99a7720d26d",
+    "video_id": "od-5f6438cc200f40ef8f1d75a021fcd39ba8265fc9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.84,\"probabilities\":{\"live\":0,\"video\":0.89,\"review\":0.11}}",
+    "input_tokens": 1397,
+    "created_at": "2026-09-20 05:06:04"
+  },
+  {
+    "fingerprint": "235afe3547142afb8b4414fe78f99c0c2acc10a3b8c257bb1384170a60c96e3f",
+    "video_id": "od-ef13334018c2b76849d30edc7f7d35d6a54a89fc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.79,\"probabilities\":{\"live\":0,\"review\":0.14,\"video\":0.86}}",
+    "input_tokens": 1339,
+    "created_at": "2026-09-20 05:06:04"
+  },
+  {
+    "fingerprint": "cb1d1103b9142fc86ab9067fae3ffb836b044e92f2975b26e7c9f762942eabc6",
+    "video_id": "236f270e-42ed-4233-b4cc-792030689652",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.91,\"probabilities\":{\"live\":0,\"video\":0.94,\"review\":0.06}}",
+    "input_tokens": 1378,
+    "created_at": "2026-09-20 05:06:09"
+  },
+  {
+    "fingerprint": "6f062635c9d0a9f95be91f26f1f224aee139750e2198adaa111236619cafed33",
+    "video_id": "od-c40c8ad607df07df160a7165a4d4a56026a8d106",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.97,\"probabilities\":{\"live\":0,\"video\":0.98,\"review\":0.02}}",
+    "input_tokens": 1372,
+    "created_at": "2026-09-20 05:06:09"
+  },
+  {
+    "fingerprint": "cdedb55f7812fbeb7b816c72c92e99dada17eb0a0464e0cce8019a788ee23d09",
+    "video_id": "od-74a9265f330c5b1dfce64a7fa3853171fe4d44a4",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.83,\"probabilities\":{\"review\":0.11,\"video\":0.89,\"live\":0}}",
+    "input_tokens": 1342,
+    "created_at": "2026-09-20 05:06:09"
+  },
+  {
+    "fingerprint": "cd00955f86263c3214ded72becb2126c34f46a380a24152f6bdf5fcdab0f9f3e",
+    "video_id": "od-82ca61003e8e096991a1978504378cf9ce100020",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.92,\"probabilities\":{\"video\":0.95,\"review\":0.05,\"live\":0}}",
+    "input_tokens": 1502,
+    "created_at": "2026-09-20 05:06:09"
+  },
+  {
+    "fingerprint": "1e6536dc65633fe1fa63fd2a1b9667ef9178a46c3ba398e28736e2434ba3c591",
+    "video_id": "3779e29e-09a9-4475-bfb0-586d7ba46bbc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.9,\"probabilities\":{\"live\":0,\"video\":0.93,\"review\":0.07}}",
+    "input_tokens": 1528,
+    "created_at": "2026-09-20 05:06:09"
+  },
+  {
+    "fingerprint": "43c705fe73f43d45ffd6ad0855283cc65dd33a861b37fac1f0eb8d9b9d8e9597",
+    "video_id": "78c2d182-2504-46a0-8c48-a1ccd997d283",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.94,\"probabilities\":{\"live\":0,\"review\":0.04,\"video\":0.96}}",
+    "input_tokens": 1402,
+    "created_at": "2026-09-20 05:06:14"
+  },
+  {
+    "fingerprint": "5e1fd9bbe3ecd0c9dc94519aa3eaf91573bde5de839416b8c48dd999d1311648",
+    "video_id": "fd877927-3a39-4945-a08c-533b1f39510d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.92,\"probabilities\":{\"live\":0,\"video\":0.94,\"review\":0.06}}",
+    "input_tokens": 1471,
+    "created_at": "2026-09-20 05:06:14"
+  },
+  {
+    "fingerprint": "57fc08d4d96ee7a27a1191cdf4bb02709f6ee28a3ccde5a895e8732d924adef3",
+    "video_id": "cf835e74-4466-4302-97cf-1a15200299de",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.9,\"probabilities\":{\"live\":0,\"video\":0.93,\"review\":0.07}}",
+    "input_tokens": 1443,
+    "created_at": "2026-09-20 05:06:14"
+  },
+  {
+    "fingerprint": "7ae3c53d8a0671a750a5c1486ef248e05b176aef0262c68721a56a6ea1c2ce97",
+    "video_id": "58576f9e-7c36-437c-8dec-ba91a9bac9fd",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.89,\"probabilities\":{\"video\":0.93,\"review\":0.07,\"live\":0}}",
+    "input_tokens": 1156,
+    "created_at": "2026-09-20 05:06:14"
+  },
+  {
+    "fingerprint": "2f7b67e987267e68552218a0807dddba6bdcd386bea262346e61e9749cf23ef9",
+    "video_id": "f61b69b1-a78b-4909-9dbd-5edfe897a56b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.95,\"probabilities\":{\"live\":0,\"review\":0.03,\"video\":0.97}}",
+    "input_tokens": 1427,
+    "created_at": "2026-09-20 05:06:14"
+  },
+  {
+    "fingerprint": "b56639c3c82e5fc616e763baffebef263ab32b1da3901eae9c80a8e316172680",
+    "video_id": "a3820c00-c39c-4fa2-88f7-fae2725ebd5d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.92,\"probabilities\":{\"video\":0.95,\"live\":0,\"review\":0.05}}",
+    "input_tokens": 1425,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "4621f147250a6a32b92b15cc8961130125dec4b13dc42a7b2bdfc35835b834a6",
+    "video_id": "6925d467-4fd0-4993-be4d-39e6f1a728c6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.85,\"probabilities\":{\"review\":0.1,\"video\":0.9,\"live\":0}}",
+    "input_tokens": 1287,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "7469bb4b4cc3b2a27c65df03574335ee32210ec44aaaa2750ed3fc53a0a799b4",
+    "video_id": "85952b42-2664-4552-9372-b87e5cbd2795",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.86,\"probabilities\":{\"video\":0.91,\"review\":0.09,\"live\":0}}",
+    "input_tokens": 1012,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "e8bfa7ca1b478895cf05f2e6fd01780fbf4b2bf16d59164edcfe9b88a2e162bb",
+    "video_id": "e098b664-a78c-4523-b35f-65474f92c485",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.88,\"probabilities\":{\"review\":0.08,\"live\":0,\"video\":0.92}}",
+    "input_tokens": 1184,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "7e0c62828d89723441ee0e46befdb48da73cb6abddf9f1e2a3ea66c1ff778737",
+    "video_id": "5da6d505-144e-46d8-b7b9-4e9b8d1bed01",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.94,\"probabilities\":{\"live\":0,\"video\":0.96,\"review\":0.04}}",
+    "input_tokens": 1158,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "f81a33c111571ca97c188d43662fa27d54cf2b8679cac44d748ec753335f1d1b",
+    "video_id": "97f07dc8-8037-4759-9476-bd42cfcfe2a6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.68,\"probabilities\":{\"review\":0.21,\"video\":0.79,\"live\":0}}",
+    "input_tokens": 1509,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "7b33952f789958f735fe823fbcfed2ef395339d3a571f5e893e11f51115681f7",
+    "video_id": "a83b0373-8539-484b-9719-e6c5b9e7b893",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.58,\"probabilities\":{\"live\":0,\"video\":0.72,\"review\":0.28}}",
+    "input_tokens": 579,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "0402443ef7a33e207615af117b05b722e346f3412e2c0bc68197889eb8937b4a",
+    "video_id": "2e3b6d2a-71a8-4a31-a060-da00c2739917",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.75,\"probabilities\":{\"review\":0.16,\"video\":0.84,\"live\":0}}",
+    "input_tokens": 1496,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "d5dc660989dedf4ccb85e47af39679a3a9e0d87ae7dd0a7174e66f9565cb989c",
+    "video_id": "331d9000-d80a-488b-b267-48c52646ea21",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.85,\"probabilities\":{\"review\":0.1,\"live\":0,\"video\":0.9}}",
+    "input_tokens": 1512,
+    "created_at": "2026-09-20 17:15:00"
+  },
+  {
+    "fingerprint": "9200375d601b0d753951f5120f58811df5473920938bc5dbe2b56f5e6aa6e7e3",
+    "video_id": "8d0451af-6487-43cb-b108-c5570c4994ac",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.71,\"probabilities\":{\"video\":0.81,\"review\":0.19,\"live\":0}}",
+    "input_tokens": 1498,
+    "created_at": "2026-09-20 17:15:05"
+  },
+  {
+    "fingerprint": "859dc04420b22f615daf99674081a2f429ac88fa3e88bc768744832dd8a7295a",
+    "video_id": "2b71415d-c519-4bd7-93b7-f94a0efa490b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.77,\"probabilities\":{\"video\":0.85,\"review\":0.15,\"live\":0}}",
+    "input_tokens": 1068,
+    "created_at": "2026-09-20 17:15:11"
+  },
+  {
+    "fingerprint": "83fca21022aca17811adec76b787c3255f0ef3235229b16710526bf37ce88570",
+    "video_id": "6bd60309-5f82-4b8f-8bc3-2b0dda3e5456",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.83,\"probabilities\":{\"review\":0.11,\"live\":0,\"video\":0.89}}",
+    "input_tokens": 1281,
+    "created_at": "2026-09-20 17:15:11"
+  },
+  {
+    "fingerprint": "9d2a68e9d9dfe364366a2595fe92b34eb7ca371eade1f9ef5300b0bbe86c33e9",
+    "video_id": "dfb0d94a-735c-4fef-bc4b-5a8f60aa7c6f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.28,\"probabilities\":{\"live\":0,\"review\":0.48,\"video\":0.52}}",
+    "input_tokens": 1495,
+    "created_at": "2026-09-20 17:15:11"
+  },
+  {
+    "fingerprint": "e076fc6c1e75c5cb798fef75b30ce437903556aee1fd94030e27128428ad2b92",
+    "video_id": "caa30e53-317f-4152-9833-830728520173",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.63,\"probabilities\":{\"video\":0.76,\"live\":0,\"review\":0.24}}",
+    "input_tokens": 1448,
+    "created_at": "2026-09-20 17:15:11"
+  },
+  {
+    "fingerprint": "ab9011853a437632b902f59a60943c73b68ef43b1e3d1a0348f5c4e210418fdb",
+    "video_id": "fa9614c0-5ba3-4946-b733-a61dbb9806b6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.89,\"probabilities\":{\"video\":0.93,\"review\":0.07,\"live\":0}}",
+    "input_tokens": 1398,
+    "created_at": "2026-09-20 17:15:11"
+  },
+  {
+    "fingerprint": "0636258117b87055786a9a63504c0e9425a9c4d184d36f5ed91a37e60bb586cb",
+    "video_id": "241aee2c-fa92-4e6b-9435-dc58a2520297",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.88,\"probabilities\":{\"video\":0.92,\"review\":0.08,\"live\":0}}",
+    "input_tokens": 1315,
+    "created_at": "2026-09-20 17:15:16"
+  },
+  {
+    "fingerprint": "3606199ac3bc8fa148f1af127b08372f890c9f23b32613d19dba59636ce0fada",
+    "video_id": "c976de29-e6ee-4cd5-80cf-67eae6991295",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.35,\"probabilities\":{\"review\":0.43,\"video\":0.57,\"live\":0}}",
+    "input_tokens": 905,
+    "created_at": "2026-09-20 17:15:16"
+  },
+  {
+    "fingerprint": "9210d0aa852d77779355018d2b5a1acf46e96d031d7796858f71b2781d21b5ce",
+    "video_id": "5cc65487-e044-470e-b209-7e82da63fb4c",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.95,\"probabilities\":{\"review\":0.04,\"live\":0,\"video\":0.96}}",
+    "input_tokens": 1208,
+    "created_at": "2026-09-20 17:15:16"
+  },
+  {
+    "fingerprint": "7581eb58797e47485a22839ca39d80dc84c22aba70082f297b751e5700e9dfec",
+    "video_id": "07831eac-56cf-4b9b-864b-b96dab5500c0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.87,\"probabilities\":{\"video\":0.92,\"review\":0.08,\"live\":0}}",
+    "input_tokens": 1518,
+    "created_at": "2026-09-20 17:15:16"
+  },
+  {
+    "fingerprint": "c8c71f46373fbcf8292241d81688065fca8080ba4786cc9b190a849d9f358bae",
+    "video_id": "a4b26893-129b-43ce-8185-da8c0f3d7f9e",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.43,\"probabilities\":{\"video\":0.62,\"live\":0,\"review\":0.38}}",
+    "input_tokens": 967,
+    "created_at": "2026-09-20 17:15:16"
+  },
+  {
+    "fingerprint": "3890089ec9a918b6e363e6bbabb9bb460d3997c2b806dd810ce67ff81728a6ad",
+    "video_id": "a39c7bf6-a2a3-4565-8a82-0b52566e5d94",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.81,\"probabilities\":{\"live\":0,\"review\":0.13,\"video\":0.87}}",
+    "input_tokens": 930,
+    "created_at": "2026-09-20 17:15:21"
+  },
+  {
+    "fingerprint": "b89d11397f90427d8d5b75e22c14b853ffac51bc470b54ccab545c408d500e87",
+    "video_id": "48915c3f-733c-41f9-9e42-3463a52c24c4",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.74,\"probabilities\":{\"video\":0.83,\"live\":0,\"review\":0.17}}",
+    "input_tokens": 1501,
+    "created_at": "2026-09-20 17:15:21"
+  },
+  {
+    "fingerprint": "c8ebba9201fdda601d4805cddfc870970ac3feaab7a744e0daf53944f84e87a7",
+    "video_id": "9667483a-6c00-4c36-bbc5-2d5f44740b64",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.86,\"probabilities\":{\"live\":0,\"video\":0.9,\"review\":0.1}}",
+    "input_tokens": 975,
+    "created_at": "2026-09-20 17:15:21"
+  },
+  {
+    "fingerprint": "dc7ef82b0544cf54752da4cbc3f3649574d3068abc6bff649d972812b5e5bdf2",
+    "video_id": "c6f629fc-611f-42f9-b87b-e82748a0ea48",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.85,\"probabilities\":{\"review\":0.1,\"video\":0.9,\"live\":0}}",
+    "input_tokens": 1429,
+    "created_at": "2026-09-20 17:15:21"
+  },
+  {
+    "fingerprint": "69ad2e589049f82bbe49aed267a39be671db3b8dcbce07832385e9f23521c8d3",
+    "video_id": "91f52b58-647d-4fbb-a0f2-be5f3f5c5439",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.85,\"probabilities\":{\"video\":0.9,\"review\":0.1,\"live\":0}}",
+    "input_tokens": 1368,
+    "created_at": "2026-09-20 17:15:21"
+  },
+  {
+    "fingerprint": "68a96735a25559a0d206915ae0e8b33037c09d60aa396b98a14d2e3a9b0a23ae",
+    "video_id": "0cdebdaa-60c4-421c-9465-02d3080e90ea",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.35,\"probabilities\":{\"video\":0.57,\"review\":0.43,\"live\":0}}",
+    "input_tokens": 1416,
+    "created_at": "2026-09-20 17:15:26"
+  },
+  {
+    "fingerprint": "65def912523d9aab42f79585acd91f5154759b168167445a5a0a08216f26ac77",
+    "video_id": "bb365216-3b99-46b7-b576-3475af8f1fc9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.84,\"probabilities\":{\"review\":0.11,\"live\":0,\"video\":0.89}}",
+    "input_tokens": 1358,
+    "created_at": "2026-09-20 17:15:26"
+  },
+  {
+    "fingerprint": "d8715f79ffa5c827e363c7b7fa8a4cf24ccf2b82618c4ad36656a09d31fac357",
+    "video_id": "46c6dad7-682a-4289-8f0d-3e05272f3a21",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.86,\"probabilities\":{\"review\":0.09,\"video\":0.91,\"live\":0}}",
+    "input_tokens": 1074,
+    "created_at": "2026-09-20 17:15:26"
+  },
+  {
+    "fingerprint": "ff83a60bb680bb91684ad2e2185945aa7e2c282b834f80305122715d3088eb9e",
+    "video_id": "7165be96-9e18-4d32-bfff-0f2fbb8aa439",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.89,\"probabilities\":{\"live\":0,\"video\":0.93,\"review\":0.07}}",
+    "input_tokens": 1527,
+    "created_at": "2026-09-20 17:15:26"
+  },
+  {
+    "fingerprint": "9f0b81ec8157a675bba093f497ae09fefd92fec31df37cd33d5a7fbea226ff06",
+    "video_id": "5125f04b-01e9-4b17-b0a4-6e166341e834",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.27,\"probabilities\":{\"live\":0,\"review\":0.48,\"video\":0.52}}",
+    "input_tokens": 582,
+    "created_at": "2026-09-20 17:15:26"
+  },
+  {
+    "fingerprint": "40d0d5c4bc56a1095eda27c57b308f25bc7a31a849e4ce69f05fa99d35dfad2a",
+    "video_id": "48e8200d-fe6d-49a2-adeb-f4441dd92291",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.52,\"probabilities\":{\"review\":0.32,\"video\":0.68,\"live\":0}}",
+    "input_tokens": 1462,
+    "created_at": "2026-09-20 17:15:33"
+  },
+  {
+    "fingerprint": "8107ca721711378cccf91e6d104ee67e50e1c0a078e43fc1f5f253606af5099f",
+    "video_id": "aefdce79-daf4-4181-9bd9-ce588f064d40",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.85,\"probabilities\":{\"review\":0.1,\"video\":0.9,\"live\":0}}",
+    "input_tokens": 1264,
+    "created_at": "2026-09-20 17:15:33"
+  },
+  {
+    "fingerprint": "30502fd4a2e5284296f85779cd6c0f3d29d541d5c83bb67d6fc71bdbd1854c4d",
+    "video_id": "f02d016c-3b19-4aaf-ad25-83316d4ac66f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.52,\"probabilities\":{\"review\":0.32,\"live\":0,\"video\":0.68}}",
+    "input_tokens": 838,
+    "created_at": "2026-09-20 17:15:33"
+  },
+  {
+    "fingerprint": "263bd96eb31e7becf6ba97f89191876389a8be2158de9c33ae034fea8c129f9d",
+    "video_id": "a80a872a-bcc8-4bb8-a53c-ae997e213c7b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.91,\"probabilities\":{\"review\":0.06,\"live\":0,\"video\":0.94}}",
+    "input_tokens": 1385,
+    "created_at": "2026-09-20 17:15:33"
+  },
+  {
+    "fingerprint": "4aa3f14872e48bb7a3aeb823d3b4781b30a7339db9fff825c06672fb014db0a5",
+    "video_id": "22bd3011-57f1-471b-9617-c4563875b8bd",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.89,\"probabilities\":{\"review\":0.07,\"live\":0,\"video\":0.93}}",
+    "input_tokens": 1272,
+    "created_at": "2026-09-20 17:15:33"
+  },
+  {
+    "fingerprint": "89cb1e085cc0ad7876df53caa11c64522661bdd90b6550c6e43a4bfe6df48a45",
+    "video_id": "5d316872-07c0-47c6-b603-21229ec9a9d4",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.27,\"probabilities\":{\"live\":0.01,\"video\":0.51,\"review\":0.48}}",
+    "input_tokens": 670,
+    "created_at": "2026-09-20 17:15:38"
+  },
+  {
+    "fingerprint": "d0d47ea90c46f9e258188ca3acff8ee34210fa008e3c1bfafea1d36a13532153",
+    "video_id": "65951d2b-88eb-4b79-8b8c-c67afaa00cca",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.26,\"probabilities\":{\"live\":0,\"video\":0.51,\"review\":0.49}}",
+    "input_tokens": 1595,
+    "created_at": "2026-09-20 17:15:39"
+  },
+  {
+    "fingerprint": "b6de5d525021b3f169545f1b0010149ccbd43890bab703fb179189c3bcb236ef",
+    "video_id": "2c942044-49d5-40a0-9f74-ac75aabb4edb",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.61,\"probabilities\":{\"review\":0.26,\"live\":0,\"video\":0.74}}",
+    "input_tokens": 1023,
+    "created_at": "2026-09-20 17:15:39"
+  },
+  {
+    "fingerprint": "7c204e1bf2fbf27248e56f5c76962deb776649399e9d21533e944f8140e65159",
+    "video_id": "fb0af2ba-3226-4628-9923-84d0510288af",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.26,\"probabilities\":{\"live\":0,\"video\":0.49,\"review\":0.51}}",
+    "input_tokens": 1529,
+    "created_at": "2026-09-20 17:15:39"
+  },
+  {
+    "fingerprint": "c032bfd290f14bbc6ceeaa16e0d341820f0a74dd6552bb0a1029fad777632fdb",
+    "video_id": "9bc1e704-0bd3-4945-8e2e-08756433e402",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.34,\"probabilities\":{\"review\":0.56,\"video\":0.43,\"live\":0.01}}",
+    "input_tokens": 1506,
+    "created_at": "2026-09-20 17:15:39"
+  },
+  {
+    "fingerprint": "c992cecb8a5b2a0db0cc114cbafec57ce8207fe416893c8df736a53a2e04c9d9",
+    "video_id": "yt-DCw6ViSP0bA",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.88,\"probabilities\":{\"live\":0,\"video\":0.07,\"review\":0.93}}",
+    "input_tokens": 537,
+    "created_at": "2026-09-20 17:15:44"
+  },
+  {
+    "fingerprint": "f460312a4181a569a4c3678aa77b289acadfac95247e401fd14fecd6531239c5",
+    "video_id": "yt-g7hcFHya-4M",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.68,\"probabilities\":{\"live\":0,\"video\":0.21,\"review\":0.79}}",
+    "input_tokens": 537,
+    "created_at": "2026-09-20 17:15:44"
+  },
+  {
+    "fingerprint": "b4b64b421558d192248fda47837fce273cb67657ee55d3a3fb91b3a74d21de7c",
+    "video_id": "yt-b0v-n5eutdQ",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.89,\"probabilities\":{\"review\":0.93,\"video\":0.07,\"live\":0}}",
+    "input_tokens": 540,
+    "created_at": "2026-09-20 17:15:44"
+  },
+  {
+    "fingerprint": "b7f6529573c3449577f6225f2ef011b426fda115b6fbc8eacffc82e106b3a13c",
+    "video_id": "yt-ksxQMV-7xIY",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.7,\"probabilities\":{\"video\":0.2,\"review\":0.8,\"live\":0}}",
+    "input_tokens": 542,
+    "created_at": "2026-09-20 17:15:44"
+  },
+  {
+    "fingerprint": "700e1ab22df97bae84960a4333b8a69f75bf491627315c528a5d7cdecc4aa2a1",
+    "video_id": "yt-VChTote173E",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.79,\"probabilities\":{\"review\":0.86,\"video\":0.14,\"live\":0}}",
+    "input_tokens": 534,
+    "created_at": "2026-09-20 17:15:44"
+  },
+  {
+    "fingerprint": "89198ab5394413c90d519aaa44fabb3f408a7118e6bdb5c72c2fe059a026b7cd",
+    "video_id": "od-43229a340553020cbd2de261a59c80af1600ec2d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.02,\"probabilities\":{\"live\":0.33,\"review\":0.33,\"video\":0.33999999999999997}}",
+    "input_tokens": 1642,
+    "created_at": "2026-09-20 05:04:09"
+  },
+  {
+    "fingerprint": "856eefafa0d86af06956afd59f3f3620353848a5e322e3caf32dea8cac08c240",
+    "video_id": "od-adfc01f58ed52a22f2dc5211ed2720487b4ec700",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.9,\"probabilities\":{\"live\":0,\"video\":0.9400000000000001,\"review\":0.06}}",
+    "input_tokens": 870,
+    "created_at": "2026-09-20 05:05:46"
+  },
+  {
+    "fingerprint": "84b8ebadb59ff3ca41204c84327c9e843adcb7f6d64ce49afcd8b99a7720d26d",
+    "video_id": "od-5f6438cc200f40ef8f1d75a021fcd39ba8265fc9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.84,\"probabilities\":{\"live\":0,\"video\":0.89,\"review\":0.11}}",
+    "input_tokens": 1397,
+    "created_at": "2026-09-20 05:06:04"
+  },
+  {
+    "fingerprint": "859dc04420b22f615daf99674081a2f429ac88fa3e88bc768744832dd8a7295a",
+    "video_id": "2b71415d-c519-4bd7-93b7-f94a0efa490b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.77,\"probabilities\":{\"video\":0.85,\"review\":0.15,\"live\":0}}",
+    "input_tokens": 1068,
+    "created_at": "2026-09-20 17:15:11"
+  },
+  {
+    "fingerprint": "4e45528e279b6b40e2c624028f91c0bcdd9843d777bde3f50b67748153d2972d",
+    "video_id": "yt-pWN9r8WPN9o",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.97,\"probabilities\":{\"live\":0.98,\"review\":0.01,\"video\":0.01}}",
+    "input_tokens": 1738,
+    "created_at": "2026-09-20 17:50:24"
+  },
+  {
+    "fingerprint": "07f406a61ff6172aae9ce0dee8d33d1756e9ba76353a6d2a286fa68d05844ec8",
+    "video_id": "od-d6538af2bc68082985ce30247d88f8ee0413dca9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"video\":0.01,\"review\":0,\"live\":0.99}}",
+    "input_tokens": 2207,
+    "created_at": "2026-09-20 17:50:24"
+  },
+  {
+    "fingerprint": "d9784506856660076332723b3ddd4493b87f64def09f27af214e32015548fb0d",
+    "video_id": "od-75baeb75a03e0f700fbe1fa6cc9a3f69ba4d24f2",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.43,\"probabilities\":{\"review\":0.63,\"video\":0.3,\"live\":0.07}}",
+    "input_tokens": 1086,
+    "created_at": "2026-09-20 17:50:24"
+  },
+  {
+    "fingerprint": "36dc5c6d48bbf32cd5166bc8e10ebb4cd0ca06e5680a9c38d252a6e4e0e6d745",
+    "video_id": "yt-x6opH-XK98I",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"live\":0.99,\"review\":0,\"video\":0.01}}",
+    "input_tokens": 1662,
+    "created_at": "2026-09-20 17:50:24"
+  },
+  {
+    "fingerprint": "adc124b93e7a879e141b4fd5de5f91aa7ff6c467aec7804c9d24a9550e8621fc",
+    "video_id": "od-b89b88a3016a37c69f30cc860e7260489bbc4324",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.13,\"probabilities\":{\"live\":0.32,\"review\":0.41,\"video\":0.27}}",
+    "input_tokens": 1514,
+    "created_at": "2026-09-20 17:50:24"
+  },
+  {
+    "fingerprint": "9c482f5be11e2f8e77328188a8643be7a30442020e96c852893d31abd86483fe",
+    "video_id": "yt-b0v-n5eutdQ",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.98,\"probabilities\":{\"video\":0,\"review\":0.01,\"live\":0.99}}",
+    "input_tokens": 1197,
+    "created_at": "2026-09-20 17:50:25"
+  },
+  {
+    "fingerprint": "5163da5b498be7543a98fd17882f12489c8c5c2624f81666ceedb1bc026be4fc",
+    "video_id": "yt-DCw6ViSP0bA",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"review\":0,\"live\":1,\"video\":0}}",
+    "input_tokens": 1430,
+    "created_at": "2026-09-20 17:50:25"
+  },
+  {
+    "fingerprint": "80a3bb62808004b5ca3c188984b668a0a23104460a29da0443880fea6c8e3886",
+    "video_id": "yt-G_4quR2xW5Q",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"video\":0,\"live\":1,\"review\":0}}",
+    "input_tokens": 1176,
+    "created_at": "2026-09-20 17:50:25"
+  },
+  {
+    "fingerprint": "8b037240110164919cc6308f6ed0caeeff49ddd6457a1453ad63003702862d76",
+    "video_id": "yt-QVgriDQ1iOY",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.94,\"probabilities\":{\"review\":0.01,\"live\":0.96,\"video\":0.03}}",
+    "input_tokens": 1562,
+    "created_at": "2026-09-20 17:50:25"
+  },
+  {
+    "fingerprint": "a8f098a1806b5e9af08fdf89454f52bb873f93e539c6a4d5b296154fe06ce396",
+    "video_id": "od-731554d74acf457f9c712e8bd9b59ca7392fa7a0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.86,\"probabilities\":{\"review\":0.01,\"live\":0.91,\"video\":0.08}}",
+    "input_tokens": 2246,
+    "created_at": "2026-09-20 17:50:29"
+  },
+  {
+    "fingerprint": "ef7241235d5f307afa1c1c64de639d5819a00de6759eabbb050e43175f5881d0",
+    "video_id": "yt-wvuBiYs5vDI",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"review\":0,\"live\":1,\"video\":0}}",
+    "input_tokens": 1198,
+    "created_at": "2026-09-20 17:50:29"
+  },
+  {
+    "fingerprint": "46fe9e7b09a374605d15510c8d2b55bdf133a4f127328553375131bf7eb12bec",
+    "video_id": "od-43229a340553020cbd2de261a59c80af1600ec2d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.98,\"probabilities\":{\"live\":0.99,\"review\":0,\"video\":0.01}}",
+    "input_tokens": 2229,
+    "created_at": "2026-09-20 17:50:34"
+  },
+  {
+    "fingerprint": "1929efc58da4236032674c160aa3cd52ed8117cca4e091ec9089ee8547380180",
+    "video_id": "yt-Pz-fWWjI5UQ",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"live\":1,\"video\":0,\"review\":0}}",
+    "input_tokens": 1178,
+    "created_at": "2026-09-20 17:50:34"
+  },
+  {
+    "fingerprint": "ad3fdf42e98b251d0cd7de9a229951b4e8430635c2b97debe04f2860b7ba07c4",
+    "video_id": "od-9c7862357f9ae94f7eab0661ed69e534ad993909",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.85,\"probabilities\":{\"live\":0.9,\"video\":0.09,\"review\":0.01}}",
+    "input_tokens": 1560,
+    "created_at": "2026-09-20 17:50:34"
+  },
+  {
+    "fingerprint": "d80ca59cee5209c42333b1342208b1e0017df3c7f666cceb93247b15389cf2d4",
+    "video_id": "od-fc30672e0678d966325f387a2fba1041f457ebed",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.97,\"probabilities\":{\"live\":0.98,\"review\":0,\"video\":0.02}}",
+    "input_tokens": 2243,
+    "created_at": "2026-09-20 17:50:34"
+  },
+  {
+    "fingerprint": "2b1c6a92ecc56e4d3822f95312adf84f609cbd404e723a76917223ba66c62817",
+    "video_id": "od-44e6df891814c3908c184bda03328c8799f8bdeb",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.07,\"probabilities\":{\"live\":0.34,\"video\":0.38,\"review\":0.28}}",
+    "input_tokens": 1450,
+    "created_at": "2026-09-20 17:50:39"
+  },
+  {
+    "fingerprint": "b37f49a1864e2dcdf4b2cf6fcb832f469726f0d9962a15aa6a1eb324aa98e4fa",
+    "video_id": "48915c3f-733c-41f9-9e42-3463a52c24c4",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.94,\"probabilities\":{\"live\":0.96,\"review\":0.01,\"video\":0.03}}",
+    "input_tokens": 2088,
+    "created_at": "2026-09-20 17:50:39"
+  },
+  {
+    "fingerprint": "9d2cccc63e55f4aaa06efe9d7db0d7ed97ad74900670b0a696400a0c028c93f3",
+    "video_id": "2e3b6d2a-71a8-4a31-a060-da00c2739917",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.91,\"probabilities\":{\"review\":0.01,\"live\":0.94,\"video\":0.05}}",
+    "input_tokens": 2083,
+    "created_at": "2026-09-20 17:50:39"
+  },
+  {
+    "fingerprint": "b61b90eee2f51c540599513c5a5c1f3e82d7bfc1818dc0bc417c19791573bee9",
+    "video_id": "caa30e53-317f-4152-9833-830728520173",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.94,\"probabilities\":{\"video\":0.03,\"live\":0.96,\"review\":0.01}}",
+    "input_tokens": 2035,
+    "created_at": "2026-09-20 17:50:39"
+  },
+  {
+    "fingerprint": "b729792a1314b20073e11eff14dc43d67306af57174c4502f3f057aa629aad34",
+    "video_id": "od-9cb3fb0e1d43947d7d94d88051813fd81597b8a6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.39,\"probabilities\":{\"video\":0.39,\"live\":0.01,\"review\":0.6}}",
+    "input_tokens": 1124,
+    "created_at": "2026-09-20 17:50:39"
+  },
+  {
+    "fingerprint": "3f28962112eb7a1cd303ba5e115ca31078ae6d3e6d14f4bf677c6c299e5b1f71",
+    "video_id": "9bc1e704-0bd3-4945-8e2e-08756433e402",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.14,\"probabilities\":{\"review\":0.29,\"live\":0.28,\"video\":0.43}}",
+    "input_tokens": 2069,
+    "created_at": "2026-09-20 17:50:43"
+  },
+  {
+    "fingerprint": "956e2a18d61ad54d63509314169596ce0b0f8fee1c6632e1093b65190747d119",
+    "video_id": "c6f629fc-611f-42f9-b87b-e82748a0ea48",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.88,\"probabilities\":{\"review\":0.02,\"live\":0.92,\"video\":0.06}}",
+    "input_tokens": 2016,
+    "created_at": "2026-09-20 17:50:43"
+  },
+  {
+    "fingerprint": "714561f983a4907385a15f35ff583db87fb07a1ad8aa3d071ab1bf6af8e452e6",
+    "video_id": "fb0af2ba-3226-4628-9923-84d0510288af",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.35,\"probabilities\":{\"live\":0.07,\"review\":0.36,\"video\":0.57}}",
+    "input_tokens": 2092,
+    "created_at": "2026-09-20 17:50:44"
+  },
+  {
+    "fingerprint": "56b0f4f91d57bfa0f4da1ede9200a9283c4aa82f83990e137232a0061243b04c",
+    "video_id": "yt-9z0uFJWjuvQ",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.39,\"probabilities\":{\"review\":0.6,\"video\":0.38,\"live\":0.02}}",
+    "input_tokens": 1565,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "cc6cffe7135e3b0bad62b38cb4b1fa91f7aeb3582524f479f23255bad7efdb32",
+    "video_id": "od-e8bef32d7863c85e871d1af79fa2c86a45a53a63",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.35,\"probabilities\":{\"live\":0.01,\"video\":0.43,\"review\":0.5599999999999999}}",
+    "input_tokens": 1505,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "81f3a87f1f14ccf3aed8861ca649841bc6b172a74c531096a17ef3be88ce3e26",
+    "video_id": "od-3662c74ff926759632b1bf93eb45b3f28554462a",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.35,\"probabilities\":{\"live\":0.01,\"review\":0.57,\"video\":0.42}}",
+    "input_tokens": 1564,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "b04f46b8c0b583c7e39126f6b7ee5fbb8ad8f6cce949549185f772e5486f97fc",
+    "video_id": "yt-8G_MBVsmr8Q",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.3,\"probabilities\":{\"video\":0.46,\"review\":0.53,\"live\":0.01}}",
+    "input_tokens": 1559,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "c48461e1e4c76d591491b0f398e23f4a2bd5e3184bb2faf50729e557d59f5f8a",
+    "video_id": "yt-SE44Xu8DBmI",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.27,\"probabilities\":{\"live\":0.01,\"review\":0.52,\"video\":0.47}}",
+    "input_tokens": 1563,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "b10df4aba21738f43978c3f5e8e4c0e17442f83a8f664fd0a3882e8308bf2f47",
+    "video_id": "yt-pWN9r8WPN9o",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.38,\"probabilities\":{\"video\":0.34,\"review\":0.59,\"live\":0.07}}",
+    "input_tokens": 1858,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "17701b1fed798bb9a93d2fb42727c12ff838d220bce59b5d58c8611a323102f7",
+    "video_id": "od-daf1fcbb73b18cd8a0059a660975c732c451d6dc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.41,\"probabilities\":{\"review\":0.61,\"video\":0.38,\"live\":0.01}}",
+    "input_tokens": 1511,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "d5bbd8495a70ab5124fb2199fd99e42cd2101f996be715298c89a5c52c807b66",
+    "video_id": "yt-rp8r49WFOkU",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.35,\"probabilities\":{\"live\":0.01,\"video\":0.42,\"review\":0.57}}",
+    "input_tokens": 1617,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "377c1f228c7a8742314f8b4ca39a9715bf39094d9ef49d300a487dd1f0360d4b",
+    "video_id": "yt-OHXrI0E0Ewo",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.29,\"probabilities\":{\"video\":0.46,\"review\":0.53,\"live\":0.01}}",
+    "input_tokens": 1564,
+    "created_at": "2026-09-20 17:58:25"
+  },
+  {
+    "fingerprint": "5f72a1d79c33eec0e87618f526f41732764a8e2424745d63e329deb4da68f132",
+    "video_id": "od-03b0a12be335d0d879c724826456548f42e21c88",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.32,\"probabilities\":{\"live\":0,\"review\":0.55,\"video\":0.45}}",
+    "input_tokens": 1494,
+    "created_at": "2026-09-20 17:58:30"
+  },
+  {
+    "fingerprint": "916b789d96ce22fdc3f06b865c28c01268c1a9286c1a74f819549157dba2590f",
+    "video_id": "yt-VChTote173E",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.36,\"probabilities\":{\"live\":0,\"review\":0.42,\"video\":0.58}}",
+    "input_tokens": 1709,
+    "created_at": "2026-09-20 17:58:35"
+  },
+  {
+    "fingerprint": "0deb4ab70189e0be25ecb5a1aa40f3ebdfd9d9e50c1ba1dac2ab1de9f6787c3d",
+    "video_id": "yt-x6opH-XK98I",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.44,\"probabilities\":{\"live\":0.06,\"review\":0.63,\"video\":0.31}}",
+    "input_tokens": 1782,
+    "created_at": "2026-09-20 17:58:35"
+  },
+  {
+    "fingerprint": "01bc5160633be2ca466c8deee0405c72fdc0459d3cce126df177d0d02bcec6cc",
+    "video_id": "yt-IQpcTpaFVK8",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.3,\"probabilities\":{\"review\":0.54,\"video\":0.46,\"live\":0}}",
+    "input_tokens": 1549,
+    "created_at": "2026-09-20 17:58:35"
+  },
+  {
+    "fingerprint": "72a4f7b187908590e3d2d2f2c5a0e47065ff58ad05cb237292d54e6a28b598f1",
+    "video_id": "od-b89b88a3016a37c69f30cc860e7260489bbc4324",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.4,\"probabilities\":{\"live\":0,\"review\":0.39,\"video\":0.61}}",
+    "input_tokens": 1655,
+    "created_at": "2026-09-20 17:58:35"
+  },
+  {
+    "fingerprint": "631913d610e5f40ec62db5d4975c56ca3baa994130f20468239c6689e86e2820",
+    "video_id": "od-d6538af2bc68082985ce30247d88f8ee0413dca9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.66,\"probabilities\":{\"review\":0.21,\"live\":0.77,\"video\":0.02}}",
+    "input_tokens": 2640,
+    "created_at": "2026-09-20 17:58:35"
+  },
+  {
+    "fingerprint": "142bb6c34823075ca47704373ec2e5093566706869d9b0a4d1ac3defb1c9fe34",
+    "video_id": "od-75baeb75a03e0f700fbe1fa6cc9a3f69ba4d24f2",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.85,\"probabilities\":{\"review\":0.9,\"live\":0.02,\"video\":0.08}}",
+    "input_tokens": 1227,
+    "created_at": "2026-09-20 17:58:41"
+  },
+  {
+    "fingerprint": "705b2c5972bf37803b422bd390856b742f280e63941bd93c590f15115bb2eaa2",
+    "video_id": "yt-G_4quR2xW5Q",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.73,\"probabilities\":{\"live\":0.08,\"video\":0.1,\"review\":0.82}}",
+    "input_tokens": 1296,
+    "created_at": "2026-09-20 17:58:41"
+  },
+  {
+    "fingerprint": "db05a5238cc45f2347caa5f2f1a909782c219b3b3e4c2e1e5b843a5761017822",
+    "video_id": "yt-b0v-n5eutdQ",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.43,\"probabilities\":{\"live\":0.62,\"video\":0.01,\"review\":0.37}}",
+    "input_tokens": 1638,
+    "created_at": "2026-09-20 17:58:41"
+  },
+  {
+    "fingerprint": "1b799e683f0633804e76a1a822317a854aac406b026365297e5faeb28c7b4e51",
+    "video_id": "yt-QVgriDQ1iOY",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.29,\"probabilities\":{\"review\":0.52,\"live\":0.38,\"video\":0.1}}",
+    "input_tokens": 1998,
+    "created_at": "2026-09-20 17:58:41"
+  },
+  {
+    "fingerprint": "137e37cc6c492ccf9c9b6dcfe5750d1a01def87dd0c8568b571741ecbfcde38a",
+    "video_id": "yt-DCw6ViSP0bA",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.37,\"probabilities\":{\"live\":0.58,\"video\":0.01,\"review\":0.41}}",
+    "input_tokens": 1656,
+    "created_at": "2026-09-20 17:58:41"
+  },
+  {
+    "fingerprint": "c1317bafbd942eadd6108be07da77996ab44dff7019755fb8d4a87f0191ce495",
+    "video_id": "od-731554d74acf457f9c712e8bd9b59ca7392fa7a0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.38,\"probabilities\":{\"video\":0.06,\"review\":0.35,\"live\":0.59}}",
+    "input_tokens": 2665,
+    "created_at": "2026-09-20 17:58:45"
+  },
+  {
+    "fingerprint": "5c88dd48673cc852541e8ff3abdfc78ba8fe6af9b534f2736070bff173bc3f2a",
+    "video_id": "od-fc30672e0678d966325f387a2fba1041f457ebed",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.43,\"probabilities\":{\"live\":0.62,\"video\":0.04,\"review\":0.34}}",
+    "input_tokens": 2662,
+    "created_at": "2026-09-20 17:58:45"
+  },
+  {
+    "fingerprint": "11d2e8e4f7a90ad7c1ea736e53c160c79b06d2d0af7f3cf445088181bc458013",
+    "video_id": "yt-Pz-fWWjI5UQ",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.31,\"probabilities\":{\"live\":0.54,\"review\":0.45,\"video\":0.01}}",
+    "input_tokens": 1614,
+    "created_at": "2026-09-20 17:58:45"
+  },
+  {
+    "fingerprint": "f579b66a9c9dd7ea25d0eff88442aa56f8a449ce9a1234e244ae6af6101d23e7",
+    "video_id": "od-31a14be1e2c421ec59a364396e6a0bcebd0d51b1",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"live\":0.99,\"review\":0.01,\"video\":0}}",
+    "input_tokens": 2394,
+    "created_at": "2026-09-20 17:58:45"
+  },
+  {
+    "fingerprint": "9613bcd5ca2289378ac45b0ad7ca754ce6e1d1a05a981fb41ad5807797c33ce6",
+    "video_id": "od-5f90938854f18db0f15c9700fe0ab4e2c3e8a2f0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.6,\"probabilities\":{\"video\":0.02,\"live\":0.73,\"review\":0.25}}",
+    "input_tokens": 2674,
+    "created_at": "2026-09-20 17:58:45"
+  },
+  {
+    "fingerprint": "5b39b026bace51c791c291faf58a7a1e9ad7f6c050fac884e70e8cbf086cdf6f",
+    "video_id": "od-43229a340553020cbd2de261a59c80af1600ec2d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.34,\"probabilities\":{\"review\":0.56,\"live\":0.38,\"video\":0.05}}",
+    "input_tokens": 2346,
+    "created_at": "2026-09-20 17:58:49"
+  },
+  {
+    "fingerprint": "3863c7f81592dbde33ab87d7c5e55af59213c9533e4cae3c9377dd242277f13c",
+    "video_id": "yt-wvuBiYs5vDI",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.3,\"probabilities\":{\"video\":0.02,\"review\":0.53,\"live\":0.45}}",
+    "input_tokens": 1634,
+    "created_at": "2026-09-20 17:58:49"
+  },
+  {
+    "fingerprint": "711ca14a9c895491f7dd35c3ccb77a00263437b105c57e6ab3f93801b9d45a6d",
+    "video_id": "od-4406172673f4a7221699b192705fccf9675e3b0f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"review\":0,\"video\":0,\"live\":1}}",
+    "input_tokens": 2692,
+    "created_at": "2026-09-20 17:58:49"
+  },
+  {
+    "fingerprint": "48bafb505d3a07cbbe29768d3fa554eccf77ee64fc8d6680efc7671816e82c56",
+    "video_id": "od-2d77891415659e0f4eb9599650d02fe928f0861f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"live\":1,\"review\":0,\"video\":0}}",
+    "input_tokens": 2702,
+    "created_at": "2026-09-20 17:58:49"
+  },
+  {
+    "fingerprint": "6807cd7229588fe5ab24245fc180e7f56390eb096d5d47b7ba1f2fd697e914dd",
+    "video_id": "od-0e0322e97f2cd8799e6f5ca91868fec0ee724042",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":1,\"probabilities\":{\"video\":0,\"live\":1,\"review\":0}}",
+    "input_tokens": 2692,
+    "created_at": "2026-09-20 17:58:49"
+  },
+  {
+    "fingerprint": "034d945b86a8d129fb50a964ebf6864cb87ad4e5b3b520b29c81b798c209767f",
+    "video_id": "od-a14273cead44bf4b87b69500235bc4eac5692ff1",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.5,\"probabilities\":{\"live\":0.01,\"video\":0.66,\"review\":0.33}}",
+    "input_tokens": 1595,
+    "created_at": "2026-09-20 17:58:54"
+  },
+  {
+    "fingerprint": "d94d3a64dea83d4af167c94f0f6327e56d1dce9ba25cfe783320429df5ad4236",
+    "video_id": "yt-cjGTW3pxPFc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.55,\"probabilities\":{\"review\":0.7,\"live\":0.01,\"video\":0.29}}",
+    "input_tokens": 1320,
+    "created_at": "2026-09-20 17:58:54"
+  },
+  {
+    "fingerprint": "aa88e550ce0a7f1826d263690b318468c9092c0f142c44a365d9637c71098f39",
+    "video_id": "od-3a75ac2fcb642569e376273db0082724d3c8e670",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.99,\"probabilities\":{\"review\":0,\"video\":0,\"live\":1}}",
+    "input_tokens": 2199,
+    "created_at": "2026-09-20 17:58:55"
+  },
+  {
+    "fingerprint": "3dc3885a86d5911b3be1afd4bd143db8197776b655383b07e0347f2a7ee19bc7",
+    "video_id": "od-9c7862357f9ae94f7eab0661ed69e534ad993909",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"live\",\"confidence\":0.35,\"probabilities\":{\"review\":0.34,\"video\":0.09,\"live\":0.57}}",
+    "input_tokens": 1979,
+    "created_at": "2026-09-20 17:58:55"
+  },
+  {
+    "fingerprint": "9bf65c1f82e02891e48f31c85a005bbe2092eeb499f95bcd8feae37909a657ee",
+    "video_id": "od-9cb3fb0e1d43947d7d94d88051813fd81597b8a6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.65,\"probabilities\":{\"live\":0.01,\"review\":0.76,\"video\":0.23}}",
+    "input_tokens": 1265,
+    "created_at": "2026-09-20 17:58:55"
+  },
+  {
+    "fingerprint": "4b9922d518a18d6f810b3b33bf10515ba01c8c55ab43206a989522e06b38a74b",
+    "video_id": "od-44e6df891814c3908c184bda03328c8799f8bdeb",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.5,\"probabilities\":{\"live\":0.01,\"video\":0.33,\"review\":0.66}}",
+    "input_tokens": 1591,
+    "created_at": "2026-09-20 17:59:00"
+  },
+  {
+    "fingerprint": "fe06f5ae1b4d16c8780e508b676d984f7ada9c3e138a3fbabdddc79dcbec407a",
+    "video_id": "od-a7a519e0c25351fac0e60e39b02b993d2836d197",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.34,\"probabilities\":{\"video\":0.56,\"review\":0.43,\"live\":0.01}}",
+    "input_tokens": 2017,
+    "created_at": "2026-09-20 17:59:00"
+  },
+  {
+    "fingerprint": "926006c74b7b47d57e624f65276ca1e40ad7464920d30a9c9b7b90aa3c9c585b",
+    "video_id": "od-d9f98f73b3c8d99cb74a7f05eb78e686bd3f7f42",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.34,\"probabilities\":{\"review\":0.43,\"video\":0.56,\"live\":0.01}}",
+    "input_tokens": 1749,
+    "created_at": "2026-09-20 17:59:00"
+  },
+  {
+    "fingerprint": "b304c578c43151f3fd17d282dd7cab40c13f109f86a00456f47c0b30038bc219",
+    "video_id": "od-0a7858cd69808861f2d4d34262472bacb4528aa9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.38,\"probabilities\":{\"live\":0,\"review\":0.41,\"video\":0.59}}",
+    "input_tokens": 1687,
+    "created_at": "2026-09-20 17:59:00"
+  },
+  {
+    "fingerprint": "c7e9def77f7d3c459115fd9b420620085b01a6357a7360747935b93cace63078",
+    "video_id": "od-aa67ad516295af65319e8330ca6db7f14a79c5d0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.48,\"probabilities\":{\"live\":0,\"video\":0.66,\"review\":0.34}}",
+    "input_tokens": 1496,
+    "created_at": "2026-09-20 17:59:00"
+  },
+  {
+    "fingerprint": "693cc79a196e183995baf9b7fd4129814b467d2d243a76ff513c624632d3a64a",
+    "video_id": "od-044350ae0b9f75ddc8dad2af0ee64642e92c583b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.51,\"probabilities\":{\"live\":0.01,\"video\":0.67,\"review\":0.32}}",
+    "input_tokens": 1699,
+    "created_at": "2026-09-20 17:59:04"
+  },
+  {
+    "fingerprint": "faab7f5d1c77320a92520a21ea1e7d25e0bea3507bc216e63c1ca27624635ac9",
+    "video_id": "od-2b6bd00a0ad2431b9116889ac095e0d198a99c1e",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.5,\"probabilities\":{\"live\":0,\"video\":0.67,\"review\":0.33}}",
+    "input_tokens": 1539,
+    "created_at": "2026-09-20 17:59:04"
+  },
+  {
+    "fingerprint": "41323791c1c78f6abe899cdd85655c8c54c9957a8f89e9a4b5b63f96c03deebf",
+    "video_id": "od-0e85da87a68b31fdd30708448cb3a925adf61ca3",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.47,\"probabilities\":{\"live\":0,\"review\":0.35,\"video\":0.65}}",
+    "input_tokens": 1604,
+    "created_at": "2026-09-20 17:59:04"
+  },
+  {
+    "fingerprint": "9f91f37f3a1119cf7c13d89eb4c6ab490d0cb418476db29f2ec9cad7142f50be",
+    "video_id": "od-9143b7ba34fa6ded6269e7786f89329fc5561085",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.29,\"probabilities\":{\"live\":0,\"video\":0.53,\"review\":0.47}}",
+    "input_tokens": 1661,
+    "created_at": "2026-09-20 17:59:04"
+  },
+  {
+    "fingerprint": "572853347c602ac8f0d790b6627e279954e552de0d9802669bef8575fbc13505",
+    "video_id": "od-4d5d02c27359ce254c49157b18212408278b31b6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.55,\"probabilities\":{\"live\":0,\"video\":0.7,\"review\":0.3}}",
+    "input_tokens": 1601,
+    "created_at": "2026-09-20 17:59:04"
+  },
+  {
+    "fingerprint": "eececea42e2f5ed95ce194337714bc431f32852dd309a3ce91f4b6099ea279c6",
+    "video_id": "od-7be21500268a6b5a05149ace94b71d0dd1741ecc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.59,\"probabilities\":{\"live\":0,\"video\":0.73,\"review\":0.27}}",
+    "input_tokens": 1520,
+    "created_at": "2026-09-20 17:59:08"
+  },
+  {
+    "fingerprint": "cf2fc0cd4945b39e6385c63b711e307193a160ccc73ecd1a4c3c17f5cf71a433",
+    "video_id": "od-12d8d588c21b5befe457ea7c14148af989a5ed79",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.34,\"probabilities\":{\"live\":0.01,\"review\":0.43,\"video\":0.56}}",
+    "input_tokens": 1607,
+    "created_at": "2026-09-20 17:59:08"
+  },
+  {
+    "fingerprint": "ba26e683a4ab51ca56f4dc05f15e9c12a78546d003cbf024adfae5e5df24ec7f",
+    "video_id": "od-adfc01f58ed52a22f2dc5211ed2720487b4ec700",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.5,\"probabilities\":{\"review\":0.33,\"video\":0.67,\"live\":0}}",
+    "input_tokens": 1574,
+    "created_at": "2026-09-20 17:59:08"
+  },
+  {
+    "fingerprint": "d58fb01449fc3f23db03e93e0fa740545afb36bfb4af5b8d1e68b4177b26ae60",
+    "video_id": "od-9ed3e257df77af9c91ba85fbb1c4bdce7ca71e57",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.59,\"probabilities\":{\"video\":0.73,\"live\":0,\"review\":0.27}}",
+    "input_tokens": 1540,
+    "created_at": "2026-09-20 17:59:09"
+  },
+  {
+    "fingerprint": "30cabaa93380cdb529642d9034d9e4fc99689395806ffc9a8696bf85b535e3c5",
+    "video_id": "od-40f3f0e9948a7e499ddfc578dfbbb5dec9619a23",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.32,\"probabilities\":{\"review\":0.45,\"video\":0.55,\"live\":0}}",
+    "input_tokens": 1576,
+    "created_at": "2026-09-20 17:59:09"
+  },
+  {
+    "fingerprint": "d6c9bc5a23d4d06b72199a71a90c8f77491e16cbeca71ffcdbcde5f6de1939cc",
+    "video_id": "od-1b55d2aa39965d3cd1087aa6ca58247909a08412",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.45,\"probabilities\":{\"video\":0.64,\"live\":0,\"review\":0.36}}",
+    "input_tokens": 1516,
+    "created_at": "2026-09-20 17:59:13"
+  },
+  {
+    "fingerprint": "a80070742adf4a7d5d70ea51043732362a99cff340cd4beeb5ec98a87e3d8c34",
+    "video_id": "od-8918f32d8ee9ab06f1f6c9b892c61488e3226af7",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.31,\"probabilities\":{\"video\":0.45,\"review\":0.55,\"live\":0}}",
+    "input_tokens": 1467,
+    "created_at": "2026-09-20 17:59:13"
+  },
+  {
+    "fingerprint": "b57780e77d5f52b03d62653d6daa5770c00de13a0398c6dff1ea4c74a51291c6",
+    "video_id": "od-6a1403c59d1e07c73d0a7b8971434b9f90dfa2ab",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.44,\"probabilities\":{\"live\":0.01,\"review\":0.37,\"video\":0.62}}",
+    "input_tokens": 1503,
+    "created_at": "2026-09-20 17:59:13"
+  },
+  {
+    "fingerprint": "f31c11af0b74af3a0b2a427ac1fd77e9b3e84284508576d1cbbbb9ce3f5277e9",
+    "video_id": "od-79dc2756587ee434c98378fb94298aca744f19da",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.48,\"probabilities\":{\"live\":0,\"video\":0.66,\"review\":0.34}}",
+    "input_tokens": 1602,
+    "created_at": "2026-09-20 17:59:13"
+  },
+  {
+    "fingerprint": "9a734a7e42c8f9118a2403b36c61b1039cdd31fa131339a6e8f044b0a1f2f3e0",
+    "video_id": "yt-g7hcFHya-4M",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.34,\"probabilities\":{\"video\":0.56,\"review\":0.43,\"live\":0.01}}",
+    "input_tokens": 1485,
+    "created_at": "2026-09-20 17:59:13"
+  },
+  {
+    "fingerprint": "de789f377672719a0dae7a4e3358ebaa4ea3d4ea6020b1622741b453461f1e62",
+    "video_id": "od-0c10c0560a336eff19c8a08d5a7b16c275f8d315",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.49,\"probabilities\":{\"live\":0,\"review\":0.34,\"video\":0.66}}",
+    "input_tokens": 1665,
+    "created_at": "2026-09-20 17:59:17"
+  },
+  {
+    "fingerprint": "1ca26e847931a362b7e356f02d75cd28334fed7622a4894fe42bef05f298ada9",
+    "video_id": "od-a4c7cf39a909f367d15162786bc4d947dda5d7d3",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.54,\"probabilities\":{\"live\":0.01,\"video\":0.69,\"review\":0.3}}",
+    "input_tokens": 1602,
+    "created_at": "2026-09-20 17:59:17"
+  },
+  {
+    "fingerprint": "037bc40c6ec44b637dd68135fe316e449ef96e820391d8da1d8947bbba6ee7c3",
+    "video_id": "od-be1f4cba006db19b226fef1aa7f889f2c2c54ba9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.5,\"probabilities\":{\"live\":0.01,\"review\":0.67,\"video\":0.32}}",
+    "input_tokens": 1510,
+    "created_at": "2026-09-20 17:59:17"
+  },
+  {
+    "fingerprint": "a8a30d2ad95dabdd085f0b13deb0ef0fa0e16085c8c3786e59749940b12cb684",
+    "video_id": "od-3363264f346d61658be728875876ecc177a38519",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.35,\"probabilities\":{\"review\":0.57,\"live\":0,\"video\":0.43}}",
+    "input_tokens": 1365,
+    "created_at": "2026-09-20 17:59:17"
+  },
+  {
+    "fingerprint": "2db3ca03691db305047a22f7f05af8292d38eca8f69775815ef0e8c723b97c12",
+    "video_id": "od-4dd1ff3bcfee6acba37b5c1bec4205d2521b4e04",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.3,\"probabilities\":{\"live\":0,\"video\":0.54,\"review\":0.46}}",
+    "input_tokens": 1591,
+    "created_at": "2026-09-20 17:59:17"
+  },
+  {
+    "fingerprint": "892e713b78aaee05b84ccbedef75b50b0ce898abe5fbdc22c2e33ac23dbc9251",
+    "video_id": "od-ef13334018c2b76849d30edc7f7d35d6a54a89fc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.54,\"probabilities\":{\"review\":0.3,\"video\":0.7,\"live\":0}}",
+    "input_tokens": 2043,
+    "created_at": "2026-09-20 17:59:21"
+  },
+  {
+    "fingerprint": "b1d7b7c2b2fe93b6e46bb23bb3206bb50065f55bec0775e72bdaf11c308e06ea",
+    "video_id": "od-d3c79259d46f9cd7b89e92aac345c07c28eff011",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.46,\"probabilities\":{\"review\":0.35,\"live\":0,\"video\":0.65}}",
+    "input_tokens": 2002,
+    "created_at": "2026-09-20 17:59:21"
+  },
+  {
+    "fingerprint": "47a246c70f7454ae4815331d333d7ca81aae5aba7dcb895964bfaf7a0eed7c48",
+    "video_id": "od-eae4572a86ea911c8128f659e200c5df4c7e8c35",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.55,\"probabilities\":{\"review\":0.3,\"live\":0,\"video\":0.7}}",
+    "input_tokens": 1969,
+    "created_at": "2026-09-20 17:59:21"
+  },
+  {
+    "fingerprint": "4beea2e886e1b1fe8536459d12330a15946a148f3dd31bf083c95ee4b0c60020",
+    "video_id": "od-82ca61003e8e096991a1978504378cf9ce100020",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.49,\"probabilities\":{\"video\":0.66,\"review\":0.33,\"live\":0.01}}",
+    "input_tokens": 2206,
+    "created_at": "2026-09-20 17:59:21"
+  },
+  {
+    "fingerprint": "ee8a81f948de123f0525704c2657832e851063bf93ee9eeeccaae268d8353b01",
+    "video_id": "od-5f6438cc200f40ef8f1d75a021fcd39ba8265fc9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.57,\"probabilities\":{\"review\":0.28,\"live\":0.01,\"video\":0.71}}",
+    "input_tokens": 2101,
+    "created_at": "2026-09-20 17:59:21"
+  },
+  {
+    "fingerprint": "992aa012b0f889cac6e4408743b1bc2b63012b069909a664b366d669603f4d99",
+    "video_id": "od-74a9265f330c5b1dfce64a7fa3853171fe4d44a4",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.52,\"probabilities\":{\"live\":0,\"video\":0.68,\"review\":0.32}}",
+    "input_tokens": 2046,
+    "created_at": "2026-09-20 17:59:26"
+  },
+  {
+    "fingerprint": "19bdbe76d06134588e21b7f4ceddffb33d0b17e43edfd89cc9e2246ce4a99740",
+    "video_id": "fd877927-3a39-4945-a08c-533b1f39510d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.41,\"probabilities\":{\"review\":0.39,\"live\":0,\"video\":0.61}}",
+    "input_tokens": 2175,
+    "created_at": "2026-09-20 17:59:26"
+  },
+  {
+    "fingerprint": "20c4f17075a82c059c9b117667f447068463ceeb8742528a66880ff12f6313e8",
+    "video_id": "236f270e-42ed-4233-b4cc-792030689652",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.51,\"probabilities\":{\"live\":0,\"review\":0.33,\"video\":0.67}}",
+    "input_tokens": 2082,
+    "created_at": "2026-09-20 17:59:26"
+  },
+  {
+    "fingerprint": "823acc680e6b29102d574619215e4280995226b8b305841c2c9941b8fb5b58cc",
+    "video_id": "od-c40c8ad607df07df160a7165a4d4a56026a8d106",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.48,\"probabilities\":{\"live\":0,\"video\":0.65,\"review\":0.35}}",
+    "input_tokens": 2076,
+    "created_at": "2026-09-20 17:59:26"
+  },
+  {
+    "fingerprint": "b380612d636f6ad4f1e92db05127ce821fca9759ad8cd62e2e6b181465a0f7eb",
+    "video_id": "3779e29e-09a9-4475-bfb0-586d7ba46bbc",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.46,\"probabilities\":{\"video\":0.64,\"live\":0,\"review\":0.36}}",
+    "input_tokens": 2232,
+    "created_at": "2026-09-20 17:59:26"
+  },
+  {
+    "fingerprint": "f07bf37117c6b3401c3a952921240f96469701d803c67a8ec2a1de716d85e10c",
+    "video_id": "58576f9e-7c36-437c-8dec-ba91a9bac9fd",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.48,\"probabilities\":{\"video\":0.66,\"live\":0,\"review\":0.34}}",
+    "input_tokens": 1860,
+    "created_at": "2026-09-20 17:59:30"
+  },
+  {
+    "fingerprint": "89d65c1be2b017123afdf0bbe2b24d209bc15ea1baaff3aca247170dc5b873f8",
+    "video_id": "f61b69b1-a78b-4909-9dbd-5edfe897a56b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.53,\"probabilities\":{\"video\":0.6900000000000001,\"review\":0.31,\"live\":0}}",
+    "input_tokens": 2131,
+    "created_at": "2026-09-20 17:59:30"
+  },
+  {
+    "fingerprint": "459355c5e227b53d9ee0ed9aba05e3c9452bf7c953b080747976a33a8669379e",
+    "video_id": "cf835e74-4466-4302-97cf-1a15200299de",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.57,\"probabilities\":{\"video\":0.71,\"review\":0.28,\"live\":0.01}}",
+    "input_tokens": 2147,
+    "created_at": "2026-09-20 17:59:30"
+  },
+  {
+    "fingerprint": "f956b6eea8e5b6bcfe53ed427b5b279de0cc5da6b11b38bfa58efea8bfc12250",
+    "video_id": "78c2d182-2504-46a0-8c48-a1ccd997d283",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.45,\"probabilities\":{\"review\":0.37,\"live\":0,\"video\":0.63}}",
+    "input_tokens": 2106,
+    "created_at": "2026-09-20 17:59:30"
+  },
+  {
+    "fingerprint": "19d94209cd024af107e22a4a0377bb96e74856f3dd579b07ff0bbadd6d73670c",
+    "video_id": "6925d467-4fd0-4993-be4d-39e6f1a728c6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.54,\"probabilities\":{\"live\":0,\"video\":0.7,\"review\":0.3}}",
+    "input_tokens": 1991,
+    "created_at": "2026-09-20 17:59:30"
+  },
+  {
+    "fingerprint": "aafb8a85312606bbf7240e3fdd59aeb30229a913116256f8f7b1bf7822855c8d",
+    "video_id": "e098b664-a78c-4523-b35f-65474f92c485",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.46,\"probabilities\":{\"review\":0.36,\"video\":0.64,\"live\":0}}",
+    "input_tokens": 1888,
+    "created_at": "2026-09-20 17:59:35"
+  },
+  {
+    "fingerprint": "435d9a84673ed189c2c38f7dd948601875f4e4d6ad0adb16d6873c6ffa8cb472",
+    "video_id": "5da6d505-144e-46d8-b7b9-4e9b8d1bed01",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.34,\"probabilities\":{\"live\":0,\"review\":0.44,\"video\":0.56}}",
+    "input_tokens": 1862,
+    "created_at": "2026-09-20 17:59:35"
+  },
+  {
+    "fingerprint": "b7a4c68ef3cd2e22d769cace84a10e7a8c43ea54fa2bbe7a07721bae6b8a404f",
+    "video_id": "97f07dc8-8037-4759-9476-bd42cfcfe2a6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.45,\"probabilities\":{\"live\":0,\"review\":0.37,\"video\":0.63}}",
+    "input_tokens": 2213,
+    "created_at": "2026-09-20 17:59:35"
+  },
+  {
+    "fingerprint": "00d7f914e770c53a0b6c7d320fa14da3ecabb0f5e12871417a6cdedfca0440c8",
+    "video_id": "a83b0373-8539-484b-9719-e6c5b9e7b893",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.61,\"probabilities\":{\"review\":0.74,\"live\":0.01,\"video\":0.25}}",
+    "input_tokens": 1283,
+    "created_at": "2026-09-20 17:59:35"
+  },
+  {
+    "fingerprint": "dbeace9c9ddc2427883e1d8bb07ebe2b774379ce3a4e66219af69d493c9c6c3d",
+    "video_id": "a3820c00-c39c-4fa2-88f7-fae2725ebd5d",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.43,\"probabilities\":{\"live\":0,\"video\":0.62,\"review\":0.38}}",
+    "input_tokens": 2129,
+    "created_at": "2026-09-20 17:59:35"
+  },
+  {
+    "fingerprint": "6778d18831424101839d0410b108ac387ff0e96426125cf8eb45f0ee9043f360",
+    "video_id": "8d0451af-6487-43cb-b108-c5570c4994ac",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.38,\"probabilities\":{\"review\":0.41,\"live\":0.01,\"video\":0.58}}",
+    "input_tokens": 2202,
+    "created_at": "2026-09-20 17:59:39"
+  },
+  {
+    "fingerprint": "ac86c2e0c2cdd9878476b2f2a33e9863d69a36cbfde569f1ff58baed5010e490",
+    "video_id": "2e3b6d2a-71a8-4a31-a060-da00c2739917",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.29,\"probabilities\":{\"live\":0,\"review\":0.47,\"video\":0.53}}",
+    "input_tokens": 2200,
+    "created_at": "2026-09-20 17:59:39"
+  },
+  {
+    "fingerprint": "9c55e648a703befe76314e94f892a88edc068b15d86d853671f7db1af21e9323",
+    "video_id": "331d9000-d80a-488b-b267-48c52646ea21",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.37,\"probabilities\":{\"live\":0.01,\"video\":0.57,\"review\":0.42}}",
+    "input_tokens": 2216,
+    "created_at": "2026-09-20 17:59:39"
+  },
+  {
+    "fingerprint": "eef5581ce139846d6078237de347e476770b4cebbb7d8172b70e80e2ee328c13",
+    "video_id": "2b71415d-c519-4bd7-93b7-f94a0efa490b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.38,\"probabilities\":{\"live\":0.01,\"video\":0.59,\"review\":0.4}}",
+    "input_tokens": 1772,
+    "created_at": "2026-09-20 17:59:39"
+  },
+  {
+    "fingerprint": "7826be23f550926bff98a10e25847c6172915232c05b61ccd2a355e5074bd33f",
+    "video_id": "dfb0d94a-735c-4fef-bc4b-5a8f60aa7c6f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.41,\"probabilities\":{\"live\":0.01,\"review\":0.61,\"video\":0.38}}",
+    "input_tokens": 2199,
+    "created_at": "2026-09-20 17:59:39"
+  },
+  {
+    "fingerprint": "f20cbfbed20f82ee8ce8de5683516ef39d21b69ee1aa89f0e59fc123f06682bd",
+    "video_id": "fa9614c0-5ba3-4946-b733-a61dbb9806b6",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.48,\"probabilities\":{\"live\":0.01,\"review\":0.34,\"video\":0.65}}",
+    "input_tokens": 2102,
+    "created_at": "2026-09-20 17:59:44"
+  },
+  {
+    "fingerprint": "aa9bebfde58d35404d5062ff331ef0323e623f559b654f7242c4fe255c5a8350",
+    "video_id": "241aee2c-fa92-4e6b-9435-dc58a2520297",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.48,\"probabilities\":{\"video\":0.65,\"live\":0,\"review\":0.35}}",
+    "input_tokens": 2019,
+    "created_at": "2026-09-20 17:59:44"
+  },
+  {
+    "fingerprint": "d6b0e4f4ee976f785744d5330d2e6e50ec216800334cf5be534cba6a838b7c96",
+    "video_id": "caa30e53-317f-4152-9833-830728520173",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.32,\"probabilities\":{\"live\":0,\"video\":0.45,\"review\":0.55}}",
+    "input_tokens": 2152,
+    "created_at": "2026-09-20 17:59:44"
+  },
+  {
+    "fingerprint": "241c10df8eb190fd88259f11de7516dccada0d66fec465ed16090851dc8088b2",
+    "video_id": "6bd60309-5f82-4b8f-8bc3-2b0dda3e5456",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.46,\"probabilities\":{\"video\":0.64,\"live\":0,\"review\":0.36}}",
+    "input_tokens": 1985,
+    "created_at": "2026-09-20 17:59:44"
+  },
+  {
+    "fingerprint": "e55861b04d447f1d223945a2accc47b3cde33443124a8682d0194ff20fd3d0db",
+    "video_id": "07831eac-56cf-4b9b-864b-b96dab5500c0",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.37,\"probabilities\":{\"review\":0.41,\"live\":0,\"video\":0.59}}",
+    "input_tokens": 2222,
+    "created_at": "2026-09-20 17:59:44"
+  },
+  {
+    "fingerprint": "2f6dc429eeb9d9df6a4543017d16a49171b25177c81c33bc41ef9c42b628b051",
+    "video_id": "9667483a-6c00-4c36-bbc5-2d5f44740b64",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.41,\"probabilities\":{\"live\":0.01,\"video\":0.61,\"review\":0.38}}",
+    "input_tokens": 1679,
+    "created_at": "2026-09-20 17:59:48"
+  },
+  {
+    "fingerprint": "13cbe11dda4f8ff5ea39691076cc6ac8c6830fb145448fe6c994535dddcef1a6",
+    "video_id": "a4b26893-129b-43ce-8185-da8c0f3d7f9e",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.35,\"probabilities\":{\"review\":0.5599999999999999,\"live\":0.02,\"video\":0.42}}",
+    "input_tokens": 1671,
+    "created_at": "2026-09-20 17:59:48"
+  },
+  {
+    "fingerprint": "3ea6c932be5549335f8bf0532926c19d2d40f17e932ee568103f369735b3d518",
+    "video_id": "c976de29-e6ee-4cd5-80cf-67eae6991295",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.49,\"probabilities\":{\"review\":0.34,\"live\":0,\"video\":0.66}}",
+    "input_tokens": 1609,
+    "created_at": "2026-09-20 17:59:49"
+  },
+  {
+    "fingerprint": "b4249cb5ecbb9c3799445ae3a4bc50d31222dcc2c58803c8dcec441a203a0320",
+    "video_id": "48915c3f-733c-41f9-9e42-3463a52c24c4",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.5,\"probabilities\":{\"video\":0.67,\"live\":0,\"review\":0.33}}",
+    "input_tokens": 2205,
+    "created_at": "2026-09-20 17:59:49"
+  },
+  {
+    "fingerprint": "c55d7f7baa64a64addf37b9a0bc9fb4f8b588d05fb7010736ef3ef0609e80fc4",
+    "video_id": "5cc65487-e044-470e-b209-7e82da63fb4c",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.53,\"probabilities\":{\"live\":0,\"video\":0.69,\"review\":0.31}}",
+    "input_tokens": 1912,
+    "created_at": "2026-09-20 17:59:49"
+  },
+  {
+    "fingerprint": "7e1c0e97d076df249740f9e8b5fc7e00470e44d2c559ff8f8feccfb24fb3c2ef",
+    "video_id": "5125f04b-01e9-4b17-b0a4-6e166341e834",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.56,\"probabilities\":{\"review\":0.7,\"video\":0.29,\"live\":0.01}}",
+    "input_tokens": 1286,
+    "created_at": "2026-09-20 17:59:53"
+  },
+  {
+    "fingerprint": "c6ffe937cb049ce0c7b1406f32e811f36f720aad79299475b672258e245612ab",
+    "video_id": "7165be96-9e18-4d32-bfff-0f2fbb8aa439",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.46,\"probabilities\":{\"live\":0.01,\"video\":0.63,\"review\":0.36}}",
+    "input_tokens": 2231,
+    "created_at": "2026-09-20 17:59:53"
+  },
+  {
+    "fingerprint": "11e658aa09f99b23e0b610f1a71c2f343a04fac0bcce0afa540da7ba18b710eb",
+    "video_id": "91f52b58-647d-4fbb-a0f2-be5f3f5c5439",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.35,\"probabilities\":{\"live\":0,\"video\":0.57,\"review\":0.43}}",
+    "input_tokens": 2072,
+    "created_at": "2026-09-20 17:59:53"
+  },
+  {
+    "fingerprint": "159265728a9ab134a1caf84f00e3504701b748aa32c07360d46d6878f6e8cffa",
+    "video_id": "a39c7bf6-a2a3-4565-8a82-0b52566e5d94",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.39,\"probabilities\":{\"live\":0,\"video\":0.4,\"review\":0.6}}",
+    "input_tokens": 1634,
+    "created_at": "2026-09-20 17:59:53"
+  },
+  {
+    "fingerprint": "0490372a3586dd9fefa7470a1ce95f92a7a14c2b7304e735bffd25142a31a4a6",
+    "video_id": "c6f629fc-611f-42f9-b87b-e82748a0ea48",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.57,\"probabilities\":{\"review\":0.29,\"live\":0,\"video\":0.71}}",
+    "input_tokens": 2133,
+    "created_at": "2026-09-20 17:59:53"
+  },
+  {
+    "fingerprint": "b7818a601c93eb9c2bb48002d21881f7a43fb444fc11518419cec9ba5b4a1d4f",
+    "video_id": "aefdce79-daf4-4181-9bd9-ce588f064d40",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.32,\"probabilities\":{\"live\":0.01,\"video\":0.54,\"review\":0.45}}",
+    "input_tokens": 1968,
+    "created_at": "2026-09-20 17:59:57"
+  },
+  {
+    "fingerprint": "67432cbe67dc1c135b79d3352c2a91fa8e57e75083743c22954f9b26ce222fca",
+    "video_id": "46c6dad7-682a-4289-8f0d-3e05272f3a21",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.33,\"probabilities\":{\"video\":0.56,\"live\":0,\"review\":0.44}}",
+    "input_tokens": 1778,
+    "created_at": "2026-09-20 17:59:57"
+  },
+  {
+    "fingerprint": "6341af0e4c595d2548577c8d710eaf51121e771a5a7afaa3bd19b1741cd6aa2d",
+    "video_id": "bb365216-3b99-46b7-b576-3475af8f1fc9",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.54,\"probabilities\":{\"live\":0.01,\"review\":0.3,\"video\":0.69}}",
+    "input_tokens": 2062,
+    "created_at": "2026-09-20 17:59:57"
+  },
+  {
+    "fingerprint": "ce28673c925725756fedf65718581fe3b274e8c9e517c8d0735e687f7a9187d2",
+    "video_id": "a80a872a-bcc8-4bb8-a53c-ae997e213c7b",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.3,\"probabilities\":{\"live\":0.01,\"video\":0.46,\"review\":0.53}}",
+    "input_tokens": 2089,
+    "created_at": "2026-09-20 17:59:57"
+  },
+  {
+    "fingerprint": "b138508570d10c336933b43d72738d15bcf1d20cbdddcb6e0f397c616e1df22c",
+    "video_id": "0cdebdaa-60c4-421c-9465-02d3080e90ea",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.36,\"probabilities\":{\"review\":0.42,\"video\":0.58,\"live\":0}}",
+    "input_tokens": 2120,
+    "created_at": "2026-09-20 17:59:58"
+  },
+  {
+    "fingerprint": "496c944f881ca860cff10091f1347452956fd81b6b11668b8634c8bf699b3ebb",
+    "video_id": "5d316872-07c0-47c6-b603-21229ec9a9d4",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.5,\"probabilities\":{\"live\":0.01,\"review\":0.67,\"video\":0.32}}",
+    "input_tokens": 1374,
+    "created_at": "2026-09-20 18:00:02"
+  },
+  {
+    "fingerprint": "bceff69329e25f2dac2e3ad3df0b6ae0ff8d3052269801b3ea426cbd290f2a5f",
+    "video_id": "48e8200d-fe6d-49a2-adeb-f4441dd92291",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.36,\"probabilities\":{\"live\":0.01,\"video\":0.42,\"review\":0.57}}",
+    "input_tokens": 2166,
+    "created_at": "2026-09-20 18:00:02"
+  },
+  {
+    "fingerprint": "3fdeede14d651ef1bae3bf7fed59aa67b96da692ea24d22ad17deb8fb9693ed1",
+    "video_id": "22bd3011-57f1-471b-9617-c4563875b8bd",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"video\",\"confidence\":0.49,\"probabilities\":{\"review\":0.33,\"video\":0.66,\"live\":0.01}}",
+    "input_tokens": 1976,
+    "created_at": "2026-09-20 18:00:02"
+  },
+  {
+    "fingerprint": "a8c887b73dd1d3fabbbd24e58b7afd5d1403f45f5e97760b95639f77719dd05c",
+    "video_id": "yt-ksxQMV-7xIY",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.37,\"probabilities\":{\"video\":0.42,\"live\":0.01,\"review\":0.57}}",
+    "input_tokens": 1774,
+    "created_at": "2026-09-20 18:00:02"
+  },
+  {
+    "fingerprint": "f8e2f05f9fe8204d2e52657c74434833f553cee1a2e7f15449452be7fece7923",
+    "video_id": "f02d016c-3b19-4aaf-ad25-83316d4ac66f",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.35,\"probabilities\":{\"review\":0.5599999999999999,\"live\":0.01,\"video\":0.43}}",
+    "input_tokens": 1542,
+    "created_at": "2026-09-20 18:00:03"
+  },
+  {
+    "fingerprint": "78e781e14ed500aa83bb67a820858609a3270448032a7c147af2c52ab6abd15f",
+    "video_id": "65951d2b-88eb-4b79-8b8c-c67afaa00cca",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.33,\"probabilities\":{\"review\":0.55,\"video\":0.44,\"live\":0.01}}",
+    "input_tokens": 2299,
+    "created_at": "2026-09-20 18:00:07"
+  },
+  {
+    "fingerprint": "3bdcad1a34b72fca8e2d104afa8f5bd91e5364b2dc2a43db51ffe55afc32dde9",
+    "video_id": "fb0af2ba-3226-4628-9923-84d0510288af",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.23,\"probabilities\":{\"review\":0.49,\"live\":0.03,\"video\":0.48}}",
+    "input_tokens": 2233,
+    "created_at": "2026-09-20 18:00:07"
+  },
+  {
+    "fingerprint": "2c0703ae6ae93622e631c67aab539623856934a59f414d4fec7234fbdcb82693",
+    "video_id": "9bc1e704-0bd3-4945-8e2e-08756433e402",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.43,\"probabilities\":{\"live\":0.01,\"video\":0.38,\"review\":0.61}}",
+    "input_tokens": 2210,
+    "created_at": "2026-09-20 18:00:08"
+  },
+  {
+    "fingerprint": "7d27dbcce64d201fdfec8ae2d483dd3962fcaaa719406cf12260acf2510d2fa9",
+    "video_id": "2c942044-49d5-40a0-9f74-ac75aabb4edb",
+    "model": "jev-1.13.0",
+    "response": "{\"type\":\"choice\",\"choice\":\"review\",\"confidence\":0.3,\"probabilities\":{\"review\":0.54,\"video\":0.46,\"live\":0}}",
+    "input_tokens": 1727,
+    "created_at": "2026-09-20 18:00:08"
+  }
+]

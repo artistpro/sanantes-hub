@@ -1,0 +1,10 @@
+import {createServer} from 'node:http';
+import {readFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+import handler from '../api/index.js';
+process.env.APP_ORIGIN||='http://localhost:3000';process.env.LOCAL_DATABASE_PATH||='./development.sqlite';
+const {initialize}=await import('./init.mjs');await initialize();
+const root=fileURLToPath(new URL('../public/',import.meta.url));
+const mime={'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json','.png':'image/png','.jpg':'image/jpeg'};
+createServer(async(req,res)=>{if(req.url.startsWith('/api/'))return handler(req,res);let name=new URL(req.url,'http://localhost').pathname;if(!path.extname(name))name='/index.html';const filename=path.resolve(root,'.'+name);if(!filename.startsWith(root)){res.writeHead(403);return res.end()};try{const bytes=await readFile(filename);res.setHeader('Content-Type',mime[path.extname(filename)]||'application/octet-stream');res.end(bytes)}catch{res.writeHead(404);res.end('No encontrado')}}).listen(Number(process.env.PORT||3000),'127.0.0.1',()=>console.log('Sanantes: '+process.env.APP_ORIGIN));
