@@ -21,6 +21,14 @@
       "destination": "/api/index?route=preview&type=video&id=:id"
     },
     {
+      "source": "/b/:id/image",
+      "destination": "/api/index?route=post/image&slug=:id"
+    },
+    {
+      "source": "/blog/:id/image",
+      "destination": "/api/index?route=post/image&slug=:id"
+    },
+    {
       "source": "/b/:id",
       "destination": "/api/index?route=preview&type=blog&id=:id"
     },

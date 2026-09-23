@@ -137,4 +137,18 @@ test('Vistas previas de redes sociales (/v/:id y /b/:slug) con OpenGraph y redir
   const bHtml=await bRes.text();
   assert.ok(bHtml.includes('<meta property="og:image" content="'+post.image+'">'));
   assert.ok(bHtml.includes(post.slug));
+
+  // Blog post with data: image returns /b/:slug/image and binary endpoint works
+  const base64Pixel='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+  await query("INSERT INTO posts(id,slug,title,excerpt,body,status,image) VALUES('base64-post','base64-post','Post con Data URI','Resumen','Texto','published',?) ON CONFLICT(id) DO UPDATE SET image=excluded.image",[base64Pixel]);
+  const bDataRes=await fetch(base+'/api/b/base64-post');
+  assert.equal(bDataRes.status,200);
+  const bDataHtml=await bDataRes.text();
+  assert.ok(bDataHtml.includes('/b/base64-post/image'));
+
+  const imgRes=await fetch(base+'/api/post/image?slug=base64-post');
+  assert.equal(imgRes.status,200);
+  assert.equal(imgRes.headers.get('content-type'),'image/png');
+  const imgBuf=Buffer.from(await imgRes.arrayBuffer());
+  assert.ok(imgBuf.length>0);
 });

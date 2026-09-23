@@ -35,6 +35,24 @@ export default async function handler(req,res){
     if(!['GET','POST','DELETE'].includes(method))fail('Método no permitido',405);
     if(method!=='GET' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
     if(path==='health')return send(res,{ok:true});
+    if((path==='post/image'||path.endsWith('/image'))&&method==='GET'){
+      const slugOrId=u.searchParams.get('slug')||u.searchParams.get('id')||path.replace(/^b\//,'').replace(/^blog\//,'').replace(/\/image$/,'');
+      const [p]=(await query("SELECT image FROM posts WHERE slug=? OR id=?",[slugOrId,slugOrId]))||[];
+      if(!p||!p.image)fail('Imagen no disponible',404);
+      if(p.image.startsWith('https://')){
+        res.statusCode=302;
+        res.setHeader('Location',p.image);
+        return res.end();
+      }
+      const match=p.image.match(/^data:([^;]+);base64,(.+)$/);
+      if(!match)fail('Formato de imagen inválido',404);
+      const mime=match[1];
+      const buffer=Buffer.from(match[2],'base64');
+      res.statusCode=200;
+      res.setHeader('Content-Type',mime);
+      res.setHeader('Cache-Control','public, max-age=86400, s-maxage=604800');
+      return res.end(buffer);
+    }
     if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&method==='GET'){
       let type=u.searchParams.get('type')||'';
       let targetId=u.searchParams.get('id')||'';
@@ -64,7 +82,10 @@ export default async function handler(req,res){
         if(p){
           title=p.title+' · Sanantes';
           if(p.excerpt)desc=p.excerpt.slice(0,220).replace(/\s+/g,' ').trim();
-          if(p.image&&!p.image.startsWith('data:'))image=p.image;
+          if(p.image){
+            if(p.image.startsWith('https://'))image=p.image;
+            else if(p.image.startsWith('data:'))image=origin()+'/b/'+p.slug+'/image';
+          }
           targetUrl=origin()+'/#blog/'+p.slug;
           canonicalUrl=origin()+'/b/'+p.slug;
         }
