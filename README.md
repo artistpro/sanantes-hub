@@ -84,6 +84,16 @@ npm run build
 
 Las pruebas comprueban sesiones, enlace de acceso de un uso, control de rol, origen de solicitudes, duplicación de puntos, directos terminados, validación de URLs y el contrato/caché de Jev mediante una respuesta simulada. No certifican la precisión de Jev ni sustituyen pruebas contra las cuentas reales.
 
+## Dominio Oficial (`sanantes.com`)
+
+- **Dominio registrado:** `sanantes.com`
+- **Registrador:** Hostinger
+- **Vigencia:** 3 años (adquirido en septiembre de 2026, vencimiento en septiembre de 2029).
+- **Direccionamiento DNS para Vercel:**
+  - Registro A: `@` → `76.76.21.21`
+  - Registro CNAME: `www` → `cname.vercel-dns.com`
+- **Variable de entorno:** `APP_ORIGIN=https://sanantes.com`
+
 ## Publicar en Vercel
 
 1. Crea una base libSQL en Turso. Obtén su URL y token. El código también permite sustituir este proveedor manteniendo el contrato de `lib/db.mjs`.
@@ -93,7 +103,7 @@ Las pruebas comprueban sesiones, enlace de acceso de un uso, control de rol, ori
 
 | Variable | Uso |
 |---|---|
-| `APP_ORIGIN` | URL HTTPS exacta del sitio, sin rutas |
+| `APP_ORIGIN` | URL HTTPS exacta del sitio (`https://sanantes.com`), sin rutas |
 | `TURSO_DATABASE_URL` | URL de la base persistente |
 | `TURSO_AUTH_TOKEN` | Token privado de la base |
 | `ADMIN_EMAIL` | Único correo autorizado inicialmente para administrar |

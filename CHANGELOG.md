@@ -51,6 +51,11 @@ Todas las mejoras y actualizaciones técnicas de **Comunidad Sanantes**.
 - **Fallback resiliente no-bloqueante:** Si la API externa falla o se alcanza el límite de gasto, conmuta de forma segura a estado de revisión manual (`review`) sin interrumpir la sincronización de contenidos.
 - **Ledger local:** Registro acumulado en `.budget_ledger.json`.
 
+#### 6. Adquisición y Configuración de Dominio Oficial (sanantes.com)
+- **Registro de Dominio:** Adquisición de `sanantes.com` en Hostinger con periodo contratado de 3 años (vigencia hasta septiembre de 2029).
+- **Enrutamiento DNS para Vercel:** Documentación de registros A (`76.76.21.21`) y CNAME (`cname.vercel-dns.com`) para apuntamiento con SSL automático.
+- **Preparación de Entorno:** Parámetro `APP_ORIGIN=https://sanantes.com` para URLs canónicas y enlaces de invitación.
+
 ---
 
 ### 🧪 Pruebas y Cobertura
