@@ -84,3 +84,32 @@ test('Interrupted musical streams never qualify for publication; one hour qualif
  assert.equal(exclusionReason({...base,kind:'video',duration:15}),null);
  assert.equal(exclusionReason({kind:'live',category:'Entrevistas',title:'Entrevista',duration:1500}),null);
 });
+
+test('Gamificación: donación otorga puntos Mecenas, insignias y posición en ranking público',async()=>{
+ const owner=await login('admin@example.test');
+ const donor=await login('donante@example.test');
+ const [donorUser]=await query("SELECT id FROM users WHERE email='donante@example.test'");
+ assert.ok(donorUser);
+
+ // Owner registers a $25 USD donation assigned to donorUser
+ const donRes=await call('admin/donation',{amount:25,note:'Aporte por PayPal',user_id:donorUser.id},owner.cookie);
+ assert.equal(donRes.status,200);
+
+ // Donor queries their community profile
+ const cRes=await call('community',null,donor.cookie);
+ assert.equal(cRes.status,200);
+ const cJson=await cRes.json();
+ assert.equal(cJson.total,260); // 10 welcome + 250 donation
+ assert.equal(cJson.level,'Compañero de camino');
+ assert.ok(cJson.badges.some(b=>b.id==='mecenas'));
+
+ // Public ranking reflects the donor
+ const pub=await (await call('public')).json();
+ assert.ok(pub.ranking&&pub.ranking.length>0);
+ const ranked=pub.ranking.find(r=>r.id===donorUser.id);
+ assert.ok(ranked);
+ assert.equal(ranked.total,260);
+ assert.equal(ranked.level,'Compañero de camino');
+ assert.ok(ranked.badges.some(b=>b.id==='mecenas'));
+});
+

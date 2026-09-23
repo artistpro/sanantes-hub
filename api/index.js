@@ -22,6 +22,12 @@ async function sync(source){
   await query('UPDATE sources SET cursor=?,external_id=COALESCE(?,external_id),last_sync=CURRENT_TIMESTAMP,last_error=NULL WHERE id=?',[result.cursor||null,result.external_id||null,source.id]);
   return {added,hasMore:!!result.cursor,classificationError};
 }
+async function getRanking(){
+  const rankingRaw=await query(`SELECT users.id,users.name,users.created_at,COALESCE(SUM(points.amount),0) total,(SELECT COUNT(*) FROM points p WHERE p.user_id=users.id AND p.reason='Nuevo miembro invitado') invites_count,(SELECT COUNT(*) FROM points p WHERE p.user_id=users.id AND p.event_key LIKE 'download_share:%') downloads_count,(SELECT COUNT(*) FROM donations d WHERE d.user_id=users.id) donations_count FROM users JOIN points ON users.id=points.user_id GROUP BY users.id HAVING total>0 ORDER BY total DESC,users.created_at ASC LIMIT 15`);
+  const getBadges=u=>{const b=[];if(u.donations_count>0)b.push({id:'mecenas',label:'Mecenas',icon:'💛',title:'Aporte confirmado en PayPal'});if(u.invites_count>=3)b.push({id:'embajador',label:'Embajador',icon:'📢',title:'Invitó a 3 o más personas'});if(u.downloads_count>=2)b.push({id:'lector',label:'Lector',icon:'📖',title:'Difundió investigaciones y lecturas'});b.push({id:'pionero',label:'Pionero',icon:'🌱',title:'Miembro fundador'});return b;};
+  const getLevel=t=>t>=500?'Guardián de la comunidad':t>=200?'Compañero de camino':t>=50?'Voz que acompaña':'Semilla de comunidad';
+  return rankingRaw.map((u,idx)=>{const parts=u.name.trim().split(/\s+/);const maskedName=parts.length>1?`${parts[0]} ${parts[1][0]}.`:(parts[0]||'Miembro');return {rank:idx+1,id:u.id,name:maskedName,total:u.total,level:getLevel(u.total),badges:getBadges(u)};});
+}
 export default async function handler(req,res){
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
   try{
@@ -31,7 +37,7 @@ export default async function handler(req,res){
     if(path==='health')return send(res,{ok:true});
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
-      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),me:await user(req)});
+      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),me:await user(req),ranking:await getRanking()});
     }
     if(path==='auth/request'&&method==='POST'){
       const b=await body(req);const email=text(b.email,254).toLowerCase();const name=text(b.name,80)||email.split('@')[0];if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))fail('Revisa tu correo electrónico');if(!b.consent)fail('Acepta la política de privacidad para continuar');
@@ -53,7 +59,15 @@ export default async function handler(req,res){
       const session=token();await query('INSERT INTO sessions(token,user_id,expires) VALUES(?,?,?)',[hash(session),member.id,now()+604800]);setSession(res,session);res.statusCode=302;res.setHeader('Location',origin()+(role==='admin'?'/#admin':'/#comunidad'));return res.end();
     }
     if(path==='auth/logout'&&method==='POST'){await query('DELETE FROM sessions WHERE token=?',[hash(cookie(req,'session'))]);setSession(res,'');return send(res,{ok:true});}
-    if(path==='community'&&method==='GET'){const me=await requireUser(req);return send(res,{me,ledger:await query('SELECT amount,reason,created_at FROM points WHERE user_id=? ORDER BY created_at DESC LIMIT 100',[me.id]),total:(await query('SELECT COALESCE(SUM(amount),0) total FROM points WHERE user_id=?',[me.id]))[0].total});}
+    if(path==='community'&&method==='GET'){
+      const me=await requireUser(req);
+      const ledger=await query('SELECT amount,reason,created_at FROM points WHERE user_id=? ORDER BY created_at DESC LIMIT 100',[me.id]);
+      const total=(await query('SELECT COALESCE(SUM(amount),0) total FROM points WHERE user_id=?',[me.id]))[0]?.total||0;
+      const stats=(await query(`SELECT (SELECT COUNT(*) FROM points p WHERE p.user_id=? AND p.reason='Nuevo miembro invitado') invites_count,(SELECT COUNT(*) FROM points p WHERE p.user_id=? AND p.event_key LIKE 'download_share:%') downloads_count,(SELECT COUNT(*) FROM donations d WHERE d.user_id=?) donations_count`,[me.id,me.id,me.id]))[0]||{};
+      const b=[];if(stats.donations_count>0)b.push({id:'mecenas',label:'Mecenas',icon:'💛',title:'Aporte confirmado en PayPal'});if(stats.invites_count>=3)b.push({id:'embajador',label:'Embajador',icon:'📢',title:'Invitó a 3 o más personas'});if(stats.downloads_count>=2)b.push({id:'lector',label:'Lector',icon:'📖',title:'Difundió investigaciones y lecturas'});b.push({id:'pionero',label:'Pionero',icon:'🌱',title:'Miembro fundador'});
+      const getLevel=t=>t>=500?'Guardián de la comunidad':t>=200?'Compañero de camino':t>=50?'Voz que acompaña':'Semilla de comunidad';
+      return send(res,{me,ledger,total,level:getLevel(total),badges:b,ranking:await getRanking()});
+    }
     if(path==='share'&&method==='POST'){const me=await requireUser(req);const b=await body(req);if(!(await query("SELECT id FROM videos WHERE id=? AND status='published'",[text(b.videoId,64)])).length)fail('Video no disponible',404);await rate('share:'+me.id,50);await query('INSERT INTO shares(id,user_id,video_id) VALUES(?,?,?) ON CONFLICT(user_id,video_id) DO NOTHING',[id(),me.id,b.videoId]);const [s]=await query('SELECT id FROM shares WHERE user_id=? AND video_id=?',[me.id,b.videoId]);return send(res,{url:origin()+'/?ref='+s.id+'#video/'+b.videoId});}
     if(path==='post/unlock'&&method==='POST'){const me=await user(req);const b=await body(req);const slug=text(b.slug,100);const [p]=(await query("SELECT id,title FROM posts WHERE slug=? AND status='published'",[slug]))||[];if(!p)fail('Artículo no disponible',404);let awarded=0;if(me){const s=await settings();const pts=Number(s.referralPoints||10);const r=await query("INSERT INTO points(id,user_id,amount,reason,event_key) VALUES(?,?,?,?,'download_share:'||?||':'||?) ON CONFLICT(event_key) DO NOTHING RETURNING id",[id(),me.id,pts,'Compartir lectura: '+text(p.title,60),me.id,p.id]);if(r.length)awarded=pts;}return send(res,{ok:true,awarded});}
     if(path==='cron'&&method==='GET'){
@@ -63,7 +77,7 @@ export default async function handler(req,res){
     }
     if(path.startsWith('admin')){
       const me=await requireUser(req,true);
-      if(path==='admin'&&method==='GET')return send(res,{classifierReady:!!process.env.TYPESAFE_API_KEY,classifications:await query('SELECT * FROM classifications ORDER BY created_at DESC LIMIT 100'),sources:await query('SELECT * FROM sources ORDER BY own DESC,name'),videos:await query('SELECT videos.*,media_labels.relevance,media_labels.response editorial_response FROM videos LEFT JOIN media_labels ON videos.id=media_labels.video_id ORDER BY videos.published_at DESC LIMIT 1000'),posts:await query('SELECT * FROM posts ORDER BY updated_at DESC'),users:await query('SELECT users.id,users.email,users.name,users.role,users.created_at,COALESCE(SUM(points.amount),0) points FROM users LEFT JOIN points ON users.id=points.user_id GROUP BY users.id'),settings:await settings(),donations:await query('SELECT * FROM donations ORDER BY created_at DESC'),audit:await query('SELECT * FROM audit ORDER BY created_at DESC LIMIT 50')});
+      if(path==='admin'&&method==='GET')return send(res,{classifierReady:!!process.env.TYPESAFE_API_KEY,classifications:await query('SELECT * FROM classifications ORDER BY created_at DESC LIMIT 100'),sources:await query('SELECT * FROM sources ORDER BY own DESC,name'),videos:await query('SELECT videos.*,media_labels.relevance,media_labels.response editorial_response FROM videos LEFT JOIN media_labels ON videos.id=media_labels.video_id ORDER BY videos.published_at DESC LIMIT 1000'),posts:await query('SELECT * FROM posts ORDER BY updated_at DESC'),users:await query('SELECT users.id,users.email,users.name,users.role,users.created_at,COALESCE(SUM(points.amount),0) points FROM users LEFT JOIN points ON users.id=points.user_id GROUP BY users.id'),settings:await settings(),        donations:await query('SELECT donations.*,users.name user_name,users.email user_email FROM donations LEFT JOIN users ON donations.user_id=users.id ORDER BY donations.created_at DESC'),audit:await query('SELECT * FROM audit ORDER BY created_at DESC LIMIT 50')});
       const b=await body(req);
       if(path==='admin/organize'&&method==='POST'){await rate('organize:'+me.id,12);try{const r=await organizePending();await audit(me.id,'Organización Jev: '+r.processed+' contenidos');return send(res,r)}catch(e){fail(e.message,502)}}
       if(path==='admin/classify'&&method==='POST'){await rate('classify:'+me.id,12);try{const result=await classifyPending();await audit(me.id,'Clasificación Jev: '+result.processed+' evaluados');return send(res,result)}catch(e){fail(e.message,502)}}
@@ -83,8 +97,26 @@ export default async function handler(req,res){
       if(path==='admin/settings'&&method==='POST'){
         for(const [key,val] of Object.entries(b)){if(!(key in {...defaults,...classificationDefaults}))continue;const value=text(String(val),['privacyText','classificationRules'].includes(key)?10000:600);if(key==='autoPublish'&&!['0','1'].includes(value))fail('Publicación automática inválida');if(key==='classificationEnabled'&&!['0','1'].includes(value))fail('Activación inválida');if(key==='classificationThreshold'&&(!Number.isFinite(Number(value))||Number(value)<0||Number(value)>1))fail('El umbral debe estar entre 0 y 1');if(key==='accent'&&!/^#[0-9a-f]{6}$/i.test(value))fail('Color inválido');if(['donationGoal','welcomePoints','referralPoints'].includes(key)&&(!/^\d+$/.test(value)||Number(value)>1000000000))fail('Introduce un número válido');if(key==='donationUrl'&&value){let url;try{url=new URL(value)}catch{fail('Enlace de donación inválido')};if(url.protocol!=='https:'||url.username||url.password)fail('El enlace de donación debe ser HTTPS');}await query('INSERT INTO settings(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value',[key,value]);}await audit(me.id,'Configuración actualizada');return send(res,{ok:true});
       }
-      if(path==='admin/donation'&&method==='POST'){const amount=Number(b.amount);if(!Number.isSafeInteger(amount)||amount<=0||amount>1000000000)fail('Introduce un aporte válido en USD');await query('INSERT INTO donations(id,amount,note) VALUES(?,?,?)',[id(),amount,text(b.note,300)]);await audit(me.id,'Aporte registrado: '+amount+' USD');return send(res,{ok:true});}
-      if(path==='admin/donation'&&method==='DELETE'){await query('DELETE FROM donations WHERE id=?',[b.id]);await audit(me.id,'Aporte eliminado: '+text(b.id,64));return send(res,{ok:true});}
+      if(path==='admin/donation'&&method==='POST'){
+        const amount=Number(b.amount);
+        if(!Number.isSafeInteger(amount)||amount<=0||amount>1000000000)fail('Introduce un aporte válido en USD');
+        const donorId=text(b.user_id,64)||null;
+        if(donorId&&!(await query('SELECT id FROM users WHERE id=?',[donorId])).length)fail('Miembro seleccionado no encontrado');
+        const donationId=id();
+        await query('INSERT INTO donations(id,amount,note,user_id) VALUES(?,?,?,?)',[donationId,amount,text(b.note,300),donorId]);
+        if(donorId){
+          const pts=amount*10;
+          await query('INSERT INTO points(id,user_id,amount,reason,event_key) VALUES(?,?,?,?,?)',[id(),donorId,pts,'Mecenas Sanantes: Aporte voluntario ($'+amount+' USD)','donation:'+donationId]);
+        }
+        await audit(me.id,'Aporte registrado: '+amount+' USD'+(donorId?' (Mecenas: '+donorId+')':''));
+        return send(res,{ok:true});
+      }
+      if(path==='admin/donation'&&method==='DELETE'){
+        await query('DELETE FROM points WHERE event_key=?',['donation:'+text(b.id,64)]);
+        await query('DELETE FROM donations WHERE id=?',[b.id]);
+        await audit(me.id,'Aporte eliminado: '+text(b.id,64));
+        return send(res,{ok:true});
+      }
       if(path==='admin/points'&&method==='POST'){const amount=Number(b.amount);if(!Number.isSafeInteger(amount)||Math.abs(amount)>10000||!text(b.reason,200))fail('Indica los puntos y una razón');if(!(await query('SELECT id FROM users WHERE id=?',[b.user_id])).length)fail('Miembro no encontrado');await query('INSERT INTO points(id,user_id,amount,reason,event_key) VALUES(?,?,?,?,?)',[id(),b.user_id,amount,text(b.reason,200),'manual:'+id()]);await audit(me.id,'Ajuste de puntos a '+b.user_id+': '+amount);return send(res,{ok:true});}
     }
     fail('No encontrado',404);
