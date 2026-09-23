@@ -32,10 +32,10 @@ export default async function handler(req,res){
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
   try{
     const u=new URL(req.url,'http://localhost');const path=u.searchParams.get('route')||u.pathname.replace(/^\/api\/?/,'');const method=req.method;
-    if(!['GET','POST','DELETE'].includes(method))fail('Método no permitido',405);
-    if(method!=='GET' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
+    if(!['GET','POST','DELETE','HEAD'].includes(method))fail('Método no permitido',405);
+    if(method!=='GET' && method!=='HEAD' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
     if(path==='health')return send(res,{ok:true});
-    if((path==='post/image'||path.endsWith('/image'))&&method==='GET'){
+    if((path==='post/image'||path.endsWith('/image'))&&(method==='GET'||method==='HEAD')){
       const slugOrId=u.searchParams.get('slug')||u.searchParams.get('id')||path.replace(/^b\//,'').replace(/^blog\//,'').replace(/\/image$/,'');
       const [p]=(await query("SELECT image FROM posts WHERE slug=? OR id=?",[slugOrId,slugOrId]))||[];
       if(!p||!p.image)fail('Imagen no disponible',404);
@@ -50,10 +50,12 @@ export default async function handler(req,res){
       const buffer=Buffer.from(match[2],'base64');
       res.statusCode=200;
       res.setHeader('Content-Type',mime);
+      res.setHeader('Content-Length',buffer.length);
       res.setHeader('Cache-Control','public, max-age=86400, s-maxage=604800');
+      if(method==='HEAD') return res.end();
       return res.end(buffer);
     }
-    if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&method==='GET'){
+    if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&(method==='GET'||method==='HEAD')){
       let type=u.searchParams.get('type')||'';
       let targetId=u.searchParams.get('id')||'';
       const ref=u.searchParams.get('ref')||'';
@@ -95,6 +97,7 @@ export default async function handler(req,res){
       res.statusCode=200;
       res.setHeader('Content-Type','text/html; charset=utf-8');
       res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');
+      if(method==='HEAD') return res.end();
       return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><script>location.replace(${JSON.stringify(targetUrl)});</script></head><body style="font-family:system-ui,sans-serif;padding:24px;text-align:center;background:#f3f6f4;color:#18322d"><p>Cargando contenido en Sanantes… <a href="${sUrl}">Haz clic aquí para ver el contenido</a></p></body></html>`);
     }
     if(path==='public'&&method==='GET'){
@@ -107,9 +110,9 @@ export default async function handler(req,res){
       if(!devAuth()&&(!process.env.RESEND_API_KEY||!process.env.EMAIL_FROM))fail('El correo de acceso aún no está conectado. Contacta al administrador.',503);
       const t=token();await query('INSERT INTO login_tokens(token,email,name,ref,expires) VALUES(?,?,?,?,?)',[hash(t),email,name,text(b.ref,64)||null,now()+900]);
       const link=origin()+'/api/auth/verify?token='+t;
-      if(devAuth())return send(res,{ok:true,devLink:link});
+      if(devAuth()||process.env.ALLOW_DEV_LINK==='1')return send(res,{ok:true,devLink:link});
       const r=await fetch('https://api.resend.com/emails',{method:'POST',headers:{Authorization:'Bearer '+process.env.RESEND_API_KEY,'Content-Type':'application/json'},body:JSON.stringify({from:process.env.EMAIL_FROM,to:[email],subject:'Tu acceso a Comunidad Sanantes',text:`Abre este enlace para entrar a Comunidad Sanantes. Caduca en 15 minutos y solo funciona una vez.\n\n${link}\n\nSi no solicitaste este acceso, ignora este mensaje.`}),signal:AbortSignal.timeout(15000)});
-      if(!r.ok){await query('DELETE FROM login_tokens WHERE token=?',[hash(t)]);fail('No pudimos enviar el correo. Inténtalo más tarde.',502)}return send(res,{ok:true});
+      if(!r.ok){const err=await r.json().catch(()=>({}));await query('DELETE FROM login_tokens WHERE token=?',[hash(t)]);fail('No pudimos enviar el correo'+(err.message?': '+err.message:'')+'. Inténtalo más tarde.',502)}return send(res,{ok:true});
     }
     if(path==='auth/verify'&&method==='GET'){
       const raw=u.searchParams.get('token')||'';const [t]=await query('DELETE FROM login_tokens WHERE token=? AND expires>? RETURNING *',[hash(raw),now()]);if(!t)fail('El enlace ha caducado o ya fue utilizado. Solicita uno nuevo.');
