@@ -35,6 +35,40 @@ export default async function handler(req,res){
     if(!['GET','POST','DELETE'].includes(method))fail('Método no permitido',405);
     if(method!=='GET' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
     if(path==='health')return send(res,{ok:true});
+    if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&method==='GET'){
+      let type=u.searchParams.get('type')||'';
+      let targetId=u.searchParams.get('id')||'';
+      const ref=u.searchParams.get('ref')||'';
+      if(!type&&(path.startsWith('v/')||path.startsWith('video/'))){type='video';targetId=path.replace(/^video\//,'').replace(/^v\//,'');}
+      if(!type&&(path.startsWith('b/')||path.startsWith('blog/'))){type='blog';targetId=path.replace(/^blog\//,'').replace(/^b\//,'');}
+      let title='Comunidad Sanantes · El Podcast del Cáncer';
+      let desc='Videos, conversaciones y contenidos seleccionados por El Podcast del Cáncer. Un espacio para aprender y acompañarnos.';
+      let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
+      let targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'');
+      if(type==='video'&&targetId){
+        const [v]=(await query("SELECT id,title,description,thumbnail,external_id FROM videos WHERE id=? OR external_id=?",[targetId,targetId]))||[];
+        if(v){
+          title=v.title+' · Sanantes';
+          if(v.description)desc=v.description.slice(0,220).replace(/\s+/g,' ').trim();
+          if(v.thumbnail)image=v.thumbnail;
+          targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'/')+'#video/'+v.id;
+        }
+      }else if(type==='blog'&&targetId){
+        const [p]=(await query("SELECT id,slug,title,excerpt,image FROM posts WHERE slug=? OR id=?",[targetId,targetId]))||[];
+        if(p){
+          title=p.title+' · Sanantes';
+          if(p.excerpt)desc=p.excerpt.slice(0,220).replace(/\s+/g,' ').trim();
+          if(p.image&&!p.image.startsWith('data:'))image=p.image;
+          targetUrl=origin()+'/#blog/'+p.slug;
+        }
+      }
+      const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl);
+      res.statusCode=200;
+      res.setHeader('Content-Type','text/html; charset=utf-8');
+      res.setHeader('Cache-Control','public, max-age=300, s-maxage=3600');
+      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:url" content="${sUrl}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><meta http-equiv="refresh" content="0; url=${sUrl}"><script>location.replace(${JSON.stringify(targetUrl)});</script></head><body style="font-family:system-ui,sans-serif;padding:24px;text-align:center;background:#f3f6f4;color:#18322d"><p>Cargando contenido en Sanantes… <a href="${sUrl}">Haz clic aquí si no redirige automáticamente</a></p></body></html>`);
+    }
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
       return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),me:await user(req),ranking:await getRanking()});
@@ -68,7 +102,7 @@ export default async function handler(req,res){
       const getLevel=t=>t>=500?'Guardián de la comunidad':t>=200?'Compañero de camino':t>=50?'Voz que acompaña':'Semilla de comunidad';
       return send(res,{me,ledger,total,level:getLevel(total),badges:b,ranking:await getRanking()});
     }
-    if(path==='share'&&method==='POST'){const me=await requireUser(req);const b=await body(req);if(!(await query("SELECT id FROM videos WHERE id=? AND status='published'",[text(b.videoId,64)])).length)fail('Video no disponible',404);await rate('share:'+me.id,50);await query('INSERT INTO shares(id,user_id,video_id) VALUES(?,?,?) ON CONFLICT(user_id,video_id) DO NOTHING',[id(),me.id,b.videoId]);const [s]=await query('SELECT id FROM shares WHERE user_id=? AND video_id=?',[me.id,b.videoId]);return send(res,{url:origin()+'/?ref='+s.id+'#video/'+b.videoId});}
+    if(path==='share'&&method==='POST'){const me=await requireUser(req);const b=await body(req);if(!(await query("SELECT id FROM videos WHERE id=? AND status='published'",[text(b.videoId,64)])).length)fail('Video no disponible',404);await rate('share:'+me.id,50);await query('INSERT INTO shares(id,user_id,video_id) VALUES(?,?,?) ON CONFLICT(user_id,video_id) DO NOTHING',[id(),me.id,b.videoId]);const [s]=await query('SELECT id FROM shares WHERE user_id=? AND video_id=?',[me.id,b.videoId]);return send(res,{url:origin()+'/v/'+b.videoId+'?ref='+s.id});}
     if(path==='post/unlock'&&method==='POST'){const me=await user(req);const b=await body(req);const slug=text(b.slug,100);const [p]=(await query("SELECT id,title FROM posts WHERE slug=? AND status='published'",[slug]))||[];if(!p)fail('Artículo no disponible',404);let awarded=0;if(me){const s=await settings();const pts=Number(s.referralPoints||10);const r=await query("INSERT INTO points(id,user_id,amount,reason,event_key) VALUES(?,?,?,?,'download_share:'||?||':'||?) ON CONFLICT(event_key) DO NOTHING RETURNING id",[id(),me.id,pts,'Compartir lectura: '+text(p.title,60),me.id,p.id]);if(r.length)awarded=pts;}return send(res,{ok:true,awarded});}
     if(path==='cron'&&method==='GET'){
       if(!secretEqual(req.headers.authorization||'', 'Bearer '+(process.env.CRON_SECRET||''))||!process.env.CRON_SECRET)fail('No autorizado',401);

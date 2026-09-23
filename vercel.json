@@ -13,6 +13,22 @@
       "destination": "/api/index?route=:path*"
     },
     {
+      "source": "/v/:id",
+      "destination": "/api/index?route=preview&type=video&id=:id"
+    },
+    {
+      "source": "/video/:id",
+      "destination": "/api/index?route=preview&type=video&id=:id"
+    },
+    {
+      "source": "/b/:id",
+      "destination": "/api/index?route=preview&type=blog&id=:id"
+    },
+    {
+      "source": "/blog/:id",
+      "destination": "/api/index?route=preview&type=blog&id=:id"
+    },
+    {
       "source": "/((?!api/|.*\\.).*)",
       "destination": "/index.html"
     }

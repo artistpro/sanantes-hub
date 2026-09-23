@@ -113,3 +113,25 @@ test('Gamificación: donación otorga puntos Mecenas, insignias y posición en r
  assert.ok(ranked.badges.some(b=>b.id==='mecenas'));
 });
 
+test('Vistas previas de redes sociales (/v/:id y /b/:slug) con OpenGraph y redirección',async()=>{
+  const pub=await (await call('public')).json();
+  const vid=pub.videos[0];
+  const post=pub.posts[0];
+
+  // Video preview endpoint
+  const vRes=await fetch(base+'/api/v/'+vid.id+'?ref=test-ref');
+  assert.equal(vRes.status,200);
+  assert.match(vRes.headers.get('content-type'),/text\/html/);
+  const vHtml=await vRes.text();
+  assert.ok(vHtml.includes('<meta property="og:image" content="'+vid.thumbnail+'">'));
+  assert.ok(vHtml.includes('<meta name="twitter:card" content="summary_large_image">'));
+  assert.ok(vHtml.includes('#video/'+vid.id));
+  assert.ok(vHtml.includes('ref=test-ref'));
+
+  // Blog preview endpoint
+  const bRes=await fetch(base+'/api/b/'+post.slug);
+  assert.equal(bRes.status,200);
+  const bHtml=await bRes.text();
+  assert.ok(bHtml.includes('<meta property="og:image" content="'+post.image+'">'));
+  assert.ok(bHtml.includes('#blog/'+post.slug));
+});
