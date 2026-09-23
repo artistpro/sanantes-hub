@@ -8,8 +8,12 @@ Repositorio curado de videos de El Podcast del Cáncer, preparado para Vercel.
 - Secciones independientes para El Podcast del Cáncer, selección de otros canales, directos, blog, comunidad y donaciones.
 - Dashboard protegido por sesión y rol de administrador. Añade o pausa fuentes; sincroniza; edita títulos, categorías y descripciones; clasifica, publica u oculta; escribe artículos; consulta/exporta miembros; ajusta puntos; registra aportes; cambia textos, color, reglas y meta.
 - Acceso sin contraseña por correo verificado, mediante Resend. Solo el correo configurado en `ADMIN_EMAIL` obtiene rol administrador. Los enlaces caducan en 15 minutos y son de un solo uso; las sesiones duran siete días.
-- Puntos de bienvenida y de invitación cuando un nuevo miembro confirma su correo. Crear un enlace de compartir no genera puntos. Se premian hasta cinco registros invitados al día por miembro; no hay rifas, canjes ni saldo monetario. La verificación de correo y el límite reducen abuso, pero no prueban que cada cuenta pertenezca a una persona diferente.
-- Contador de aportes confirmados manualmente en COP y enlace configurable hacia el servicio de donaciones. No cobra ni verifica pagos automáticamente.
+- Puntos de bienvenida, invitaciones y difusión de artículos. Sistema de gamificación con niveles de comunidad (`Semilla`, `Voz`, `Compañero`, `Guardián`), insignias dinámicas (`Mecenas`, `Embajador`, `Lector`, `Pionero`) y Muro de Gratitud público con nombres protegidos.
+- Contador de aportes confirmados en USD con meta editable y botón oficial a PayPal (`https://paypal.me/podcastcancer`). Asignación manual de aportes a miembros para otorgar puntos de Mecenas (+10 pts por cada $1 USD).
+- Artículos de blog con descarga complementaria en PDF protegida por acción social (WhatsApp, Facebook, X).
+- Vistas previas enriquecidas en redes sociales (`/v/:id` y `/b/:slug`) con tarjetas OpenGraph y Twitter Cards en alta resolución para Telegram, WhatsApp, Twitter y Facebook.
+- Salvaguarda de gasto y disyuntor (`Budget Guard & Circuit Breaker`) en `lib/budget-guard.mjs` con fallback seguro para APIs de pago.
+- Ver [CHANGELOG.md](file:///d:/Descargas%202/Antigravity/sananteshub/CHANGELOG.md) para el detalle completo de versiones y mejoras.
 
 ## Estado del catálogo inicial
 
