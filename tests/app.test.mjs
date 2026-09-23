@@ -118,24 +118,18 @@ test('Vistas previas de redes sociales (/v/:id y /b/:slug) con OpenGraph y redir
   const vid=pub.videos[0];
   const post=pub.posts[0];
 
-  // Video preview endpoint (Bot request - e.g. Telegram)
-  const botRes=await fetch(base+'/api/v/'+vid.id+'?ref=test-ref',{headers:{'User-Agent':'TelegramBot (like TwitterBot)'}});
-  assert.equal(botRes.status,200);
-  assert.match(botRes.headers.get('content-type'),/text\/html/);
-  const botHtml=await botRes.text();
+  // Video preview endpoint
+  const vRes=await fetch(base+'/api/v/'+vid.id+'?ref=test-ref');
+  assert.equal(vRes.status,200);
+  assert.match(vRes.headers.get('content-type'),/text\/html/);
+  const vHtml=await vRes.text();
   const expectedImg=vid.platform==='youtube'&&vid.external_id?'https://i.ytimg.com/vi/'+vid.external_id+'/hqdefault.jpg':vid.thumbnail;
-  assert.ok(botHtml.includes('<meta property="og:image" content="'+expectedImg+'">'));
-  assert.ok(botHtml.includes('<meta name="twitter:card" content="summary_large_image">'));
-  assert.ok(!botHtml.includes('<meta http-equiv="refresh"'),'Bots should not be redirected via refresh');
-  assert.ok(!botHtml.includes('location.replace'),'Bots should not have replace script');
-
-  // Video preview endpoint (Human browser request)
-  const humanRes=await fetch(base+'/api/v/'+vid.id+'?ref=test-ref',{headers:{'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}});
-  assert.equal(humanRes.status,200);
-  const humanHtml=await humanRes.text();
-  assert.ok(humanHtml.includes('#video/'+vid.id));
-  assert.ok(humanHtml.includes('ref=test-ref'));
-  assert.ok(humanHtml.includes('location.replace'));
+  assert.ok(vHtml.includes('<meta property="og:image" content="'+expectedImg+'">'));
+  assert.ok(vHtml.includes('<meta name="twitter:card" content="summary_large_image">'));
+  assert.ok(!vHtml.includes('<meta http-equiv="refresh"'),'Never redirect crawlers via refresh header');
+  assert.ok(vHtml.includes('#video/'+vid.id));
+  assert.ok(vHtml.includes('ref=test-ref'));
+  assert.ok(vHtml.includes('location.replace'));
 
   // Blog preview endpoint
   const bRes=await fetch(base+'/api/b/'+post.slug);
