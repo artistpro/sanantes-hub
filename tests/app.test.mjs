@@ -25,9 +25,10 @@ test('Auth, curación, separación de directos y puntos verificados',async()=>{
  assert.equal((await call('admin/video',{...vid,kind:'live'},owner.cookie)).status,200);
  const changed=await (await call('public')).json();assert.equal(changed.videos.find(v=>v.id===vid.id).kind,'live');assert.equal(changed.videos.filter(v=>v.kind==='video').length,initialVideos-1);
  assert.equal((await call('admin/source',{name:'Attack',platform:'odysee',url:'https://169.254.169.254/latest/meta-data'},owner.cookie)).status,500);
- const postRes=await call('admin/post',{title:'Artículo con imagen',slug:'articulo-con-imagen',excerpt:'Un resumen',body:'## Título\n\n![Foto](https://images.unsplash.com/photo-1)\n\nTexto.',category:'Comunidad',status:'published',image:'https://images.unsplash.com/photo-featured'},owner.cookie);assert.equal(postRes.status,200);
- const pubWithPost=await (await call('public')).json();const createdPost=pubWithPost.posts.find(p=>p.slug==='articulo-con-imagen');assert.ok(createdPost);assert.equal(createdPost.image,'https://images.unsplash.com/photo-featured');
- await call('auth/logout',{},member.cookie);assert.equal((await call('community',null,member.cookie)).status,401);
+  const postRes=await call('admin/post',{title:'Artículo con imagen y pdf',slug:'articulo-con-pdf',excerpt:'Un resumen',body:'## Título\n\n![Foto](https://images.unsplash.com/photo-1)\n\nTexto.',category:'Comunidad',status:'published',image:'https://images.unsplash.com/photo-featured',download_url:'https://drive.google.com/file/d/123/view',download_title:'Compendio PDF'},owner.cookie);assert.equal(postRes.status,200);
+  const pubWithPost=await (await call('public')).json();const createdPost=pubWithPost.posts.find(p=>p.slug==='articulo-con-pdf');assert.ok(createdPost);assert.equal(createdPost.image,'https://images.unsplash.com/photo-featured');assert.equal(createdPost.download_url,'https://drive.google.com/file/d/123/view');assert.equal(createdPost.download_title,'Compendio PDF');
+  const unlockRes=await call('post/unlock',{slug:'articulo-con-pdf'},owner.cookie);assert.equal(unlockRes.status,200);const unlockJson=await unlockRes.json();assert.ok(unlockJson.ok);
+  await call('auth/logout',{},member.cookie);assert.equal((await call('community',null,member.cookie)).status,401);
 });
 test('Metadatos de directos terminados y URLs',()=>{
  assert.equal(youtubeKind({snippet:{liveBroadcastContent:'none'},liveStreamingDetails:{actualEndTime:'2026-01-01'}}),'live');
