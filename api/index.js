@@ -36,6 +36,8 @@ export default async function handler(req,res){
     if(method!=='GET' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
     if(path==='health')return send(res,{ok:true});
     if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&method==='GET'){
+      const ua=String(req.headers['user-agent']||'').toLowerCase();
+      const isBot=/telegrambot|whatsapp|twitterbot|facebookexternalhit|meta-externalagent|facebot|discordbot|slackbot|linkedinbot|embedly|quora link preview|pinterest|vkshare|bingpreview/i.test(ua);
       let type=u.searchParams.get('type')||'';
       let targetId=u.searchParams.get('id')||'';
       const ref=u.searchParams.get('ref')||'';
@@ -45,13 +47,19 @@ export default async function handler(req,res){
       let desc='Videos, conversaciones y contenidos seleccionados por El Podcast del Cáncer. Un espacio para aprender y acompañarnos.';
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
       let targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'');
+      let canonicalUrl=origin()+'/';
       if(type==='video'&&targetId){
-        const [v]=(await query("SELECT id,title,description,thumbnail,external_id FROM videos WHERE id=? OR external_id=?",[targetId,targetId]))||[];
+        const [v]=(await query("SELECT id,title,description,thumbnail,external_id,platform FROM videos WHERE id=? OR external_id=?",[targetId,targetId]))||[];
         if(v){
           title=v.title+' · Sanantes';
           if(v.description)desc=v.description.slice(0,220).replace(/\s+/g,' ').trim();
-          if(v.thumbnail)image=v.thumbnail;
+          if(v.platform==='youtube'&&v.external_id){
+            image=`https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg`;
+          }else if(v.thumbnail){
+            image=v.thumbnail;
+          }
           targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'/')+'#video/'+v.id;
+          canonicalUrl=origin()+'/v/'+v.id;
         }
       }else if(type==='blog'&&targetId){
         const [p]=(await query("SELECT id,slug,title,excerpt,image FROM posts WHERE slug=? OR id=?",[targetId,targetId]))||[];
@@ -60,14 +68,16 @@ export default async function handler(req,res){
           if(p.excerpt)desc=p.excerpt.slice(0,220).replace(/\s+/g,' ').trim();
           if(p.image&&!p.image.startsWith('data:'))image=p.image;
           targetUrl=origin()+'/#blog/'+p.slug;
+          canonicalUrl=origin()+'/b/'+p.slug;
         }
       }
       const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-      const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl);
+      const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl),sCanon=escHtml(canonicalUrl);
       res.statusCode=200;
       res.setHeader('Content-Type','text/html; charset=utf-8');
       res.setHeader('Cache-Control','public, max-age=300, s-maxage=3600');
-      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:url" content="${sUrl}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><meta http-equiv="refresh" content="0; url=${sUrl}"><script>location.replace(${JSON.stringify(targetUrl)});</script></head><body style="font-family:system-ui,sans-serif;padding:24px;text-align:center;background:#f3f6f4;color:#18322d"><p>Cargando contenido en Sanantes… <a href="${sUrl}">Haz clic aquí si no redirige automáticamente</a></p></body></html>`);
+      const botTags=isBot?'':`<meta http-equiv="refresh" content="0; url=${sUrl}"><script>location.replace(${JSON.stringify(targetUrl)});</script>`;
+      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}">${botTags}</head><body style="font-family:system-ui,sans-serif;padding:24px;text-align:center;background:#f3f6f4;color:#18322d"><p>Cargando contenido en Sanantes… <a href="${sUrl}">Haz clic aquí para ver el contenido</a></p></body></html>`);
     }
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
