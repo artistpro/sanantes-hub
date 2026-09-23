@@ -67,5 +67,20 @@ Todas las mejoras y actualizaciones técnicas de **Comunidad Sanantes**.
   - Clasificación de formatos y temas con Jev.
   - Asignación de puntos y nivel de Mecenas por donaciones.
   - Vistas previas OpenGraph de videos y blog en `/v/:id` y `/b/:slug`.
-  - Hard-limit, Circuit Breaker y Fallback del Budget Guard.
-- Verificación en entorno de producción desplegado en Vercel.
+  - Verificación en entorno de producción desplegado en Vercel.
+
+---
+
+## 📌 Tareas Pendientes (Backlog de Próxima Fase)
+
+### Monetización Ética & Tienda de Recursos
+- **Objetivo:** Generar fuentes sostenibles de ingresos para la producción de contenidos mediante recomendaciones de productos útiles y honestos.
+- **Canales a Integrar:**
+  1. **Droppi:** Enlace a productos físicos locales y kits terapéuticos (dropshipping).
+  2. **iHerb (Programa de Afiliados):** Suplementación coadyuvante, fitoterapia e higiene limpia.
+  3. **Amazon (Programa de Afiliados):** Libros de referencia (Dr. Bernie Siegel, nutrición, arteterapia) y accesorios de descanso/meditación.
+- **Requerimientos de Sistema:**
+  - Nueva sección pública `#tienda` o `#recursos`.
+  - Pestaña administrativa para registrar productos, categorías, imágenes y enlaces de afiliado.
+  - Avisos de transparencia ética y descargo de responsabilidad médica.
+

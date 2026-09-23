@@ -133,3 +133,15 @@ Las publicaciones se incrustan bajo demanda. Las miniaturas se cargan desde sus 
 ## Verificación pendiente
 
 La compilación y las pruebas de servidor pasan. La descarga del navegador de pruebas no estuvo disponible en este entorno, por lo que no se ha completado la revisión visual automatizada de escritorio y móvil. El HTML de vista previa permite revisar el diseño y navegar por el catálogo real y por el panel administrativo en modo de solo lectura; no ejecuta operaciones de servidor ni representa una sesión de administrador real. Antes del lanzamiento se deben verificar en navegador las conexiones reales y el diseño.
+
+## Tareas Pendientes y Roadmap (Monetización Ética & Recursos)
+
+- [ ] **Módulo de Tienda y Recomendaciones de la Comunidad:**
+  - Crear una nueva sección en la plataforma (`#tienda` o `#recursos`) con catálogo visual de productos recomendados para el bienestar, suplementación y apoyo a pacientes y familias.
+  - **Integración multicanal de ingresos:**
+    1. **Droppi:** Enlace de productos físicos locales y kits de bienestar bajo modelo de dropshipping.
+    2. **iHerb (Afiliados):** Suplementos coadyuvantes, fitoterapia y nutrición con enlace de afiliado personal.
+    3. **Amazon (Afiliados):** Libros de referencia oncológica/emocional, arteterapia y accesorios de meditación/descanso.
+  - **Panel de Administración:** Pestaña para añadir, pausar, editar precios y categorizar productos con su URL de afiliado.
+  - **Transparencia Ética:** Aviso legal visible informando que las compras generan una pequeña comisión para sostener el proyecto sin costo adicional para el comprador, y que ningún suplemento sustituye el tratamiento médico.
+
