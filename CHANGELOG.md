@@ -4,6 +4,43 @@ Todas las mejoras y actualizaciones técnicas de **Comunidad Sanantes**.
 
 ---
 
+## [2026-09-24] - Autenticación Híbrida (Google OAuth + Contraseña) y Google Analytics 4 (GA4)
+
+### 🌟 Nuevas Funcionalidades
+
+#### 1. Autenticación Híbrida Segura (Email + Contraseña + Google OAuth 2.0)
+- **Acceso con 1 Clic (Sign In with Google):**
+  - Integración nativa con Google Identity Services (`gsi/client`) y Google One-Tap.
+  - Client ID oficial configurado: `556094809768-t183rn0i6c4k3mkrnj0et9irjphmfd3a.apps.googleusercontent.com`.
+  - Endpoint `POST /api/auth/google`: Valida el `id_token` firmado por Google contra `https://oauth2.googleapis.com/tokeninfo`, crea o vincula la cuenta del usuario, asigna puntos de bienvenida y genera sesión HTTP-only segura.
+- **Registro Directo e Inicio de Sesión con Contraseña:**
+  - Endpoint `POST /api/auth/register`: Registro instantáneo con nombre, email, contraseña (mínimo 6 caracteres) y aceptación de política de privacidad.
+  - Endpoint `POST /api/auth/login`: Validación timing-safe de credenciales.
+  - **Auto-adopción de clave para Admin:** Si el administrador (`artistproco@gmail.com`) entra por primera vez con contraseña, el sistema encripta su clave y la fija sin requerir reseteo manual.
+- **Criptografía Robusta Nivel Bancario:**
+  - Uso de algoritmo estándar `scrypt` (`node:crypto` nativo de Node.js) con salt aleatorio de 16 bytes y clave derivada de 64 bytes.
+  - Prevención de ataques de canal lateral (timing attacks) mediante `crypto.timingSafeEqual`.
+- **Auto-Migración Transparente en Base de Datos (Turso / SQLite):**
+  - Módulo `ensureAuthSchema()` en `api/index.js` que verifica y crea sobre la marcha las columnas `password_hash`, `password_salt`, `google_id` y el índice `users_google` sin requerir downtime ni migraciones manuales por CLI.
+- **Interfaz de Usuario (Modal de Acceso):**
+  - Selector con 3 pestañas: *Iniciar sesión*, *Registrarme* y *Enlace al correo* (fallback sin clave).
+  - Selector dinámico de visibilidad de contraseña (icono 👁️ / 🔒).
+  - Campo de configuración en Administración (`#admin` > Ajustes) para modificar el `Google Client ID` sin tocar código.
+
+#### 2. Analítica Web Integral con Google Analytics 4 (GA4)
+- **Medición Oficial:** ID de flujo web `G-JNXSFX7HF3` registrado para el dominio `sanantes.com`.
+- **Inyección no-bloqueante:** Script `gtag.js` cargado de forma asíncrona en el `<head>` de `public/index.html`.
+- **Rastreo Dinámico SPA (Single Page Application):** Hook en la función `route()` de `public/app.js` que dispara eventos `page_view` cada vez que el usuario navega entre las diferentes secciones (`#podcast`, `#explorar`, `#directos`, `#blog/:slug`, `#video/:id`, `#comunidad`, `#apoyar`, `#admin`).
+- **Medición Mejorada:** Conteo en tiempo real de usuarios activos, sesiones, retención, fuentes de tráfico, países y reproducciones de contenido.
+
+### 🛡️ Huellas de Auditoría y Despliegue en Producción
+- **Commit `3ff4a16`:** Activación de Google OAuth Client ID por defecto en `api/index.js`.
+- **Commit `8944613`:** Integración de Google Analytics GA4 (`G-JNXSFX7HF3`) en `public/index.html` y tracking dinámico de rutas en `public/app.js`.
+- **Despliegues en Vercel:** Ambas versiones desplegadas y verificadas con estado HTTP 200 en `https://sanantes.com`.
+- **Suite de Pruebas Automatizadas:** 13 pruebas unitarias e integración en verde (`npm test`, 100% pasando en ~1.0 s).
+
+---
+
 ## [2026-09-22] - Gamificación, Donaciones USD PayPal, Social Previews y Budget Guard
 
 ### 🌟 Nuevas Funcionalidades

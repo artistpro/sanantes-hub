@@ -7,11 +7,12 @@ Repositorio curado de videos de El Podcast del Cáncer, preparado para Vercel.
 - Muestra reproductores incrustados; **no descarga ni almacena archivos de video o audio**. La base guarda metadatos, enlaces, usuarios, puntos, fuentes, artículos y aportes.
 - Secciones independientes para El Podcast del Cáncer, selección de otros canales, directos, blog, comunidad y donaciones.
 - Dashboard protegido por sesión y rol de administrador. Añade o pausa fuentes; sincroniza; edita títulos, categorías y descripciones; clasifica, publica u oculta; escribe artículos; consulta/exporta miembros; ajusta puntos; registra aportes; cambia textos, color, reglas y meta.
-- Acceso sin contraseña por correo verificado, mediante Resend. Solo el correo configurado en `ADMIN_EMAIL` obtiene rol administrador. Los enlaces caducan en 15 minutos y son de un solo uso; las sesiones duran siete días.
+- Acceso flexible y seguro: Autenticación híbrida con **Google OAuth 2.0** (1 clic con Google Identity Services), **correo y contraseña** (con hash `scrypt` y verificación `timingSafeEqual`) y enlaces mágicos al correo con Resend. Solo el correo configurado en `ADMIN_EMAIL` (`artistproco@gmail.com`) obtiene rol de administrador.
 - Puntos de bienvenida, invitaciones y difusión de artículos. Sistema de gamificación con niveles de comunidad (`Semilla`, `Voz`, `Compañero`, `Guardián`), insignias dinámicas (`Mecenas`, `Embajador`, `Lector`, `Pionero`) y Muro de Gratitud público con nombres protegidos.
 - Contador de aportes confirmados en USD con meta editable y botón oficial a PayPal (`https://paypal.me/podcastcancer`). Asignación manual de aportes a miembros para otorgar puntos de Mecenas (+10 pts por cada $1 USD).
 - Artículos de blog con descarga complementaria en PDF protegida por acción social (WhatsApp, Facebook, X).
 - Vistas previas enriquecidas en redes sociales (`/v/:id` y `/b/:slug`) con tarjetas OpenGraph y Twitter Cards en alta resolución para Telegram, WhatsApp, Twitter y Facebook.
+- Analítica web profesional sin coste con **Google Analytics 4** (`G-JNXSFX7HF3`), con medición de eventos en tiempo real y soporte SPA por hash routing.
 - Salvaguarda de gasto y disyuntor (`Budget Guard & Circuit Breaker`) en `lib/budget-guard.mjs` con fallback seguro para APIs de pago.
 - Ver [CHANGELOG.md](file:///d:/Descargas%202/Antigravity/sananteshub/CHANGELOG.md) para el detalle completo de versiones y mejoras.
 
@@ -82,7 +83,7 @@ npm test
 npm run build
 ```
 
-Las pruebas comprueban sesiones, enlace de acceso de un uso, control de rol, origen de solicitudes, duplicación de puntos, directos terminados, validación de URLs y el contrato/caché de Jev mediante una respuesta simulada. No certifican la precisión de Jev ni sustituyen pruebas contra las cuentas reales.
+Las 13 pruebas automatizadas (`npm test`) comprueban: criptografía de contraseñas (hash scrypt, salt aleatorio y comparación timing-safe), registro y login directo, sesiones, enlaces de acceso de un uso, control de rol de administrador, origen de solicitudes, duplicación de puntos y prevención de granjas de referidos, directos terminados, validación de URLs, gamificación y ranking, vistas previas OpenGraph de videos y blog, contrato y caché de Jev, y la salvaguarda de presupuesto (Budget Guard con disyuntor y fallback).
 
 ## Dominio Oficial (`sanantes.com`)
 
@@ -113,6 +114,7 @@ Las pruebas comprueban sesiones, enlace de acceso de un uso, control de rol, ori
 | `TYPESAFE_API_KEY` | Credencial de Jev |
 | `TYPESAFE_MODEL` | Opcional: `jev-1.13.0` |
 | `CRON_SECRET` | Secreto aleatorio largo para la sincronización programada |
+| `GOOGLE_CLIENT_ID` | Opcional: ID de cliente OAuth 2.0 de Google (también editable desde el panel de Ajustes) |
 | `VIMEO_ACCESS_TOKEN` | Solo si conectas Vimeo |
 
 5. Publica, entra con `ADMIN_EMAIL`, completa contacto/política de privacidad y enlace/meta de donaciones. Activa Jev en Ajustes y pulsa Clasificar con Jev para procesar el catálogo ya importado.
