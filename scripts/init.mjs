@@ -5,6 +5,11 @@ import path from 'node:path';
 import {query} from '../lib/db.mjs';
 export async function initialize(){
   const schema=await readFile(new URL('../lib/schema.sql',import.meta.url),'utf8');for(const statement of schema.split(';').map(x=>x.trim()).filter(Boolean))await query(statement);
+  const cols=(await query("PRAGMA table_info(users)")).map(c=>c.name);
+  if(!cols.includes('password_hash'))await query("ALTER TABLE users ADD COLUMN password_hash TEXT");
+  if(!cols.includes('password_salt'))await query("ALTER TABLE users ADD COLUMN password_salt TEXT");
+  if(!cols.includes('google_id'))await query("ALTER TABLE users ADD COLUMN google_id TEXT");
+  await query("CREATE INDEX IF NOT EXISTS users_google ON users(google_id)");
   for(const s of [{id:'podcast-odysee',name:'El Podcast del Cáncer · Odysee',platform:'odysee',url:'https://odysee.com/@ElPodcastdelCancer:3',external:'3fe18c9c35ed73eff22e56470b53ec85c7332913'},{id:'podcast-youtube',name:'El Podcast del Cáncer · YouTube',platform:'youtube',url:'https://www.youtube.com/@podcastcancer',external:null}])await query('INSERT INTO sources(id,name,platform,url,own,external_id) VALUES(?,?,?,?,1,?) ON CONFLICT(id) DO NOTHING',[s.id,s.name,s.platform,s.url,s.external]);
   const seeds=JSON.parse(await readFile(new URL('../lib/catalog.json',import.meta.url),'utf8'));
   for(const v of seeds)await query('INSERT INTO videos(id,source_id,platform,external_id,title,description,url,thumbnail,duration,published_at,kind,status,category,featured) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(platform,external_id) DO NOTHING',[v.id,v.source_id,v.platform,v.external_id,v.title,v.description,v.url,v.thumbnail,v.duration,v.published_at,v.kind,v.status,v.category,v.featured||0]);

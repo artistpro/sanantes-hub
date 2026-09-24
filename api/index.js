@@ -1,13 +1,13 @@
 import {exclusionReason,excludeInterrupted} from '../lib/publication.mjs';
 import {query} from '../lib/db.mjs';
-import {token,hash,now,fail,origin,cookie,setSession,user,requireUser,rate,secretEqual,text,devAuth} from '../lib/auth.mjs';
+import {token,hash,now,fail,origin,cookie,setSession,user,requireUser,rate,secretEqual,text,devAuth,hashPassword,verifyPassword} from '../lib/auth.mjs';
 import {fetchSource,identify,mediaURL,platforms,safeImage} from '../lib/media.mjs';
 import {organizePending} from '../lib/editorial.mjs';
 import {randomUUID} from 'node:crypto';
 import {classificationDefaults,classifierSettings,classify,classifyPending} from '../lib/classifier.mjs';
 const id=()=>randomUUID();
 const safeFileUrl=raw=>{if(typeof raw!=='string'||!raw)return '';if(raw.startsWith('data:application/pdf;')&&raw.length<=4500000)return raw;try{const u=new URL(raw);return u.protocol==='https:'&&!u.username&&!u.password?u.href:''}catch{return ''}};
-const defaults={title:'Comunidad Sanantes',subtitle:'El Podcast del Cáncer',intro:'Un espacio para aprender, escuchar y acompañarnos.',accent:'#d65337',donationGoal:'500',donationUrl:'https://paypal.me/podcastcancer',donationTitle:'Hagamos posible el próximo episodio',welcomePoints:'10',referralPoints:'20',privacyContact:'',privacyText:'',autoPublish:'1'};
+const defaults={title:'Comunidad Sanantes',subtitle:'El Podcast del Cáncer',intro:'Un espacio para aprender, escuchar y acompañarnos.',accent:'#d65337',donationGoal:'500',donationUrl:'https://paypal.me/podcastcancer',donationTitle:'Hagamos posible el próximo episodio',welcomePoints:'10',referralPoints:'20',privacyContact:'',privacyText:'',autoPublish:'1',googleClientId:process.env.GOOGLE_CLIENT_ID||''};
 async function settings(){return {...defaults,...classificationDefaults,...Object.fromEntries((await query('SELECT * FROM settings')).map(x=>[x.key,x.value]))};}
 async function body(req){if(req.body){if(typeof req.body==='string')return JSON.parse(req.body);return req.body;}let b='';for await(const c of req){b+=c;if(b.length>5000000)fail('El contenido supera el límite permitido',413)}return b?JSON.parse(b):{};}
 function send(res,value,status=200){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(value));}
@@ -27,6 +27,17 @@ async function getRanking(){
   const getBadges=u=>{const b=[];if(u.donations_count>0)b.push({id:'mecenas',label:'Mecenas',icon:'💛',title:'Aporte confirmado en PayPal'});if(u.invites_count>=3)b.push({id:'embajador',label:'Embajador',icon:'📢',title:'Invitó a 3 o más personas'});if(u.downloads_count>=2)b.push({id:'lector',label:'Lector',icon:'📖',title:'Difundió investigaciones y lecturas'});b.push({id:'pionero',label:'Pionero',icon:'🌱',title:'Miembro fundador'});return b;};
   const getLevel=t=>t>=500?'Guardián de la comunidad':t>=200?'Compañero de camino':t>=50?'Voz que acompaña':'Semilla de comunidad';
   return rankingRaw.map((u,idx)=>{const parts=u.name.trim().split(/\s+/);const maskedName=parts.length>1?`${parts[0]} ${parts[1][0]}.`:(parts[0]||'Miembro');return {rank:idx+1,id:u.id,name:maskedName,total:u.total,level:getLevel(u.total),badges:getBadges(u)};});
+}
+async function establishSession(res,member,ref=null){
+  const s=await settings();
+  const welcomed=await query('INSERT INTO points(id,user_id,amount,reason,event_key) VALUES(?,?,?,?,?) ON CONFLICT(event_key) DO NOTHING RETURNING id',[id(),member.id,Number(s.welcomePoints),'Bienvenida a la comunidad','welcome:'+member.id]);
+  if(welcomed.length&&ref){
+    await query("INSERT INTO points(id,user_id,amount,reason,event_key) SELECT ?,shares.user_id,?,'Nuevo miembro invitado',? FROM shares JOIN videos ON videos.id=shares.video_id WHERE shares.id=? AND shares.user_id<>? AND videos.status='published' AND (SELECT COUNT(*) FROM points p WHERE p.user_id=shares.user_id AND p.reason='Nuevo miembro invitado' AND p.created_at>=date('now'))<5 ON CONFLICT(event_key) DO NOTHING",[id(),Number(s.referralPoints),'referral:'+member.id,ref,member.id]);
+  }
+  const session=token();
+  await query('INSERT INTO sessions(token,user_id,expires) VALUES(?,?,?)',[hash(session),member.id,now()+604800]);
+  setSession(res,session);
+  return {session,member:{id:member.id,email:member.email,name:member.name,role:member.role}};
 }
 export default async function handler(req,res){
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
@@ -104,6 +115,79 @@ export default async function handler(req,res){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
       return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),me:await user(req),ranking:await getRanking()});
     }
+    if(path==='auth/register'&&method==='POST'){
+      const b=await body(req);const email=text(b.email,254).toLowerCase();const name=text(b.name,80)||email.split('@')[0];const password=typeof b.password==='string'?b.password:'';
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))fail('Revisa tu correo electrónico');
+      if(!b.consent)fail('Acepta la política de privacidad para continuar');
+      if(password.length<6)fail('La contraseña debe tener al menos 6 caracteres');
+      await rate('auth-reg-ip:'+(req.headers['x-vercel-forwarded-for']||req.socket?.remoteAddress||'unknown'),20);
+      const [existing]=await query('SELECT id,email,password_hash FROM users WHERE email=?',[email]);
+      if(existing&&existing.password_hash)fail('Este correo ya está registrado. Inicia sesión con tu contraseña.');
+      const {hash:pHash,salt:pSalt}=hashPassword(password);
+      const adminEmail=(process.env.ADMIN_EMAIL||'artistproco@gmail.com').trim().toLowerCase();
+      const role=email===adminEmail?'admin':'member';
+      if(existing){
+        await query('UPDATE users SET name=?,password_hash=?,password_salt=?,role=CASE WHEN email=? THEN ? ELSE role END WHERE id=?',[name,pHash,pSalt,adminEmail,role,existing.id]);
+      }else{
+        await query('INSERT INTO users(id,email,name,role,password_hash,password_salt) VALUES(?,?,?,?,?,?)',[id(),email,name,role,pHash,pSalt]);
+      }
+      const [member]=await query('SELECT * FROM users WHERE email=?',[email]);
+      const s=await establishSession(res,member,text(b.ref,64)||null);
+      return send(res,{ok:true,me:s.member});
+    }
+    if(path==='auth/login'&&method==='POST'){
+      const b=await body(req);const email=text(b.email,254).toLowerCase();const password=typeof b.password==='string'?b.password:'';
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))fail('Revisa tu correo electrónico');
+      if(!password)fail('Ingresa tu contraseña');
+      await rate('auth-log-ip:'+(req.headers['x-vercel-forwarded-for']||req.socket?.remoteAddress||'unknown'),25);
+      await rate('auth-log-email:'+email,6);
+      const [u]=await query('SELECT id,email,name,role,password_hash,password_salt FROM users WHERE email=?',[email]);
+      const adminEmail=(process.env.ADMIN_EMAIL||'artistproco@gmail.com').trim().toLowerCase();
+      if(!u)fail('Correo o contraseña incorrectos',401);
+      if(!u.password_hash){
+        if(email===adminEmail){
+          if(password.length<6)fail('La contraseña del administrador debe tener al menos 6 caracteres');
+          const {hash:pHash,salt:pSalt}=hashPassword(password);
+          await query('UPDATE users SET password_hash=?,password_salt=?,role=? WHERE id=?',[pHash,pSalt,'admin',u.id]);
+        }else{
+          fail('Tu cuenta no tiene contraseña asignada aún. Puedes crear una registrándote con este correo.',401);
+        }
+      }else{
+        if(!verifyPassword(password,u.password_hash,u.password_salt))fail('Correo o contraseña incorrectos',401);
+      }
+      const [member]=await query('SELECT * FROM users WHERE email=?',[email]);
+      const s=await establishSession(res,member,null);
+      return send(res,{ok:true,me:s.member});
+    }
+    if(path==='auth/google'&&method==='POST'){
+      const b=await body(req);const credential=text(b.credential,4000);
+      if(!credential)fail('Falta la credencial de acceso de Google');
+      await rate('auth-goog-ip:'+(req.headers['x-vercel-forwarded-for']||req.socket?.remoteAddress||'unknown'),30);
+      let payload;
+      try{
+        const r=await fetch('https://oauth2.googleapis.com/tokeninfo?id_token='+encodeURIComponent(credential),{signal:AbortSignal.timeout(10000)});
+        if(!r.ok)fail('Credencial de Google no válida',401);
+        payload=await r.json();
+      }catch(e){
+        if(e.status)throw e;
+        fail('No se pudo verificar la credencial con Google',502);
+      }
+      if(!payload.email||(payload.email_verified!=='true'&&payload.email_verified!==true))fail('El correo de Google no está verificado',401);
+      const googleId=String(payload.sub);
+      const email=String(payload.email).trim().toLowerCase();
+      const name=text(payload.name||payload.given_name,80)||email.split('@')[0];
+      const adminEmail=(process.env.ADMIN_EMAIL||'artistproco@gmail.com').trim().toLowerCase();
+      const role=email===adminEmail?'admin':'member';
+      const [existing]=await query('SELECT id,email,name,role,google_id FROM users WHERE google_id=? OR email=?',[googleId,email]);
+      if(existing){
+        await query('UPDATE users SET google_id=COALESCE(?,google_id),role=CASE WHEN email=? THEN ? ELSE role END WHERE id=?',[googleId,adminEmail,role,existing.id]);
+      }else{
+        await query('INSERT INTO users(id,email,name,role,google_id) VALUES(?,?,?,?,?)',[id(),email,name,role,googleId]);
+      }
+      const [member]=await query('SELECT * FROM users WHERE email=?',[email]);
+      const s=await establishSession(res,member,text(b.ref,64)||null);
+      return send(res,{ok:true,me:s.member});
+    }
     if(path==='auth/request'&&method==='POST'){
       const b=await body(req);const email=text(b.email,254).toLowerCase();const name=text(b.name,80)||email.split('@')[0];if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))fail('Revisa tu correo electrónico');if(!b.consent)fail('Acepta la política de privacidad para continuar');
       await rate('auth-ip:'+(req.headers['x-vercel-forwarded-for']||req.socket?.remoteAddress||'unknown'),15);await rate('auth-email:'+email,3);
@@ -118,10 +202,9 @@ export default async function handler(req,res){
       const raw=u.searchParams.get('token')||'';const [t]=await query('DELETE FROM login_tokens WHERE token=? AND expires>? RETURNING *',[hash(raw),now()]);if(!t)fail('El enlace ha caducado o ya fue utilizado. Solicita uno nuevo.');
       const adminEmail=(process.env.ADMIN_EMAIL||'artistproco@gmail.com').trim().toLowerCase();
       const role=t.email===adminEmail?'admin':'member';
-      await query('INSERT INTO users(id,email,name,role) VALUES(?,?,?,?) ON CONFLICT(email) DO UPDATE SET role=excluded.role',[id(),t.email,t.name,role]);const [member]=await query('SELECT * FROM users WHERE email=?',[t.email]);const s=await settings();
-      const welcomed=await query('INSERT INTO points(id,user_id,amount,reason,event_key) VALUES(?,?,?,?,?) ON CONFLICT(event_key) DO NOTHING RETURNING id',[id(),member.id,Number(s.welcomePoints),'Bienvenida a la comunidad','welcome:'+member.id]);
-      if(welcomed.length&&t.ref){await query("INSERT INTO points(id,user_id,amount,reason,event_key) SELECT ?,shares.user_id,?,'Nuevo miembro invitado',? FROM shares JOIN videos ON videos.id=shares.video_id WHERE shares.id=? AND shares.user_id<>? AND videos.status='published' AND (SELECT COUNT(*) FROM points p WHERE p.user_id=shares.user_id AND p.reason='Nuevo miembro invitado' AND p.created_at>=date('now'))<5 ON CONFLICT(event_key) DO NOTHING",[id(),Number(s.referralPoints),'referral:'+member.id,t.ref,member.id]);}
-      const session=token();await query('INSERT INTO sessions(token,user_id,expires) VALUES(?,?,?)',[hash(session),member.id,now()+604800]);setSession(res,session);res.statusCode=302;res.setHeader('Location',origin()+(role==='admin'?'/#admin':'/#comunidad'));return res.end();
+      await query('INSERT INTO users(id,email,name,role) VALUES(?,?,?,?) ON CONFLICT(email) DO UPDATE SET role=excluded.role',[id(),t.email,t.name,role]);const [member]=await query('SELECT * FROM users WHERE email=?',[t.email]);
+      await establishSession(res,member,t.ref);
+      res.statusCode=302;res.setHeader('Location',origin()+(role==='admin'?'/#admin':'/#comunidad'));return res.end();
     }
     if(path==='auth/logout'&&method==='POST'){await query('DELETE FROM sessions WHERE token=?',[hash(cookie(req,'session'))]);setSession(res,'');return send(res,{ok:true});}
     if(path==='community'&&method==='GET'){
