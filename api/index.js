@@ -39,6 +39,18 @@ async function establishSession(res,member,ref=null){
   setSession(res,session);
   return {session,member:{id:member.id,email:member.email,name:member.name,role:member.role}};
 }
+let authSchemaChecked=false;
+async function ensureAuthSchema(){
+  if(authSchemaChecked)return;
+  try{
+    const cols=(await query('PRAGMA table_info(users)')).map(c=>c.name);
+    if(!cols.includes('password_hash'))await query('ALTER TABLE users ADD COLUMN password_hash TEXT');
+    if(!cols.includes('password_salt'))await query('ALTER TABLE users ADD COLUMN password_salt TEXT');
+    if(!cols.includes('google_id'))await query('ALTER TABLE users ADD COLUMN google_id TEXT');
+    await query('CREATE INDEX IF NOT EXISTS users_google ON users(google_id)');
+    authSchemaChecked=true;
+  }catch(e){console.warn('Auto-migración auth:',e.message);}
+}
 export default async function handler(req,res){
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
   try{
@@ -46,6 +58,7 @@ export default async function handler(req,res){
     if(!['GET','POST','DELETE','HEAD'].includes(method))fail('Método no permitido',405);
     if(method!=='GET' && method!=='HEAD' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
     if(path==='health')return send(res,{ok:true});
+    if(path.startsWith('auth/'))await ensureAuthSchema();
     if((path==='post/image'||path.endsWith('/image'))&&(method==='GET'||method==='HEAD')){
       const slugOrId=u.searchParams.get('slug')||u.searchParams.get('id')||path.replace(/^b\//,'').replace(/^blog\//,'').replace(/\/image$/,'');
       const [p]=(await query("SELECT image FROM posts WHERE slug=? OR id=?",[slugOrId,slugOrId]))||[];
