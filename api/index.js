@@ -79,6 +79,68 @@ export default async function handler(req,res){
       if(method==='HEAD') return res.end();
       return res.end(buffer);
     }
+    if((path==='robots.txt'||path==='robots')&&(method==='GET'||method==='HEAD')){
+      const txt=`User-agent: *\nAllow: /\nContent-Signal: search=yes, ai-input=yes, ai-train=no\n\nSitemap: ${origin()}/sitemap.xml\n`;
+      res.statusCode=200;
+      res.setHeader('Content-Type','text/plain; charset=utf-8');
+      res.setHeader('Cache-Control','public, max-age=3600, s-maxage=86400');
+      if(method==='HEAD') return res.end();
+      return res.end(txt);
+    }
+    if((path==='sitemap.xml'||path==='sitemap')&&(method==='GET'||method==='HEAD')){
+      const publishedVideos=(await query("SELECT id,title,description,thumbnail,external_id,platform,kind,duration,published_at FROM videos WHERE status='published' AND kind IN ('video','live') ORDER BY published_at DESC LIMIT 1000")).filter(v=>!exclusionReason(v));
+      const publishedPosts=await query("SELECT id,slug,title,excerpt,updated_at FROM posts WHERE status='published' ORDER BY updated_at DESC LIMIT 500");
+      const escXml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+      const base=origin();
+      const nowIso=new Date().toISOString();
+      const videoItems=publishedVideos.map(v=>{
+        const thumb=escXml(v.thumbnail||(v.platform==='youtube'?`https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg`:base+'/favicon.svg'));
+        const title=escXml(v.title);
+        const desc=escXml(v.description?v.description.slice(0,2048):v.title);
+        const pubDate=v.published_at?new Date(v.published_at).toISOString():nowIso;
+        return `  <url>
+    <loc>${base}/v/${v.id}</loc>
+    <lastmod>${pubDate.split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>${thumb}</video:thumbnail_loc>
+      <video:title>${title}</video:title>
+      <video:description>${desc}</video:description>
+      ${v.duration?`<video:duration>${Math.min(Number(v.duration),28800)}</video:duration>`:''}
+      <video:publication_date>${pubDate}</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>${v.kind==='live'?'yes':'no'}</video:live>
+    </video:video>
+  </url>`;
+      }).join('\n');
+      const postItems=publishedPosts.map(p=>{
+        const modDate=p.updated_at?new Date(p.updated_at).toISOString():nowIso;
+        return `  <url>
+    <loc>${base}/b/${p.slug}</loc>
+    <lastmod>${modDate.split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>`;
+      }).join('\n');
+      const xml=`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>${base}/</loc>
+    <lastmod>${nowIso.split('T')[0]}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+${postItems}
+${videoItems}
+</urlset>`;
+      res.statusCode=200;
+      res.setHeader('Content-Type','application/xml; charset=utf-8');
+      res.setHeader('Cache-Control','public, max-age=3600, s-maxage=14400');
+      if(method==='HEAD') return res.end();
+      return res.end(xml);
+    }
     if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&(method==='GET'||method==='HEAD')){
       let type=u.searchParams.get('type')||'';
       let targetId=u.searchParams.get('id')||'';
@@ -90,8 +152,9 @@ export default async function handler(req,res){
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
       let targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'');
       let canonicalUrl=origin()+'/';
+      let schemaJson='';
       if(type==='video'&&targetId){
-        const [v]=(await query("SELECT id,title,description,thumbnail,external_id,platform FROM videos WHERE id=? OR external_id=?",[targetId,targetId]))||[];
+        const [v]=(await query("SELECT id,title,description,thumbnail,external_id,platform,published_at,kind FROM videos WHERE id=? OR external_id=?",[targetId,targetId]))||[];
         if(v){
           title=v.title+' · Sanantes';
           if(v.description)desc=v.description.slice(0,220).replace(/\s+/g,' ').trim();
@@ -102,9 +165,26 @@ export default async function handler(req,res){
           }
           targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'/')+'#video/'+v.id;
           canonicalUrl=origin()+'/v/'+v.id;
+          const embedUrl=v.platform==='youtube'?`https://www.youtube-nocookie.com/embed/${v.external_id}`:(v.platform==='odysee'?`https://odysee.com/$/embed/${v.external_id||v.id}`:undefined);
+          schemaJson=JSON.stringify({
+            "@context":"https://schema.org",
+            "@type":"VideoObject",
+            "name":v.title,
+            "description":desc,
+            "thumbnailUrl":[image],
+            "uploadDate":v.published_at?new Date(v.published_at).toISOString():undefined,
+            "contentUrl":v.url||undefined,
+            "embedUrl":embedUrl,
+            "publisher":{
+              "@type":"Organization",
+              "name":"Comunidad Sanantes",
+              "url":origin(),
+              "logo":{"@type":"ImageObject","url":origin()+"/favicon.svg"}
+            }
+          });
         }
       }else if(type==='blog'&&targetId){
-        const [p]=(await query("SELECT id,slug,title,excerpt,image FROM posts WHERE slug=? OR id=?",[targetId,targetId]))||[];
+        const [p]=(await query("SELECT id,slug,title,excerpt,image,updated_at FROM posts WHERE slug=? OR id=?",[targetId,targetId]))||[];
         if(p){
           title=p.title+' · Sanantes';
           if(p.excerpt)desc=p.excerpt.slice(0,220).replace(/\s+/g,' ').trim();
@@ -114,6 +194,23 @@ export default async function handler(req,res){
           }
           targetUrl=origin()+'/#blog/'+p.slug;
           canonicalUrl=origin()+'/b/'+p.slug;
+          schemaJson=JSON.stringify({
+            "@context":"https://schema.org",
+            "@type":"MedicalWebPage",
+            "headline":p.title,
+            "description":desc,
+            "image":[image],
+            "datePublished":p.updated_at?new Date(p.updated_at).toISOString():undefined,
+            "dateModified":p.updated_at?new Date(p.updated_at).toISOString():undefined,
+            "publisher":{
+              "@type":"Organization",
+              "name":"Comunidad Sanantes",
+              "url":origin(),
+              "logo":{"@type":"ImageObject","url":origin()+"/favicon.svg"}
+            },
+            "medicalSpecialty":"Oncology",
+            "aspect":["Emotional Support","Information"]
+          });
         }
       }
       const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -122,7 +219,7 @@ export default async function handler(req,res){
       res.setHeader('Content-Type','text/html; charset=utf-8');
       res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');
       if(method==='HEAD') return res.end();
-      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><script>location.replace(${JSON.stringify(targetUrl)});</script></head><body style="font-family:system-ui,sans-serif;padding:24px;text-align:center;background:#f3f6f4;color:#18322d"><p>Cargando contenido en Sanantes… <a href="${sUrl}">Haz clic aquí para ver el contenido</a></p></body></html>`);
+      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><script>location.replace(${JSON.stringify(targetUrl)});</script>${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="font-family:system-ui,sans-serif;padding:24px;text-align:center;background:#f3f6f4;color:#18322d"><p>Cargando contenido en Sanantes… <a href="${sUrl}">Haz clic aquí para ver el contenido</a></p></body></html>`);
     }
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');

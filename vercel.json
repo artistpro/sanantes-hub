@@ -13,6 +13,14 @@
       "destination": "/api/index?route=:path*"
     },
     {
+      "source": "/sitemap.xml",
+      "destination": "/api/index?route=sitemap"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/api/index?route=robots"
+    },
+    {
       "source": "/v/:id",
       "destination": "/api/index?route=preview&type=video&id=:id"
     },
