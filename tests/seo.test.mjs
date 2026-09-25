@@ -70,3 +70,23 @@ test('SEO & GEO: /v/:id y /b/:slug inyectan Schema.org JSON-LD (VideoObject y Me
   assert.ok(bHtml.includes('Oncology'));
   assert.ok(bHtml.includes('Cuerpo informativo sobre oncologia'));
 });
+
+test('Etapa 5: Página institucional E-E-A-T /b/criterio-editorial activa con rigor científico', async () => {
+  const res = await fetch(`${base}/api/b/criterio-editorial`);
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.ok(html.includes('Criterio Editorial'), 'Debe titular Criterio Editorial');
+  assert.ok(html.includes('PubMed'), 'Debe mencionar PubMed como fuente');
+  assert.ok(html.includes('Aviso médico informativo:'), 'Debe incluir disclaimer YMYL');
+  assert.ok(html.includes('"@type":"MedicalWebPage"'), 'Debe incluir esquema MedicalWebPage');
+});
+
+test('Etapa 5: Malla de clústeres temáticos enlazada en /v/:id', async () => {
+  const [vid] = await query("SELECT id FROM videos WHERE status='published' LIMIT 1");
+  const res = await fetch(`${base}/api/v/${vid.id}`);
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.ok(html.includes('aria-label="Contenidos relacionados"'), 'Debe incluir bloque de contenidos relacionados');
+  assert.ok(html.includes('Investigaciones y contenidos relacionados'), 'Debe titular la sección de clúster');
+});
+
