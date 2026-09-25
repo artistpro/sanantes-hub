@@ -56,13 +56,17 @@ test('SEO & GEO: /v/:id y /b/:slug inyectan Schema.org JSON-LD (VideoObject y Me
   assert.ok(vHtml.includes('"@type":"VideoObject"'));
   assert.ok(vHtml.includes('"name":'));
   assert.ok(vHtml.includes('Comunidad Sanantes'));
+  assert.ok(vHtml.includes('<article'));
+  assert.ok(vHtml.includes('<h1'));
+  assert.ok(vHtml.includes('Aviso médico informativo:'));
 
   // Insert a test published post if none exists
-  await query("INSERT INTO posts(id,slug,title,excerpt,body,status,image) VALUES('seo-post','seo-post','Post SEO','Resumen SEO','Cuerpo','published','https://images.unsplash.com/photo-1') ON CONFLICT(id) DO NOTHING");
+  await query("INSERT INTO posts(id,slug,title,excerpt,body,status,image) VALUES('seo-post','seo-post','Post SEO','Resumen SEO','Cuerpo informativo sobre oncologia','published','https://images.unsplash.com/photo-1') ON CONFLICT(id) DO NOTHING");
   const bRes = await fetch(`${base}/api/b/seo-post`);
   assert.equal(bRes.status, 200);
   const bHtml = await bRes.text();
   assert.ok(bHtml.includes('application/ld+json'));
   assert.ok(bHtml.includes('"@type":"MedicalWebPage"'));
   assert.ok(bHtml.includes('Oncology'));
+  assert.ok(bHtml.includes('Cuerpo informativo sobre oncologia'));
 });

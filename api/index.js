@@ -142,6 +142,7 @@ ${videoItems}
       return res.end(xml);
     }
     if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&(method==='GET'||method==='HEAD')){
+      const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       let type=u.searchParams.get('type')||'';
       let targetId=u.searchParams.get('id')||'';
       const ref=u.searchParams.get('ref')||'';
@@ -152,10 +153,14 @@ ${videoItems}
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
       let targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'');
       let canonicalUrl=origin()+'/';
-      let schemaJson='';
+      let category = '';
+      let fullContentHtml = '';
+      let activeEmbed = '';
+      let schemaJson = '';
       if(type==='video'&&targetId){
-        const [v]=(await query("SELECT id,title,description,thumbnail,external_id,platform,published_at,kind FROM videos WHERE id=? OR external_id=?",[targetId,targetId]))||[];
+        const [v]=(await query("SELECT id,title,description,thumbnail,external_id,platform,published_at,kind,category FROM videos WHERE id=? OR external_id=?",[targetId,targetId]))||[];
         if(v){
+          category = v.category || 'Investigación y tratamientos';
           title=v.title+' · Sanantes';
           if(v.description)desc=v.description.slice(0,220).replace(/\s+/g,' ').trim();
           if(v.platform==='youtube'&&v.external_id){
@@ -166,6 +171,9 @@ ${videoItems}
           targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'/')+'#video/'+v.id;
           canonicalUrl=origin()+'/v/'+v.id;
           const embedUrl=v.platform==='youtube'?`https://www.youtube-nocookie.com/embed/${v.external_id}`:(v.platform==='odysee'?`https://odysee.com/$/embed/${v.external_id||v.id}`:undefined);
+          activeEmbed = embedUrl || '';
+          const escBody = escHtml(v.description||'').replace(/\n/g, '<br>');
+          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${escBody}</div>`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
             "@type":"VideoObject",
@@ -184,8 +192,9 @@ ${videoItems}
           });
         }
       }else if(type==='blog'&&targetId){
-        const [p]=(await query("SELECT id,slug,title,excerpt,image,updated_at FROM posts WHERE slug=? OR id=?",[targetId,targetId]))||[];
+        const [p]=(await query("SELECT id,slug,title,excerpt,body,image,category,updated_at FROM posts WHERE slug=? OR id=?",[targetId,targetId]))||[];
         if(p){
+          category = p.category || 'Blog Sanantes';
           title=p.title+' · Sanantes';
           if(p.excerpt)desc=p.excerpt.slice(0,220).replace(/\s+/g,' ').trim();
           if(p.image){
@@ -194,6 +203,8 @@ ${videoItems}
           }
           targetUrl=origin()+'/#blog/'+p.slug;
           canonicalUrl=origin()+'/b/'+p.slug;
+          const escBody = escHtml(p.body||p.excerpt||'').replace(/\n/g, '<br>');
+          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${escBody}</div>`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
             "@type":"MedicalWebPage",
@@ -213,13 +224,12 @@ ${videoItems}
           });
         }
       }
-      const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl),sCanon=escHtml(canonicalUrl);
       res.statusCode=200;
       res.setHeader('Content-Type','text/html; charset=utf-8');
       res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');
       if(method==='HEAD') return res.end();
-      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><script>location.replace(${JSON.stringify(targetUrl)});</script>${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="font-family:system-ui,sans-serif;padding:24px;text-align:center;background:#f3f6f4;color:#18322d"><p>Cargando contenido en Sanantes… <a href="${sUrl}">Haz clic aquí para ver el contenido</a></p></body></html>`);
+      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><script>location.replace(${JSON.stringify(targetUrl)});</script>${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px;">🌿 Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header><main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sTitle}</h1>${activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sTitle}" style="max-width:100%;border-radius:10px;height:auto;"></div>`}<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main><footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</footer></body></html>`);
     }
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
