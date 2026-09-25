@@ -143,6 +143,37 @@ ${videoItems}
     }
     if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&(method==='GET'||method==='HEAD')){
       const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const formatRichText=(raw)=>{
+        if(!raw) return '';
+        const lines=String(raw).split(/\r?\n/);
+        let html='', inList=false, inPara=false;
+        for(let line of lines){
+          line=line.trim();
+          if(!line){
+            if(inList){ html+='</ul>'; inList=false; }
+            if(inPara){ html+='</p>'; inPara=false; }
+            continue;
+          }
+          const isBullet=/^[•\-\*]\s+/.test(line) || /^\d+\.\s+/.test(line);
+          if(isBullet){
+            if(inPara){ html+='</p>'; inPara=false; }
+            if(!inList){ html+='<ul style="margin:16px 0;padding-left:24px;line-height:1.6;">'; inList=true; }
+            const clean=line.replace(/^[•\-\*]\s+/,'').replace(/^\d+\.\s+/,'');
+            html+=`<li style="margin-bottom:8px;">${escHtml(clean)}</li>`;
+          }else{
+            if(inList){ html+='</ul>'; inList=false; }
+            if(!inPara){
+              html+='<p style="margin:0 0 16px;line-height:1.7;">'+escHtml(line);
+              inPara=true;
+            }else{
+              html+='<br>'+escHtml(line);
+            }
+          }
+        }
+        if(inList) html+='</ul>';
+        if(inPara) html+='</p>';
+        return html;
+      };
       let type=u.searchParams.get('type')||'';
       let targetId=u.searchParams.get('id')||'';
       const ref=u.searchParams.get('ref')||'';
@@ -172,8 +203,7 @@ ${videoItems}
           canonicalUrl=origin()+'/v/'+v.id;
           const embedUrl=v.platform==='youtube'?`https://www.youtube-nocookie.com/embed/${v.external_id}`:(v.platform==='odysee'?`https://odysee.com/$/embed/${v.external_id||v.id}`:undefined);
           activeEmbed = embedUrl || '';
-          const escBody = escHtml(v.description||'').replace(/\n/g, '<br>');
-          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${escBody}</div>`;
+          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(v.description)}</div>`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
             "@type":"VideoObject",
@@ -203,8 +233,7 @@ ${videoItems}
           }
           targetUrl=origin()+'/#blog/'+p.slug;
           canonicalUrl=origin()+'/b/'+p.slug;
-          const escBody = escHtml(p.body||p.excerpt||'').replace(/\n/g, '<br>');
-          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${escBody}</div>`;
+          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(p.body||p.excerpt)}</div>`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
             "@type":"MedicalWebPage",
