@@ -4,6 +4,7 @@ import {token,hash,now,fail,origin,cookie,setSession,user,requireUser,rate,secre
 import {fetchSource,identify,mediaURL,platforms,safeImage} from '../lib/media.mjs';
 import {organizePending} from '../lib/editorial.mjs';
 import {randomUUID} from 'node:crypto';
+import {getGeoEnrichment, renderGeoHtml} from '../lib/geo-enrichment.mjs';
 import {classificationDefaults,classifierSettings,classify,classifyPending} from '../lib/classifier.mjs';
 const id=()=>randomUUID();
 const safeFileUrl=raw=>{if(typeof raw!=='string'||!raw)return '';if(raw.startsWith('data:application/pdf;')&&raw.length<=4500000)return raw;try{const u=new URL(raw);return u.protocol==='https:'&&!u.username&&!u.password?u.href:''}catch{return ''}};
@@ -203,7 +204,9 @@ ${videoItems}
           canonicalUrl=origin()+'/v/'+v.id;
           const embedUrl=v.platform==='youtube'?`https://www.youtube-nocookie.com/embed/${v.external_id}`:(v.platform==='odysee'?`https://odysee.com/$/embed/${v.external_id||v.id}`:undefined);
           activeEmbed = embedUrl || '';
-          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(v.description)}</div>`;
+          const geoEnrich = getGeoEnrichment(v);
+          const geoHtml = geoEnrich ? renderGeoHtml(geoEnrich) : '';
+          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(v.description)}</div>${geoHtml}`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
             "@type":"VideoObject",
