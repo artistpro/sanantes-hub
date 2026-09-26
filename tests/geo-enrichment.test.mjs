@@ -32,3 +32,18 @@ test('GEO: getGeoEnrichment identifica videos de estrategia metabólica y Dr. Se
   assert.ok(enrich.quotation.author.includes('Seyfried'), 'Debe citar al Dr. Seyfried');
   assert.ok(enrich.sources.some(s => s.title.includes('Seyfried') || s.url.includes('pubmed')), 'Debe tener fuente de Seyfried');
 });
+
+test('GEO: getGeoEnrichment identifica videos del Dr. William Makis y oncología integrativa', () => {
+  const vidMakis = {
+    id: 'a39c7bf6-a2a3-4565-8a82-0b52566e5d94',
+    title: 'CÁNCER: El Fármaco que la CENSURA OCULTÓ (Dr. Makis) ⚠️',
+    description: 'El Dr. William Makis profundiza en más de 100 publicaciones sobre ivermectina...'
+  };
+  const enrich = getGeoEnrichment(vidMakis);
+  assert.ok(enrich, 'Debe encontrar enriquecimiento para Dr. Makis');
+  assert.ok(enrich.quotation.author.includes('Makis'), 'Debe citar al Dr. William Makis');
+  assert.ok(enrich.sources.some(s => s.title.includes('stem-like') || s.url.includes('pubmed')), 'Debe tener fuentes indexadas sobre células madre o drug repurposing');
+  const html = renderGeoHtml(enrich);
+  assert.ok(html.includes('William Makis'), 'HTML debe incluir al autor en la cita');
+});
+

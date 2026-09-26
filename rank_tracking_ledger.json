@@ -1,0 +1,127 @@
+{
+  "last_check": "2026-09-26T00:45:53.680Z",
+  "history": [
+    {
+      "timestamp": "2026-09-26T00:45:53.680Z",
+      "snapshot": [
+        {
+          "query": "sanantes",
+          "group": "Marca",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "comunidad sanantes",
+          "group": "Marca",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "el podcast del cancer",
+          "group": "Categoría",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "podcast del cancer",
+          "group": "Categoría",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "podcast sobre el cancer",
+          "group": "Categoría",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "william makis",
+          "group": "Entidad",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "william makis en español",
+          "group": "Entidad",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "oncologia integrativa",
+          "group": "Pilar Institucional",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "ivermectina cancer estudio pubmed",
+          "group": "Evidencia",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "mebendazol fenbendazol cancer evidencia",
+          "group": "Evidencia",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "estrategia metabolica thomas seyfried espanol",
+          "group": "Metabolismo",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "ratio glucosa cetonas gki cancer",
+          "group": "Metabolismo",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        },
+        {
+          "query": "frecuencias 432 hz bienestar descanso",
+          "group": "Bienestar",
+          "position": "Pendiente GSC (48h)",
+          "impressions": 0,
+          "clicks": 0,
+          "ctr": "0.0%",
+          "indexed_status": "Indexado (Sitemap activo)"
+        }
+      ]
+    }
+  ]
+}

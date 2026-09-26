@@ -180,8 +180,8 @@ ${videoItems}
       const ref=u.searchParams.get('ref')||'';
       if(!type&&(path.startsWith('v/')||path.startsWith('video/'))){type='video';targetId=path.replace(/^video\//,'').replace(/^v\//,'');}
       if(!type&&(path.startsWith('b/')||path.startsWith('blog/'))){type='blog';targetId=path.replace(/^blog\//,'').replace(/^b\//,'');}
-      let title='Comunidad Sanantes · El Podcast del Cáncer';
-      let desc='Videos, conversaciones y contenidos seleccionados por El Podcast del Cáncer. Un espacio para aprender y acompañarnos.';
+      let title='Comunidad Sanantes · El Podcast del Cáncer | Oncología Integrativa';
+      let desc='Sanantes: El Podcast del Cáncer y plataforma de oncología integrativa. Investigaciones científicas, análisis del Dr. William Makis en español, protocolos complementarios y acompañamiento.';
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
       let targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'');
       let canonicalUrl=origin()+'/';
