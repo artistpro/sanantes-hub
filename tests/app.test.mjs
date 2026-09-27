@@ -16,10 +16,10 @@ test('Auth, curación, separación de directos y puntos verificados',async()=>{
  const member=await login('member@example.test');assert.equal((await call('admin',null,member.cookie)).status,403);
  const pub=await (await call('public')).json();assert.ok(pub.videos.length>0);assert.ok(pub.videos.every(v=>['video','live'].includes(v.kind)));const initialVideos=pub.videos.filter(v=>v.kind==='video').length;
  const vid=pub.videos.find(v=>v.kind==='video');
- const share=await (await call('share',{videoId:vid.id},owner.cookie)).json();const share2=await (await call('share',{videoId:vid.id},owner.cookie)).json();assert.equal(share.url,share2.url);
- let c=await (await call('community',null,owner.cookie)).json();assert.equal(c.total,10,'sharing alone grants no points');
- const ref=new URL(share.url).searchParams.get('ref');await login('newperson@example.test',ref);c=await (await call('community',null,owner.cookie)).json();assert.equal(c.total,30);
- await login('newperson@example.test',ref);c=await (await call('community',null,owner.cookie)).json();assert.equal(c.total,30,'repeat login cannot farm points');
+ const share=await (await call('share',{videoId:vid.id},owner.cookie)).json();assert.equal(share.awarded,2);const share2=await (await call('share',{videoId:vid.id},owner.cookie)).json();assert.equal(share2.awarded,0);assert.equal(share.url,share2.url);
+ let c=await (await call('community',null,owner.cookie)).json();assert.equal(c.total,12,'10 bienvenida + 2 compartir');
+ const ref=new URL(share.url).searchParams.get('ref');await login('newperson@example.test',ref);c=await (await call('community',null,owner.cookie)).json();assert.equal(c.total,32);
+ await login('newperson@example.test',ref);c=await (await call('community',null,owner.cookie)).json();assert.equal(c.total,32,'repeat login cannot farm points');
  assert.equal((await call('admin/video',{...vid,kind:'live'},member.cookie)).status,403);
  assert.equal((await call('admin/video',{...vid,kind:'review'},owner.cookie)).status,400,'unclassified content cannot be published');
  assert.equal((await call('admin/video',{...vid,kind:'live'},owner.cookie)).status,200);
