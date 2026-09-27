@@ -21,6 +21,14 @@
       "destination": "/api/index?route=robots"
     },
     {
+      "source": "/v/:id/thumb.jpg",
+      "destination": "/api/index?route=video/thumb&id=:id"
+    },
+    {
+      "source": "/video/:id/thumb.jpg",
+      "destination": "/api/index?route=video/thumb&id=:id"
+    },
+    {
       "source": "/v/:id",
       "destination": "/api/index?route=preview&type=video&id=:id"
     },

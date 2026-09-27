@@ -123,7 +123,7 @@ test('Vistas previas de redes sociales (/v/:id y /b/:slug) con OpenGraph y redir
   assert.equal(vRes.status,200);
   assert.match(vRes.headers.get('content-type'),/text\/html/);
   const vHtml=await vRes.text();
-  const expectedImg=vid.platform==='youtube'&&vid.external_id?'https://i.ytimg.com/vi/'+vid.external_id+'/hqdefault.jpg':vid.thumbnail;
+  const expectedImg=vid.platform==='youtube'&&vid.external_id?'https://i.ytimg.com/vi/'+vid.external_id+'/hqdefault.jpg':base+'/v/'+vid.id+'/thumb.jpg';
   assert.ok(vHtml.includes('<meta property="og:image" content="'+expectedImg+'">'));
   assert.ok(vHtml.includes('<meta name="twitter:card" content="summary_large_image">'));
   assert.ok(!vHtml.includes('<meta http-equiv="refresh"'),'Never redirect crawlers via refresh header');
