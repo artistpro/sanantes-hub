@@ -90,3 +90,31 @@ test('Etapa 5: Malla de clústeres temáticos enlazada en /v/:id', async () => {
   assert.ok(html.includes('Investigaciones y contenidos relacionados'), 'Debe titular la sección de clúster');
 });
 
+test('Landing Hubs: /autores/william-makis renderiza monografía E-E-A-T y ProfilePage Schema', async () => {
+  const res = await fetch(`${base}/api/autores/william-makis`);
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.ok(html.includes('Dr. William Makis en Español'), 'Debe incluir título especializado');
+  assert.ok(html.includes('McGill University'), 'Debe detallar credenciales médicas');
+  assert.ok(html.includes('29054452') || html.includes('PubMed'), 'Debe citar papers indexados');
+  assert.ok(html.includes('"@type":"ProfilePage"'), 'Debe incluir ProfilePage Schema');
+});
+
+test('Landing Hubs: /temas/medicamentos-reposicionados renderiza compendio de ivermectina y mebendazol', async () => {
+  const res = await fetch(`${base}/api/temas/medicamentos-reposicionados`);
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.ok(html.includes('Medicamentos Reposicionados'), 'Debe titular el compendio');
+  assert.ok(html.includes('Ivermectina') && html.includes('Mebendazol'), 'Debe detallar principios activos');
+  assert.ok(html.includes('32415487') || html.includes('PubMed'), 'Debe incluir referencias PubMed');
+});
+
+test('SEO: sitemap.xml incluye landing hubs de autores y temas con alta prioridad', async () => {
+  const res = await fetch(`${base}/api/sitemap.xml`);
+  assert.equal(res.status, 200);
+  const xml = await res.text();
+  assert.ok(xml.includes('/autores/william-makis'), 'Sitemap debe listar /autores/william-makis');
+  assert.ok(xml.includes('/temas/medicamentos-reposicionados'), 'Sitemap debe listar /temas/medicamentos-reposicionados');
+  assert.ok(xml.includes('/temas/estrategia-metabolica'), 'Sitemap debe listar /temas/estrategia-metabolica');
+});
+

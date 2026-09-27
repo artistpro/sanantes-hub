@@ -45,6 +45,14 @@
       "destination": "/api/index?route=preview&type=blog&id=:id"
     },
     {
+      "source": "/autores/:id",
+      "destination": "/api/index?route=preview&type=author&id=:id"
+    },
+    {
+      "source": "/temas/:id",
+      "destination": "/api/index?route=preview&type=topic&id=:id"
+    },
+    {
       "source": "/((?!api/|.*\\.).*)",
       "destination": "/index.html"
     }

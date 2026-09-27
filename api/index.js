@@ -133,6 +133,24 @@ export default async function handler(req,res){
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>${base}/autores/william-makis</loc>
+    <lastmod>${nowIso.split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>${base}/temas/medicamentos-reposicionados</loc>
+    <lastmod>${nowIso.split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>${base}/temas/estrategia-metabolica</loc>
+    <lastmod>${nowIso.split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
 ${postItems}
 ${videoItems}
 </urlset>`;
@@ -142,7 +160,7 @@ ${videoItems}
       if(method==='HEAD') return res.end();
       return res.end(xml);
     }
-    if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/'))&&(method==='GET'||method==='HEAD')){
+    if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/')||path.startsWith('autores/')||path.startsWith('autor/')||path.startsWith('temas/')||path.startsWith('tema/'))&&(method==='GET'||method==='HEAD')){
       const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       const formatRichText=(raw)=>{
         if(!raw) return '';
@@ -180,6 +198,8 @@ ${videoItems}
       const ref=u.searchParams.get('ref')||'';
       if(!type&&(path.startsWith('v/')||path.startsWith('video/'))){type='video';targetId=path.replace(/^video\//,'').replace(/^v\//,'');}
       if(!type&&(path.startsWith('b/')||path.startsWith('blog/'))){type='blog';targetId=path.replace(/^blog\//,'').replace(/^b\//,'');}
+      if(!type&&(path.startsWith('autores/')||path.startsWith('autor/'))){type='author';targetId=path.replace(/^autores\//,'').replace(/^autor\//,'');}
+      if(!type&&(path.startsWith('temas/')||path.startsWith('tema/'))){type='topic';targetId=path.replace(/^temas\//,'').replace(/^tema\//,'');}
       let title='Comunidad Sanantes · El Podcast del Cáncer | Oncología Integrativa';
       let desc='Sanantes: El Podcast del Cáncer y plataforma de oncología integrativa. Investigaciones científicas, análisis del Dr. William Makis en español, protocolos complementarios y acompañamiento.';
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
@@ -289,6 +309,148 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             "aspect":["Emotional Support","Information"]
           });
         }
+      }else if(type==='author'&&(targetId==='william-makis'||targetId==='dr-william-makis')){
+        category = 'Autoridad Médica e Investigación';
+        title = 'Dr. William Makis en Español: Investigaciones, Medicamentos Reposicionados y Cáncer · Sanantes';
+        desc = 'Biblioteca y análisis científico del Dr. William Makis en español. Protocolos de ivermectina, mebendazol, fenbendazol y estudios indexados en oncología integrativa.';
+        image = origin()+'/favicon.svg';
+        targetUrl = origin()+'/#podcast';
+        canonicalUrl = origin()+'/autores/william-makis';
+        const makisVideos = (await query("SELECT id,title,description,thumbnail,external_id,platform FROM videos WHERE status='published' AND (LOWER(title) LIKE '%makis%' OR LOWER(description) LIKE '%makis%') ORDER BY published_at DESC")) || [];
+        let videoCardsHtml = '';
+        if(makisVideos.length > 0){
+          videoCardsHtml = `<h2 style="color:#123d39;margin:28px 0 16px;font-size:1.3rem;">Episodios y conferencias del Dr. William Makis en Sanantes:</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">` +
+            makisVideos.map(v => {
+              const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
+              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3><p style="margin:0;font-size:0.8rem;color:#55726a;line-height:1.4;">${escHtml((v.description||'').slice(0,110))}...</p></div></a>`;
+            }).join('') + `</div>`;
+        }
+        fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
+          <h2 style="color:#123d39;font-size:1.4rem;margin:20px 0 12px;">¿Quién es el Dr. William Makis?</h2>
+          <p>El Dr. William Makis, MD, es un médico canadiense especializado en radiología, oncología y medicina nuclear, graduado de la Universidad McGill. A lo largo de su carrera ha supervisado el tratamiento de miles de pacientes con diversas neoplasias y se ha convertido en una de las voces de referencia internacional en la investigación del reposicionamiento de fármacos (<em>drug repurposing</em>) contra el cáncer.</p>
+          <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Medicamentos Reposicionados y Vías de Acción Investigadas</h2>
+          <p>El trabajo divulgativo y clínico del Dr. Makis se enfoca en moléculas antiparasitarias con décadas de perfil de seguridad farmacológica:</p>
+          <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
+            <li style="margin-bottom:10px;"><strong>Ivermectina:</strong> Inhibición del transporte nuclear mediado por importinas alfa/beta, alteración de la mitofagia tumoral y bloqueo de la proteína quinasa PAK1.</li>
+            <li style="margin-bottom:10px;"><strong>Mebendazol y Fenbendazol:</strong> Desestabilización de microtúbulos tumorales, detención del ciclo celular en fase G2/M e inducción de apoptosis selectiva.</li>
+            <li style="margin-bottom:10px;"><strong>Reversión de la Resistencia Multidroga (MDR):</strong> Modulación de la glicoproteína P (P-gp), facilitando que células refractarias respondan a intervenciones complementarias.</li>
+          </ul>
+          <blockquote style="margin:24px 0;padding:16px 20px;border-left:4px solid #1e6b42;background:#f9fbf9;border-radius:0 8px 8px 0;font-style:italic;color:#183d35;line-height:1.65;">
+            &ldquo;El reposicionamiento de fármacos en oncología no pretende sustituir ciegamente las terapias, sino explorar la literatura científica que la medicina convencional a menudo no explora por falta de incentivo de patente comercial.&rdquo;
+            <footer style="margin-top:8px;font-style:normal;font-weight:600;font-size:0.85rem;color:#496b63;">&mdash; Dr. William Makis, MD</footer>
+          </blockquote>
+          <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Evidencia Indexada y Estudios en PubMed Citados</h2>
+          <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Ivermectin as an inhibitor of cancer stem-like cells</strong> &mdash; <em>Pharmacological Research</em> (PMID: 29054452) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/29054452/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Repurposing Ivermectin for Cancer Treatment: Preclinical and Clinical Evidence</strong> &mdash; <em>Frontiers in Pharmacology</em> (PMID: 33633575) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/33633575/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Mebendazole as a candidate for drug repurposing in oncology</strong> &mdash; <em>Cancers</em> (PMID: 31080350) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31080350/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+          </ul>
+          ${videoCardsHtml}
+        </div>`;
+        schemaJson=JSON.stringify({
+          "@context":"https://schema.org",
+          "@graph":[
+            {
+              "@type":"ProfilePage",
+              "headline":title,
+              "description":desc,
+              "mainEntity":{
+                "@type":"Person",
+                "name":"Dr. William Makis",
+                "jobTitle":"Médico Especialista en Oncología y Radiología",
+                "alumniOf":"McGill University",
+                "knowsAbout":["Oncología Integrativa","Ivermectina","Mebendazol","Fenbendazol","Drug Repurposing"]
+              }
+            },
+            {
+              "@type":"MedicalWebPage",
+              "headline":title,
+              "description":desc,
+              "medicalSpecialty":"Oncology",
+              "publisher":{
+                "@type":"Organization",
+                "name":"Comunidad Sanantes",
+                "url":origin()
+              }
+            }
+          ]
+        });
+      }else if(type==='topic'&&targetId==='medicamentos-reposicionados'){
+        category = 'Compendio Temático';
+        title = 'Medicamentos Reposicionados en Cáncer: Ivermectina, Mebendazol y Fenbendazol · Sanantes';
+        desc = 'Compendio de investigaciones científicas sobre fármacos antiparasitarios reposicionados en oncología integrativa. Estudios en PubMed, mecanismos y análisis.';
+        image = origin()+'/favicon.svg';
+        targetUrl = origin()+'/#podcast';
+        canonicalUrl = origin()+'/temas/medicamentos-reposicionados';
+        const repVideos = (await query("SELECT id,title,description,thumbnail,external_id,platform FROM videos WHERE status='published' AND (LOWER(title) LIKE '%ivermectina%' OR LOWER(description) LIKE '%ivermectina%' OR LOWER(title) LIKE '%mebendazol%' OR LOWER(description) LIKE '%mebendazol%') ORDER BY published_at DESC LIMIT 6")) || [];
+        let repCardsHtml = '';
+        if(repVideos.length > 0){
+          repCardsHtml = `<h2 style="color:#123d39;margin:28px 0 16px;font-size:1.3rem;">Episodios relacionados en Sanantes:</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">` +
+            repVideos.map(v => {
+              const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
+              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3></div></a>`;
+            }).join('') + `</div>`;
+        }
+        fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
+          <h2 style="color:#123d39;font-size:1.4rem;margin:20px 0 12px;">¿Qué es el Reposicionamiento Farmacológico (Drug Repurposing)?</h2>
+          <p>El reposicionamiento de medicamentos consiste en investigar principios activos ya aprobados para otras indicaciones médicas (como enfermedades infecciosas o parasitarias) con el objetivo de evaluar su potencial en oncología complementaria. La gran ventaja reside en que su toxicidad, farmacocinética y dosificación de seguridad humana han sido documentadas durante décadas.</p>
+          <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Fármacos Clave en la Literatura Médica</h2>
+          <p><strong>1. Ivermectina:</strong> Más allá de su efecto antiparasitario, la investigación preclínica reporta interferencia con la proteína quinasa PAK1, modulación del transporte nuclear de importinas e inducción de autofagia en líneas celulares neoplásicas.</p>
+          <p><strong>2. Mebendazol:</strong> Derivado bencimidazol que inhibe la polimerización de tubulina, impidiendo la formación del huso mitótico tumoral y bloqueando la captación de glucosa en células malignas.</p>
+          <p><strong>3. Fenbendazol:</strong> Análogo del mebendazol que ha ganado notoriedad por el caso testimonial de Joe Tippens y diversos estudios in vitro sobre daño mitocondrial en células tumorales.</p>
+          <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Fuentes Indexadas en MEDLINE / PubMed</h2>
+          <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Antitumor effects of ivermectin: Mechanisms and clinical implications</strong> &mdash; <em>IJMS</em> (PMID: 32415487) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/32415487/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 32415487 &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Mebendazole as a candidate for drug repurposing in oncology</strong> &mdash; <em>Cancers</em> (PMID: 31080350) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31080350/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 31080350 &rarr;</a></li>
+          </ul>
+          ${repCardsHtml}
+        </div>`;
+        schemaJson=JSON.stringify({
+          "@context":"https://schema.org",
+          "@type":"MedicalWebPage",
+          "headline":title,
+          "description":desc,
+          "medicalSpecialty":"Oncology",
+          "publisher":{"@type":"Organization","name":"Comunidad Sanantes","url":origin()}
+        });
+      }else if(type==='topic'&&targetId==='estrategia-metabolica'){
+        category = 'Compendio Temático';
+        title = 'Estrategia Metabólica del Cáncer: Dr. Thomas Seyfried, Efecto Warburg y GKI · Sanantes';
+        desc = 'Bases científicas de la oncología metabólica: disfunción mitocondrial, restricción calórica, cetosis terapéutica e Índice Glucosa-Cetonas (GKI).';
+        image = origin()+'/favicon.svg';
+        targetUrl = origin()+'/#podcast';
+        canonicalUrl = origin()+'/temas/estrategia-metabolica';
+        const metaVideos = (await query("SELECT id,title,description,thumbnail,external_id,platform FROM videos WHERE status='published' AND (LOWER(title) LIKE '%metaból%' OR LOWER(description) LIKE '%metaból%' OR LOWER(title) LIKE '%seyfried%' OR LOWER(description) LIKE '%seyfried%') ORDER BY published_at DESC LIMIT 6")) || [];
+        let metaCardsHtml = '';
+        if(metaVideos.length > 0){
+          metaCardsHtml = `<h2 style="color:#123d39;margin:28px 0 16px;font-size:1.3rem;">Episodios sobre metabolismo y cetosis en Sanantes:</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">` +
+            metaVideos.map(v => {
+              const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
+              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3></div></a>`;
+            }).join('') + `</div>`;
+        }
+        fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
+          <h2 style="color:#123d39;font-size:1.4rem;margin:20px 0 12px;">La Teoría Metabólica del Cáncer</h2>
+          <p>Planteada inicialmente por el Premio Nobel Otto Warburg en 1924 y desarrollada extensamente por el Dr. Thomas N. Seyfried (Boston College), esta teoría postula que el cáncer no se origina primordialmente por mutaciones genéticas nucleares, sino por una alteración irreversible de la fosforilación oxidativa mitocondrial.</p>
+          <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Pilares del Enfoque Metabólico</h2>
+          <p><strong>1. El Efecto Warburg:</strong> Las células malignas dependen de la fermentación acelerada de glucosa y glutamina, incluso en presencia de oxígeno.</p>
+          <p><strong>2. Ratio Glucosa-Cetonas (GKI):</strong> Medida clínica que compara la glucemia con los cuerpos cetónicos sanguíneos (Beta-hidroxibutirato). Un GKI inferior a 2.0 busca inducir estrés energético en el microambiente tumoral mientras protege a los tejidos sanos.</p>
+          <p><strong>3. Estrategia Press-Pulse:</strong> Combinación de estrés crónico (dieta cetogénica restringida) con pulsos agudos de intervención terapéutica.</p>
+          <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Publicaciones Clave en PubMed</h2>
+          <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Cancer as a metabolic disease: implications for novel therapeutics</strong> &mdash; <em>Carcinogenesis</em> (PMID: 24657584) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/24657584/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 24657584 &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Press-pulse: a novel strategy for the metabolic management of cancer</strong> &mdash; <em>Nutrition & Metabolism</em> (PMID: 31804968) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31804968/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 31804968 &rarr;</a></li>
+          </ul>
+          ${metaCardsHtml}
+        </div>`;
+        schemaJson=JSON.stringify({
+          "@context":"https://schema.org",
+          "@type":"MedicalWebPage",
+          "headline":title,
+          "description":desc,
+          "medicalSpecialty":"Oncology",
+          "publisher":{"@type":"Organization","name":"Comunidad Sanantes","url":origin()}
+        });
       }
       const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl),sCanon=escHtml(canonicalUrl);
       res.statusCode=200;
