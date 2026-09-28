@@ -803,11 +803,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             "image":[pImg],
             "datePublished":pPubDate,
             "dateModified":pPubDate,
-            "author":{
-              "@type":"Organization",
-              "name":"Comunidad Sanantes",
-              "url":origin()
-            },
+            "author":orgPublisher,
             "publisher":orgPublisher,
             "mainEntityOfPage":{
               "@type":"WebPage",
@@ -1219,11 +1215,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               "image":[image],
               "datePublished":pubDate,
               "dateModified":pubDate,
-              "author":{
-                "@type":"Organization",
-                "name":"Comunidad Sanantes",
-                "url":origin()
-              },
+              "author":orgPublisher,
               "publisher":orgPublisher,
               "mainEntityOfPage":{
                 "@type":"WebPage",
