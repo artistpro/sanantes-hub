@@ -8,7 +8,7 @@ import {getGeoEnrichment, renderGeoHtml} from '../lib/geo-enrichment.mjs';
 import {classificationDefaults,classifierSettings,classify,classifyPending} from '../lib/classifier.mjs';
 const id=()=>randomUUID();
 const safeFileUrl=raw=>{if(typeof raw!=='string'||!raw)return '';if(raw.startsWith('data:application/pdf;')&&raw.length<=4500000)return raw;try{const u=new URL(raw);return u.protocol==='https:'&&!u.username&&!u.password?u.href:''}catch{return ''}};
-const defaults={title:'Comunidad Sanantes',subtitle:'El Podcast del Cáncer',intro:'Un espacio para aprender, escuchar y acompañarnos.',accent:'#d65337',donationGoal:'500',donationUrl:'https://paypal.me/podcastcancer',donationTitle:'Hagamos posible el próximo episodio',welcomePoints:'10',referralPoints:'20',privacyContact:'',privacyText:'',autoPublish:'1',googleClientId:process.env.GOOGLE_CLIENT_ID||'556094809768-t183rn0i6c4k3mkrnj0et9irjphmfd3a.apps.googleusercontent.com'};
+const defaults={title:'Comunidad Sanantes',subtitle:'El Podcast del Cáncer',intro:'Un espacio para aprender, escuchar y acompañarnos.',accent:'#d65337',donationGoal:'500',donationUrl:'https://paypal.me/podcastcancer',donationTitle:'Hagamos posible el próximo episodio',welcomePoints:'10',referralPoints:'20',privacyContact:'',privacyText:'',autoPublish:'1',googleClientId:process.env.GOOGLE_CLIENT_ID||'556094809768-t183rn0i6c4k3mkrnj0et9irjphmfd3a.apps.googleusercontent.com',homeFeaturedVideo1:'',homeFeaturedVideo2:'',homeFeaturedVideo3:'',homeFeaturedVideo4:'',homeFeaturedLive:'',homeFeaturedPost:'',homeFeaturedWiki:''};
 async function settings(){return {...defaults,...classificationDefaults,...Object.fromEntries((await query('SELECT * FROM settings')).map(x=>[x.key,x.value]))};}
 async function body(req){if(req.body){if(typeof req.body==='string')return JSON.parse(req.body);return req.body;}let b='';for await(const c of req){b+=c;if(b.length>5000000)fail('El contenido supera el límite permitido',413)}return b?JSON.parse(b):{};}
 function send(res,value,status=200){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify(value));}
@@ -1187,6 +1187,174 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             });
           }
         }
+      }else if(!type){
+        category = 'Portal de Oncología Integrativa';
+        title = 'Comunidad Sanantes · El Podcast del Cáncer | Oncología Integrativa';
+        desc = 'Plataforma científica y comunidad de oncología integrativa, medicina metabólica y fármacos reposicionados. Análisis del Dr. William Makis, protocolos complementarios y acompañamiento humano.';
+        image = 'https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
+        targetUrl = origin() + (ref ? '/?ref=' + encodeURIComponent(ref) : '/');
+        canonicalUrl = origin() + '/';
+
+        const s = await settings();
+        const allPublishedVideos = (await query("SELECT videos.id,videos.title,videos.description,videos.thumbnail,videos.external_id,videos.platform,videos.kind,videos.category,videos.published_at,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' ORDER BY videos.published_at DESC LIMIT 60")) || [];
+        const featVideoIds = [s.homeFeaturedVideo1, s.homeFeaturedVideo2, s.homeFeaturedVideo3, s.homeFeaturedVideo4].filter(Boolean);
+        const featVideos = [];
+        for(const id of featVideoIds){
+          const found = allPublishedVideos.find(v => v.id === id);
+          if(found && !featVideos.some(x => x.id === found.id)) featVideos.push(found);
+        }
+        for(const v of allPublishedVideos){
+          if(featVideos.length >= 4) break;
+          if(v.kind === 'video' && !featVideos.some(x => x.id === v.id)) featVideos.push(v);
+        }
+
+        let featLive = s.homeFeaturedLive ? allPublishedVideos.find(v => v.id === s.homeFeaturedLive) : null;
+        if(!featLive){
+          featLive = allPublishedVideos.find(v => v.kind === 'live' && (v.category === 'Música y relajación' || (v.title||'').toLowerCase().includes('pizarra'))) || allPublishedVideos.find(v => v.kind === 'live');
+        }
+
+        const allPublishedPosts = (await query("SELECT id,slug,title,excerpt,download_url,download_title FROM posts WHERE status='published' ORDER BY updated_at DESC LIMIT 10")) || [];
+        let featPost = s.homeFeaturedPost ? allPublishedPosts.find(p => p.slug === s.homeFeaturedPost || p.id === s.homeFeaturedPost) : null;
+        if(!featPost && allPublishedPosts.length) featPost = allPublishedPosts[0];
+
+        const allPublishedWikis = (await query("SELECT id,slug,title,subtitle,excerpt,evidence_level,category FROM wiki_articles WHERE status='published' ORDER BY updated_at DESC LIMIT 20")) || [];
+        let featWiki = s.homeFeaturedWiki ? allPublishedWikis.find(w => w.slug === s.homeFeaturedWiki || w.id === s.homeFeaturedWiki) : null;
+        if(!featWiki && allPublishedWikis.length) featWiki = allPublishedWikis.find(w => w.slug === 'ivermectina') || allPublishedWikis[0];
+
+        const videoGridHtml = featVideos.map(v => {
+          const rThumb = v.platform === 'youtube' && v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin() + '/favicon.svg');
+          return `<article style="display:flex;flex-direction:column;background:#fff;border:1px solid #dce8df;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.03);">
+            <a href="${origin()}/v/${v.id}" style="text-decoration:none;color:inherit;">
+              <div style="position:relative;padding-bottom:56.25%;background:#0b292b;">
+                <img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div style="padding:14px;">
+                <span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;text-transform:uppercase;margin-bottom:6px;">${escHtml(v.category||'Investigación')}</span>
+                <h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3>
+                <p style="margin:0;font-size:0.82rem;color:#4f6d65;line-height:1.5;">${escHtml((v.description||'').slice(0,140))}...</p>
+              </div>
+            </a>
+          </article>`;
+        }).join('');
+
+        const liveHtml = featLive ? `
+          <div style="margin:36px 0;background:linear-gradient(135deg,#123d39 0%,#0b2623 100%);color:#fff;border-radius:14px;padding:24px;box-shadow:0 6px 20px rgba(18,61,57,0.12);">
+            <span style="display:inline-block;background:rgba(255,255,255,0.15);color:#8be3b8;padding:4px 10px;border-radius:12px;font-size:0.75rem;font-weight:700;text-transform:uppercase;margin-bottom:10px;">Directo Destacado · Música y Pizarra del Podcast</span>
+            <h3 style="color:#fff;margin:0 0 10px;font-size:1.3rem;">${escHtml(featLive.title)}</h3>
+            <p style="color:#cbe0d5;margin:0 0 16px;line-height:1.6;font-size:0.92rem;">Espacio de relajación activa, reducción de cortisol neurovegetativo y pizarra gráfica de estudio visual para acompañar el aprendizaje de nuestras investigaciones.</p>
+            <a href="${origin()}/v/${featLive.id}" style="display:inline-flex;align-items:center;gap:6px;background:#d65337;color:#fff;padding:10px 20px;border-radius:24px;text-decoration:none;font-size:0.9rem;font-weight:700;">▶ Ver sesión en directo</a>
+          </div>
+        ` : '';
+
+        const scienceHtml = `
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:32px 0;">
+            ${featPost ? `
+              <div style="background:#fff;border:1px solid #dce8df;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="font-size:0.75rem;font-weight:700;color:#1e6b42;text-transform:uppercase;">Blog Destacado</span>
+                    ${featPost.download_url ? `<span style="font-size:0.72rem;background:#e8f4ec;color:#1e6b42;padding:2px 8px;border-radius:10px;font-weight:700;">📄 Incluye PDF</span>` : ''}
+                  </div>
+                  <h4 style="margin:0 0 8px;font-size:1.05rem;line-height:1.4;color:#123d39;"><a href="${origin()}/b/${featPost.slug}" style="text-decoration:none;color:inherit;">${escHtml(featPost.title)}</a></h4>
+                  <p style="margin:0;font-size:0.85rem;color:#4f6d65;line-height:1.5;">${escHtml((featPost.excerpt||'').slice(0,140))}...</p>
+                </div>
+                <div style="margin-top:16px;border-top:1px solid #edf2ef;padding-top:10px;">
+                  <a href="${origin()}/b/${featPost.slug}" style="color:#d65337;font-weight:700;font-size:0.88rem;text-decoration:none;">Leer artículo y descargar PDF →</a>
+                </div>
+              </div>
+            ` : ''}
+            ${featWiki ? `
+              <div style="background:#fff;border:1px solid #dce8df;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="font-size:0.75rem;font-weight:700;color:#1e6b42;text-transform:uppercase;">Wiki Sanantes · ${escHtml(featWiki.category||'Monografía')}</span>
+                    <span style="font-size:0.72rem;background:#e8f4ec;color:#1e6b42;padding:2px 8px;border-radius:10px;font-weight:700;">⚖️ ${escHtml(featWiki.evidence_level||'Evidencia')}</span>
+                  </div>
+                  <h4 style="margin:0 0 8px;font-size:1.05rem;line-height:1.4;color:#123d39;"><a href="${origin()}/wiki/${featWiki.slug}" style="text-decoration:none;color:inherit;">${escHtml(featWiki.title)}</a></h4>
+                  <p style="margin:0;font-size:0.85rem;color:#4f6d65;line-height:1.5;">${escHtml((featWiki.subtitle||featWiki.excerpt||'').slice(0,140))}...</p>
+                </div>
+                <div style="margin-top:16px;border-top:1px solid #edf2ef;padding-top:10px;">
+                  <a href="${origin()}/wiki/${featWiki.slug}" style="color:#1e6b42;font-weight:700;font-size:0.88rem;text-decoration:none;">Consultar monografía en la Wiki →</a>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+
+        fullContentHtml = `
+          <div style="margin:20px 0;line-height:1.7;color:#233833;">
+            <p style="font-size:1.1rem;color:#35534b;margin-bottom:24px;line-height:1.75;">
+              Comunidad Sanantes y El Podcast del Cáncer integran investigación científica rigurosa, protocolos basados en evidencia y soporte humano para pacientes, familias y profesionales de la salud. Nuestro repositorio examina literatura clínica en MEDLINE/PubMed sobre el reposicionamiento de medicamentos, oncología metabólica, nutracéuticos de grado terapéutico y terapias complementarias.
+            </p>
+
+            <h2 style="color:#123d39;font-size:1.35rem;margin:32px 0 16px;font-weight:700;">Áreas y Recursos de Sanantes:</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:32px;">
+              <div style="background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:16px;">
+                <div style="font-size:1.4rem;margin-bottom:6px;">🎬</div>
+                <strong style="color:#123d39;font-size:0.95rem;">El Podcast del Cáncer</strong>
+                <p style="font-size:0.82rem;color:#4f6d65;margin:4px 0 8px;line-height:1.5;">Episodios monográficos y análisis del Dr. William Makis en español.</p>
+                <a href="${origin()}/#podcast" style="color:#d65337;font-size:0.82rem;font-weight:700;">Ir a videoteca →</a>
+              </div>
+              <div style="background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:16px;">
+                <div style="font-size:1.4rem;margin-bottom:6px;">🏛️</div>
+                <strong style="color:#123d39;font-size:0.95rem;">Wiki Sanantes</strong>
+                <p style="font-size:0.82rem;color:#4f6d65;margin:4px 0 8px;line-height:1.5;">Compendio en 5 pilares con nivel de evidencia y citas PubMed.</p>
+                <a href="${origin()}/wiki" style="color:#1e6b42;font-size:0.82rem;font-weight:700;">Explorar Wiki →</a>
+              </div>
+              <div style="background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:16px;">
+                <div style="font-size:1.4rem;margin-bottom:6px;">📖</div>
+                <strong style="color:#123d39;font-size:0.95rem;">Blog y Descargas</strong>
+                <p style="font-size:0.82rem;color:#4f6d65;margin:4px 0 8px;line-height:1.5;">Artículos de fondo y compendios descargables en PDF.</p>
+                <a href="${origin()}/#blog" style="color:#d65337;font-size:0.82rem;font-weight:700;">Leer blog →</a>
+              </div>
+              <div style="background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:16px;">
+                <div style="font-size:1.4rem;margin-bottom:6px;">🎵</div>
+                <strong style="color:#123d39;font-size:0.95rem;">Directos y Pizarra</strong>
+                <p style="font-size:0.82rem;color:#4f6d65;margin:4px 0 8px;line-height:1.5;">Música de relajación activa y pizarra gráfica explicativa.</p>
+                <a href="${origin()}/#directos" style="color:#1e6b42;font-size:0.82rem;font-weight:700;">Ver directos →</a>
+              </div>
+            </div>
+
+            <h2 style="color:#123d39;font-size:1.35rem;margin:32px 0 16px;font-weight:700;">Episodios e Investigaciones Destacadas:</h2>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+              ${videoGridHtml}
+            </div>
+
+            ${liveHtml}
+            ${scienceHtml}
+
+            <div style="background:#eef5f1;border:1px solid #c9ded2;border-radius:12px;padding:24px;margin:32px 0;text-align:center;">
+              <span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Comunidad y Gamificación</span>
+              <h3 style="color:#123d39;margin:0 0 10px;font-size:1.35rem;">Únete a Sanantes: Recibe +50 Puntos de Bienvenida</h3>
+              <p style="color:#35534b;margin:0 0 18px;font-size:0.95rem;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6;">Crea tu cuenta gratuita para desbloquear descargas en PDF, sumar puntos difundiendo investigaciones y formar parte del Muro de Gratitud.</p>
+              <a href="${origin()}/#comunidad" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:12px 28px;border-radius:30px;text-decoration:none;font-size:0.95rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Unirme gratis a la comunidad →</a>
+            </div>
+          </div>
+        `;
+
+        schemaJson = JSON.stringify({
+          "@context":"https://schema.org",
+          "@graph":[
+            {
+              "@type":"WebSite",
+              "name":"Comunidad Sanantes",
+              "alternateName":["El Podcast del Cáncer","Podcast del Cáncer","Sanantes"],
+              "url":origin(),
+              "description":desc,
+              "inLanguage":"es"
+            },
+            {
+              "@type":"MedicalOrganization",
+              "name":"Comunidad Sanantes",
+              "alternateName":["El Podcast del Cáncer","Podcast del Cáncer"],
+              "url":origin(),
+              "logo":origin()+"/favicon.svg",
+              "medicalSpecialty":"Oncology",
+              "description":"Plataforma de recursos, podcast sobre el cáncer y comunidad de oncología integrativa para pacientes y familias.",
+              "disclaimer":"Contenido informativo y de acompañamiento. No sustituye la atención médica especializada."
+            }
+          ]
+        });
       }
       const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl),sCanon=escHtml(canonicalUrl);
       res.statusCode=200;

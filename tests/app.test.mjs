@@ -251,3 +251,38 @@ test('Wiki Sanantes: Pre-rendering, Schema MedicalWebPage, Sitemap y rol Editor 
   assert.ok(sitemapXml.includes('<loc>' + base + '/wiki/dieta-cetogenica-oncologia-metabolica</loc>'));
 });
 
+test('Portada / Index: Personalización de destacados desde Admin y SSR enriquecido', async () => {
+  await query("DELETE FROM rate_limits");
+  const owner = await login('admin@example.test');
+
+  // 1. Guardar configuración de elementos destacados de portada
+  const setRes = await call('admin/settings', {
+    homeFeaturedVideo1: 'test-vid-1',
+    homeFeaturedVideo2: 'test-vid-2',
+    homeFeaturedLive: 'test-live-1',
+    homeFeaturedPost: 'pizarrapodcast',
+    homeFeaturedWiki: 'ivermectina'
+  }, owner.cookie);
+  assert.equal(setRes.status, 200);
+
+  // 2. Comprobar que settings() y /api/public devuelven los destacados
+  const pub = await (await call('public')).json();
+  assert.equal(pub.settings.homeFeaturedVideo1, 'test-vid-1');
+  assert.equal(pub.settings.homeFeaturedLive, 'test-live-1');
+  assert.equal(pub.settings.homeFeaturedPost, 'pizarrapodcast');
+  assert.equal(pub.settings.homeFeaturedWiki, 'ivermectina');
+
+  // 3. Comprobar que el SSR de la portada raíz (GET /api/preview) renderiza la semántica completa
+  const rootRes = await fetch(base + '/api/preview');
+  assert.equal(rootRes.status, 200);
+  const html = await rootRes.text();
+  assert.ok(html.includes('Comunidad Sanantes'));
+  assert.ok(html.includes('El Podcast del Cáncer'));
+  assert.ok(html.includes('Wiki Sanantes'));
+  assert.ok(html.includes('Directos y Pizarra'));
+  assert.ok(html.includes('Muro de Gratitud') || html.includes('Comunidad y Gamificación'));
+  assert.ok(html.includes('WebSite'));
+  assert.ok(html.includes('MedicalOrganization'));
+});
+
+
