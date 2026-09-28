@@ -793,15 +793,26 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           targetUrl=origin()+'/#blog/'+p.slug;
           canonicalUrl=origin()+'/b/'+p.slug;
           fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(p.body||p.excerpt)}</div>`;
+          const pPubDate = p.updated_at ? new Date(p.updated_at).toISOString() : new Date('2026-09-28T00:00:00Z').toISOString();
+          const pImg = image && !image.endsWith('.svg') ? image : origin() + '/logo.png';
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
             "@type":"Article",
             "headline":p.title,
             "description":desc,
-            "image":[image],
-            "datePublished":p.updated_at?new Date(p.updated_at).toISOString():undefined,
-            "dateModified":p.updated_at?new Date(p.updated_at).toISOString():undefined,
+            "image":[pImg],
+            "datePublished":pPubDate,
+            "dateModified":pPubDate,
+            "author":{
+              "@type":"Organization",
+              "name":"Comunidad Sanantes",
+              "url":origin()
+            },
             "publisher":orgPublisher,
+            "mainEntityOfPage":{
+              "@type":"WebPage",
+              "@id":canonicalUrl
+            },
             "articleSection":"Comunidad y Divulgación de Acompañamiento",
             "audience":{
               "@type":"Audience",
@@ -1027,7 +1038,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               ? (art.title + ' · Wiki Sanantes')
               : cleanTitle(art.title + ' · Sanantes', 60);
             desc = cleanDesc(art.excerpt || art.title, 155);
-            image = origin()+'/favicon.svg';
+            image = origin()+'/logo.png';
             targetUrl = origin()+'/#wiki/'+art.slug;
             canonicalUrl = origin()+'/wiki/'+art.slug;
             let citations = [];
@@ -1046,6 +1057,14 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             if(relatedWords.length > 0){
               const likePattern = '%' + relatedWords[0] + '%';
               relatedVideos = (await query("SELECT id,title,description,thumbnail,external_id,platform FROM videos WHERE status='published' AND (LOWER(title) LIKE ? OR LOWER(description) LIKE ?) LIMIT 3", [likePattern, likePattern])) || [];
+              if(relatedVideos.length > 0){
+                const topV = relatedVideos[0];
+                if(topV.platform==='youtube'&&topV.external_id){
+                  image = `https://i.ytimg.com/vi/${topV.external_id}/hqdefault.jpg`;
+                }else if(topV.thumbnail && !topV.thumbnail.endsWith('.svg')){
+                  image = topV.thumbnail;
+                }
+              }
             }
             let relatedVideosHtml = '';
             if(relatedVideos.length > 0){
@@ -1191,19 +1210,32 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               </div>
               <div class="wiki-right-col">${tocArtHtml}</div>
             </div>`;
+            const pubDate = art.updated_at ? new Date(art.updated_at).toISOString() : new Date('2026-09-28T00:00:00Z').toISOString();
             schemaJson=JSON.stringify({
               "@context":"https://schema.org",
               "@type":"Article",
               "headline":art.title,
               "description":desc,
+              "image":[image],
+              "datePublished":pubDate,
+              "dateModified":pubDate,
+              "author":{
+                "@type":"Organization",
+                "name":"Comunidad Sanantes",
+                "url":origin()
+              },
+              "publisher":orgPublisher,
+              "mainEntityOfPage":{
+                "@type":"WebPage",
+                "@id":canonicalUrl
+              },
               "articleSection":"Biblioteca de Investigación y Acompañamiento",
               "about":art.title,
               "audience":{
                 "@type":"Audience",
                 "audienceType":"Pacientes, familias y comunidad de apoyo"
               },
-              "citation":citations.map(c=>`https://pubmed.ncbi.nlm.nih.gov/${c}/`),
-              "publisher":orgPublisher
+              "citation":citations.map(c=>`https://pubmed.ncbi.nlm.nih.gov/${c}/`)
             });
           }
         }

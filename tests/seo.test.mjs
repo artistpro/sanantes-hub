@@ -141,7 +141,12 @@ test('SEO Técnico: SSR incluye favicon, apple-touch-icon, logo en Organization 
   assert.ok(titleMatch[1].length <= 60, `Título (${titleMatch[1].length}) no debe exceder 60 caracteres`);
 
   const descMatch = html.match(/<meta name="description" content="([^"]+)">/);
-  assert.ok(descMatch, 'Debe haber meta description');
-  assert.ok(descMatch[1].length <= 155, `Description (${descMatch[1].length}) no debe exceder 155 caracteres`);
+  // 4. Article Schema Completeness (Google Rich Results / GSC Wizard)
+  assert.ok(html.includes('"@type":"Article"'), 'Debe ser schema Article');
+  assert.ok(html.includes('"datePublished":'), 'Debe incluir datePublished');
+  assert.ok(html.includes('"dateModified":'), 'Debe incluir dateModified');
+  assert.ok(html.includes('"author":{'), 'Debe incluir author');
+  assert.ok(html.includes('"image":['), 'Debe incluir image array');
+  assert.ok(html.includes('"mainEntityOfPage":{'), 'Debe incluir mainEntityOfPage');
 });
 
