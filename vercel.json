@@ -61,6 +61,14 @@
       "destination": "/api/index?route=preview&type=topic&id=:id"
     },
     {
+      "source": "/wiki/:id",
+      "destination": "/api/index?route=preview&type=wiki&id=:id"
+    },
+    {
+      "source": "/wiki",
+      "destination": "/api/index?route=preview&type=wiki"
+    },
+    {
       "source": "/((?!api/|.*\\.).*)",
       "destination": "/index.html"
     }

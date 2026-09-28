@@ -17,3 +17,7 @@ CREATE TABLE IF NOT EXISTS classifications(fingerprint TEXT PRIMARY KEY,video_id
 CREATE INDEX IF NOT EXISTS classifications_video ON classifications(video_id);
 CREATE TABLE IF NOT EXISTS media_labels(video_id TEXT PRIMARY KEY,fingerprint TEXT NOT NULL,category TEXT NOT NULL,relevance TEXT NOT NULL,response TEXT NOT NULL,model TEXT NOT NULL,input_tokens INTEGER NOT NULL DEFAULT 0,updated_at TEXT DEFAULT CURRENT_TIMESTAMP);
 CREATE TABLE IF NOT EXISTS editorial_overrides(video_id TEXT PRIMARY KEY);
+CREATE TABLE IF NOT EXISTS wiki_categories(id TEXT PRIMARY KEY,slug TEXT NOT NULL UNIQUE,name TEXT NOT NULL,icon TEXT DEFAULT '📚',description TEXT DEFAULT '',sort_order INTEGER NOT NULL DEFAULT 0,created_at TEXT DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS wiki_articles(id TEXT PRIMARY KEY,slug TEXT NOT NULL UNIQUE,category_id TEXT REFERENCES wiki_categories(id),category TEXT NOT NULL DEFAULT 'Medicamentos Reposicionados',title TEXT NOT NULL,subtitle TEXT DEFAULT '',evidence_level TEXT DEFAULT 'Preclínica / In vitro',excerpt TEXT DEFAULT '',body TEXT NOT NULL,mechanisms TEXT DEFAULT '',clinical_status TEXT DEFAULT '',pubmed_citations TEXT DEFAULT '[]',related_video_ids TEXT DEFAULT '[]',status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','published')),author_id TEXT REFERENCES users(id),created_at TEXT DEFAULT CURRENT_TIMESTAMP,updated_at TEXT DEFAULT CURRENT_TIMESTAMP);
+CREATE INDEX IF NOT EXISTS wiki_slug ON wiki_articles(slug);
+CREATE INDEX IF NOT EXISTS wiki_status ON wiki_articles(status);

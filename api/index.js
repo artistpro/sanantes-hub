@@ -1,6 +1,6 @@
 import {exclusionReason,excludeInterrupted} from '../lib/publication.mjs';
 import {query} from '../lib/db.mjs';
-import {token,hash,now,fail,origin,cookie,setSession,user,requireUser,rate,secretEqual,text,devAuth,hashPassword,verifyPassword} from '../lib/auth.mjs';
+import {token,hash,now,fail,origin,cookie,setSession,user,requireUser,requireEditor,rate,secretEqual,text,devAuth,hashPassword,verifyPassword} from '../lib/auth.mjs';
 import {fetchSource,identify,mediaURL,platforms,safeImage} from '../lib/media.mjs';
 import {organizePending} from '../lib/editorial.mjs';
 import {randomUUID} from 'node:crypto';
@@ -52,6 +52,73 @@ async function ensureAuthSchema(){
     authSchemaChecked=true;
   }catch(e){console.warn('Auto-migración auth:',e.message);}
 }
+let wikiSchemaChecked=false;
+async function ensureWikiSchema(){
+  if(wikiSchemaChecked)return;
+  try{
+    await query(`CREATE TABLE IF NOT EXISTS wiki_categories(id TEXT PRIMARY KEY,slug TEXT NOT NULL UNIQUE,name TEXT NOT NULL,icon TEXT DEFAULT '📚',description TEXT DEFAULT '',sort_order INTEGER NOT NULL DEFAULT 0,created_at TEXT DEFAULT CURRENT_TIMESTAMP)`);
+    await query(`CREATE TABLE IF NOT EXISTS wiki_articles(id TEXT PRIMARY KEY,slug TEXT NOT NULL UNIQUE,category_id TEXT REFERENCES wiki_categories(id),category TEXT NOT NULL DEFAULT 'Medicamentos Reposicionados',title TEXT NOT NULL,subtitle TEXT DEFAULT '',evidence_level TEXT DEFAULT 'Preclínica / In vitro',excerpt TEXT DEFAULT '',body TEXT NOT NULL,mechanisms TEXT DEFAULT '',clinical_status TEXT DEFAULT '',pubmed_citations TEXT DEFAULT '[]',related_video_ids TEXT DEFAULT '[]',status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','published')),author_id TEXT REFERENCES users(id),created_at TEXT DEFAULT CURRENT_TIMESTAMP,updated_at TEXT DEFAULT CURRENT_TIMESTAMP)`);
+    await query('CREATE INDEX IF NOT EXISTS wiki_slug ON wiki_articles(slug)');
+    await query('CREATE INDEX IF NOT EXISTS wiki_status ON wiki_articles(status)');
+    const cats=await query('SELECT COUNT(*) count FROM wiki_categories');
+    if(!cats[0]?.count){
+      const defaultPillars=[
+        ['cat-meds','medicamentos-reposicionados','Medicamentos Reposicionados','💊','Fármacos con perfil de seguridad aprobado y estudios en oncología complementaria.',1],
+        ['cat-meta','estrategia-metabolica','Estrategia Metabólica y Biología Celular','🧬','Teoría metabólica, Efecto Warburg, cetosis terapéutica, autofagia y ratio GKI.',2],
+        ['cat-refs','investigadores-referentes','Investigadores y Referentes','👨‍⚕️','Científicos, médicos y autores que lideran la investigación en salud integrativa.',3],
+        ['cat-supp','suplementos-nutraceuticos','Suplementos y Nutracéuticos','🌿','Compuestos naturales, antioxidantes, micronutrientes y fitoterapéuticos con evidencia.',4],
+        ['cat-ther','terapias-complementarias','Enfoques y Terapias Complementarias','🥗','Ayuno terapéutico, cámara hiperbárica, termoterapia, ejercicio y apoyo integral.',5]
+      ];
+      for(const p of defaultPillars){
+        await query('INSERT INTO wiki_categories(id,slug,name,icon,description,sort_order) VALUES(?,?,?,?,?,?) ON CONFLICT(slug) DO NOTHING',p);
+      }
+    }
+    const arts=await query('SELECT COUNT(*) count FROM wiki_articles');
+    if(!arts[0]?.count){
+      const seedArticles=[
+        {
+          id:'wiki-ivermectina',slug:'ivermectina',category:'Medicamentos Reposicionados',
+          title:'Ivermectina en Oncología: Mecanismos Celulares, Evidencia y Estudios',
+          subtitle:'Antiparasitario macrocíclico con propiedades moduladoras del microambiente tumoral y mitofagia',
+          evidence_level:'Preclínica / In vitro y Ensayos Fase I/II',
+          excerpt:'Compendio científico sobre la ivermectina en oncología: modulación del transporte nuclear por importinas α/β, mitofagia tumoral, inhibición de la quinasa PAK1 y reversión de resistencia multidroga (MDR).',
+          body:`## ¿Qué es la Ivermectina?\nLa ivermectina es un derivado semisintético de las avermectinas, una clase de lactonas macrocíclicas descubiertas por Satoshi Ōmura y William C. Campbell (Premio Nobel de Medicina 2015). Aprobada originalmente para uso antiparasitario humano, ha suscitado interés biomédico mundial por sus propiedades pleiotrópicas antitumorales.\n\n## Mecanismos de Acción Oncológica Investigados\n1. **Inhibición de Importinas α/β:** Bloqueo del transporte de proteínas diana hacia el núcleo neoplásico.\n2. **Mitofagia e Inducción de Apoptosis:** Alteración selectiva del potencial de membrana mitocondrial en células cancerígenas con incremento de ROS.\n3. **Bloqueo de la Proteína Quinasa PAK1:** Disminución de la proliferación y metástasis dependientes de PAK1.\n4. **Modulación de Glicoproteína P (P-gp):** Reversión de la resistencia a quimioterapia convencional.\n\n## Estado Clínico y Uso Regulatorio\nClasificada en fase de investigación preclínica y ensayos observacionales como fármaco reposicionado (drug repurposing). Requiere supervisión médica informada dentro de un marco de salud integrativa.`,
+          mechanisms:'Inhibición importinas α/β, bloqueo PAK1, mitofagia tumoral, alteración ATP mitocondrial, modulación P-gp.',
+          clinical_status:'Aprobado FDA/EMA como antiparasitario. Ensayos clínicos Fase I/II y estudios observacionales en oncología.',
+          pubmed_citations:JSON.stringify(['29054452','33633575','32419409']),status:'published'
+        },
+        {
+          id:'wiki-fenbendazol',slug:'fenbendazol',category:'Medicamentos Reposicionados',
+          title:'Fenbendazol: Desestabilización de Microtúbulos, Captación de Glucosa y Evidencia Preclínica',
+          subtitle:'Compuesto benzimidazol con actividad antimicrotubular y bloqueo metabólico en células tumorales',
+          evidence_level:'Preclínica / Modelos Animales',
+          excerpt:'Análisis farmacológico del fenbendazol: disrupción de la polimerización de tubulina, bloqueo del transportador GLUT de glucosa, inducción de estrés celular y sinergia terapéutica investigada.',
+          body:`## ¿Qué es el Fenbendazol?\nEl fenbendazol es un carbamato de benzimidazol de amplio espectro, utilizado tradicionalmente en medicina veterinaria contra helmintos intestinales. Ha ganado notoriedad mundial a raíz de protocolos divulgativos y estudios preclínicos universitarios sobre reposicionamiento farmacológico.\n\n## Mecanismos Biológicos Observados\n1. **Inhibición de Microtúbulos:** Actúa de forma análoga a fármacos quimioterapéuticos convencionales como los taxanos, impidiendo el ensamblaje de la tubulina y provocando la detención del ciclo celular en la fase G2/M.\n2. **Bloqueo del Transporte de Glucosa:** Suprime los transportadores GLUT y la absorción de hexosa por parte de las células tumorales dependientes de glucólisis.\n3. **Restauración de p53:** Inducción de apoptosis mediada por la vía del gen supresor tumoral p53.`,
+          mechanisms:'Detención ciclo celular G2/M, disrupción microtúbulos, inhibición transportador GLUT glucosa, reactivación p53.',
+          clinical_status:'Uso veterinario estándar. Investigación off-label y preclínica en oncología; protocolos complementarios observacionales.',
+          pubmed_citations:JSON.stringify(['30154681','12154388']),status:'published'
+        },
+        {
+          id:'wiki-william-makis',slug:'william-makis',category:'Investigadores y Referentes',
+          title:'Dr. William Makis, MD: Trayectoria, Investigaciones en Cáncer y Protocolos Reposicionados',
+          subtitle:'Médico especialista en oncología, radiología y medicina nuclear (McGill University)',
+          evidence_level:'Revisión Clínica / Casos Observacionales',
+          excerpt:'Monografía biográfica y técnica del Dr. William Makis MD: educación médica, experiencia en medicina nuclear oncológica, divulgación en español sobre fármacos reposicionados y análisis de literatura científica indexada.',
+          body:`## Trayectoria Profesional y Académica\nEl Dr. William Makis es un médico canadiense especializado en Oncología General, Radiología y Medicina Nuclear, graduado de la Facultad de Medicina de la Universidad McGill en Montreal. Ha diagnosticado y tratado a más de 10.000 pacientes oncológicos utilizando terapia de radionúclidos dirigidos y tomografía por emisión de positrones (PET).\n\n## Aportes a la Divulgación en Español\nEl Dr. Makis se ha convertido en una de las fuentes de mayor consulta internacional respecto a protocolos combinados de ivermectina, mebendazol y fenbendazol, contrastando la evidencia farmacológica con las necesidades de pacientes que buscan alternativas ante casos refractarios.`,
+          mechanisms:'Terapia de radionúclidos dirigida, medicina nuclear, sinergia antiparasitaria, modulación inmunológica.',
+          clinical_status:'Médico especialista certificado (Royal College of Physicians and Surgeons of Canada). Divulgador e investigador clínico.',
+          pubmed_citations:JSON.stringify(['29054452','31080350','33633575']),status:'published'
+        }
+      ];
+      for(const art of seedArticles){
+        await query('INSERT INTO wiki_articles(id,slug,category,title,subtitle,evidence_level,excerpt,body,mechanisms,clinical_status,pubmed_citations,status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(slug) DO NOTHING',
+          [art.id,art.slug,art.category,art.title,art.subtitle,art.evidence_level,art.excerpt,art.body,art.mechanisms,art.clinical_status,art.pubmed_citations,art.status]
+        );
+      }
+    }
+    wikiSchemaChecked=true;
+  }catch(e){console.warn('Auto-migración wiki:',e.message);}
+}
 export default async function handler(req,res){
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
   try{
@@ -60,6 +127,7 @@ export default async function handler(req,res){
     if(method!=='GET' && method!=='HEAD' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
     if(path==='health')return send(res,{ok:true});
     if(path.startsWith('auth/'))await ensureAuthSchema();
+    if(path.startsWith('wiki')||path.startsWith('admin')||path==='public'||path==='sitemap'||path==='preview')await ensureWikiSchema();
     if((path==='post/image'||path.endsWith('/image'))&&(method==='GET'||method==='HEAD')){
       const slugOrId=u.searchParams.get('slug')||u.searchParams.get('id')||path.replace(/^b\//,'').replace(/^blog\//,'').replace(/\/image$/,'');
       const [p]=(await query("SELECT image FROM posts WHERE slug=? OR id=?",[slugOrId,slugOrId]))||[];
@@ -112,6 +180,7 @@ export default async function handler(req,res){
     if((path==='sitemap.xml'||path==='sitemap')&&(method==='GET'||method==='HEAD')){
       const publishedVideos=(await query("SELECT id,title,description,thumbnail,external_id,platform,kind,duration,published_at FROM videos WHERE status='published' AND kind IN ('video','live') ORDER BY published_at DESC LIMIT 1000")).filter(v=>!exclusionReason(v));
       const publishedPosts=await query("SELECT id,slug,title,excerpt,updated_at FROM posts WHERE status='published' ORDER BY updated_at DESC LIMIT 500");
+      const publishedWiki=await query("SELECT id,slug,title,updated_at FROM wiki_articles WHERE status='published' ORDER BY updated_at DESC LIMIT 500");
       const escXml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
       const base=origin();
       const nowIso=new Date().toISOString();
@@ -145,6 +214,15 @@ export default async function handler(req,res){
     <priority>0.9</priority>
   </url>`;
       }).join('\n');
+      const wikiItems=publishedWiki.map(w=>{
+        const modDate=w.updated_at?new Date(w.updated_at).toISOString():nowIso;
+        return `  <url>
+    <loc>${base}/wiki/${w.slug}</loc>
+    <lastmod>${modDate.split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>`;
+      }).join('\n');
       const xml=`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
@@ -153,6 +231,12 @@ export default async function handler(req,res){
     <lastmod>${nowIso.split('T')[0]}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${base}/wiki</loc>
+    <lastmod>${nowIso.split('T')[0]}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>${base}/autores/william-makis</loc>
@@ -172,6 +256,7 @@ export default async function handler(req,res){
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
+${wikiItems}
 ${postItems}
 ${videoItems}
 </urlset>`;
@@ -181,7 +266,7 @@ ${videoItems}
       if(method==='HEAD') return res.end();
       return res.end(xml);
     }
-    if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/')||path.startsWith('autores/')||path.startsWith('autor/')||path.startsWith('temas/')||path.startsWith('tema/'))&&(method==='GET'||method==='HEAD')){
+    if((path==='preview'||path.startsWith('v/')||path.startsWith('b/')||path.startsWith('video/')||path.startsWith('blog/')||path.startsWith('autores/')||path.startsWith('autor/')||path.startsWith('temas/')||path.startsWith('tema/')||path.startsWith('wiki/')||path==='wiki')&&(method==='GET'||method==='HEAD')){
       const escHtml=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       const formatRichText=(raw)=>{
         if(!raw) return '';
@@ -221,6 +306,7 @@ ${videoItems}
       if(!type&&(path.startsWith('b/')||path.startsWith('blog/'))){type='blog';targetId=path.replace(/^blog\//,'').replace(/^b\//,'');}
       if(!type&&(path.startsWith('autores/')||path.startsWith('autor/'))){type='author';targetId=path.replace(/^autores\//,'').replace(/^autor\//,'');}
       if(!type&&(path.startsWith('temas/')||path.startsWith('tema/'))){type='topic';targetId=path.replace(/^temas\//,'').replace(/^tema\//,'');}
+      if(!type&&(path.startsWith('wiki/')||path==='wiki')){type='wiki';targetId=path==='wiki'?'':path.replace(/^wiki\//,'');}
       let title='Comunidad Sanantes · El Podcast del Cáncer | Oncología Integrativa';
       let desc='Sanantes: El Podcast del Cáncer y plataforma de oncología integrativa. Investigaciones científicas, análisis del Dr. William Makis en español, protocolos complementarios y acompañamiento.';
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
@@ -472,17 +558,116 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           "medicalSpecialty":"Oncology",
           "publisher":{"@type":"Organization","name":"Comunidad Sanantes","url":origin()}
         });
+      }else if(type==='wiki'){
+        if(!targetId){
+          category = 'Wiki Sanantes · Biblioteca Abierta';
+          title = 'Wiki Sanantes: Compendio Científico y Oncología Integrativa';
+          desc = 'Wiki Sanantes: Enciclopedia colaborativa y base de evidencia sobre medicamentos reposicionados, estrategia metabólica, investigadores referentes, suplementos y terapias.';
+          image = origin()+'/favicon.svg';
+          targetUrl = origin()+'/#wiki';
+          canonicalUrl = origin()+'/wiki';
+          const cats = (await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC")) || [];
+          const arts = (await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC")) || [];
+          let pillarsHtml = '';
+          for(const c of cats){
+            const catArts = arts.filter(a => a.category_id === c.id || a.category === c.name);
+            pillarsHtml += `<div style="margin-bottom:32px;background:#fbfdfc;border:1px solid #dce8df;border-radius:12px;padding:24px;">
+              <h2 style="color:#123d39;margin:0 0 8px;font-size:1.35rem;display:flex;align-items:center;gap:10px;"><span>${c.icon||'📚'}</span> ${escHtml(c.name)}</h2>
+              <p style="color:#55726a;margin:0 0 16px;font-size:0.9rem;line-height:1.5;">${escHtml(c.description||'')}</p>
+              ${catArts.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">` + catArts.map(a => `
+                <a href="${origin()}/wiki/${a.slug}" style="display:block;background:#fff;border:1px solid #d8e5dd;border-radius:10px;padding:16px;text-decoration:none;color:#18322d;transition:box-shadow .15s ease;">
+                  <span style="display:inline-block;background:#e8f4ec;color:#1e6b42;font-size:0.75rem;font-weight:700;padding:3px 8px;border-radius:6px;margin-bottom:8px;">⚖️ ${escHtml(a.evidence_level||'Evidencia')}</span>
+                  <h3 style="margin:0 0 6px;color:#123d39;font-size:1.05rem;line-height:1.35;">${escHtml(a.title)}</h3>
+                  ${a.subtitle?`<p style="margin:0 0 8px;color:#55726a;font-size:0.85rem;line-height:1.4;">${escHtml(a.subtitle)}</p>`:''}
+                  <p style="margin:0;color:#28433d;font-size:0.85rem;line-height:1.5;">${escHtml((a.excerpt||'').slice(0,140))}...</p>
+                </a>
+              `).join('') + `</div>` : `<p style="color:#78938b;font-size:0.85rem;font-style:italic;margin:0;">Próximas monografías en desarrollo para este pilar.</p>`}
+            </div>`;
+          }
+          fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
+            <p style="font-size:1.1rem;color:#233833;margin-bottom:24px;line-height:1.7;">
+              Bienvenido a la <strong>Wiki Sanantes</strong>, un esfuerzo colaborativo y abierto por reunir monografías técnicas, mecanismos de acción farmacodinámicos y referencias indexadas en PubMed sobre oncología integrativa y terapias metabólicas.
+            </p>
+            ${pillarsHtml}
+          </div>`;
+          schemaJson=JSON.stringify({
+            "@context":"https://schema.org",
+            "@type":"CollectionPage",
+            "name":title,
+            "description":desc,
+            "url":canonicalUrl,
+            "publisher":{"@type":"Organization","name":"Comunidad Sanantes","url":origin()}
+          });
+        }else{
+          const [art]=(await query("SELECT * FROM wiki_articles WHERE (slug=? OR id=?) AND status='published'",[targetId,targetId]))||[];
+          if(art){
+            category = 'Wiki Sanantes · ' + (art.category||'Investigación');
+            title = art.title + ' · Wiki Sanantes';
+            desc = art.excerpt ? art.excerpt.slice(0,220).replace(/\s+/g,' ').trim() : art.title;
+            image = origin()+'/favicon.svg';
+            targetUrl = origin()+'/#wiki/'+art.slug;
+            canonicalUrl = origin()+'/wiki/'+art.slug;
+            let citations = [];
+            try { citations = JSON.parse(art.pubmed_citations||'[]'); } catch(e){}
+            let pubmedHtml = '';
+            if(citations.length > 0){
+              pubmedHtml = `<div style="margin:28px 0;background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:20px;">
+                <h3 style="color:#123d39;margin:0 0 14px;font-size:1.15rem;display:flex;align-items:center;gap:8px;">📚 Referencias y Evidencia en MEDLINE / PubMed</h3>
+                <ul style="margin:0;padding-left:20px;line-height:1.8;">
+                  ${citations.map(c => `<li style="margin-bottom:8px;"><strong style="color:#183d35;">PMID: ${escHtml(c)}</strong> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/${encodeURIComponent(c)}/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>`).join('')}
+                </ul>
+              </div>`;
+            }
+            const relatedWords = art.slug.split('-').filter(w => w.length > 3);
+            let relatedVideos = [];
+            if(relatedWords.length > 0){
+              const likePattern = '%' + relatedWords[0] + '%';
+              relatedVideos = (await query("SELECT id,title,description,thumbnail,external_id,platform FROM videos WHERE status='published' AND (LOWER(title) LIKE ? OR LOWER(description) LIKE ?) LIMIT 3", [likePattern, likePattern])) || [];
+            }
+            let relatedVideosHtml = '';
+            if(relatedVideos.length > 0){
+              relatedVideosHtml = `<h3 style="color:#123d39;margin:32px 0 16px;font-size:1.2rem;">Episodios relacionados en El Podcast del Cáncer:</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">` +
+                relatedVideos.map(v => {
+                  const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
+                  return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:12px;"><h4 style="margin:0 0 6px;font-size:0.9rem;line-height:1.35;color:#123d39;font-weight:700;">${escHtml(v.title)}</h4></div></a>`;
+                }).join('') + `</div>`;
+            }
+            fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
+              <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;">
+                <span style="background:#e8f4ec;color:#1e6b42;font-size:0.85rem;font-weight:700;padding:5px 12px;border-radius:20px;">⚖️ Nivel de Evidencia: ${escHtml(art.evidence_level||'Preclínica')}</span>
+                <span style="background:#eef3f0;color:#35534b;font-size:0.85rem;font-weight:600;padding:5px 12px;border-radius:20px;">🏛️ ${escHtml(art.category||'Wiki')}</span>
+              </div>
+              ${art.subtitle ? `<p style="font-size:1.2rem;color:#395a52;margin:0 0 20px;font-weight:500;line-height:1.5;">${escHtml(art.subtitle)}</p>` : ''}
+              ${art.excerpt ? `<div style="background:#f4f8f6;border-left:4px solid #1e6b42;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:1.05rem;line-height:1.65;color:#1d3e36;"><strong>Resumen Ejecutivo:</strong> ${escHtml(art.excerpt)}</div>` : ''}
+              ${art.mechanisms ? `<div style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">🧬 Mecanismos Biológicos y Farmacodinámicos</h3><p style="margin:0;line-height:1.7;">${escHtml(art.mechanisms)}</p></div>` : ''}
+              ${art.clinical_status ? `<div style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">📋 Estado Clínico y Regulatorio</h3><p style="margin:0;line-height:1.7;">${escHtml(art.clinical_status)}</p></div>` : ''}
+              <div style="margin:24px 0;line-height:1.8;">${formatRichText(art.body)}</div>
+              ${pubmedHtml}
+              ${relatedVideosHtml}
+            </div>`;
+            schemaJson=JSON.stringify({
+              "@context":"https://schema.org",
+              "@type":"MedicalWebPage",
+              "headline":art.title,
+              "description":desc,
+              "medicalSpecialty":"Oncology",
+              "about":{"@type":"MedicalEntity","name":art.title},
+              "citation":citations.map(c=>`https://pubmed.ncbi.nlm.nih.gov/${c}/`),
+              "publisher":{"@type":"Organization","name":"Comunidad Sanantes","url":origin()}
+            });
+          }
+        }
       }
       const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl),sCanon=escHtml(canonicalUrl);
       res.statusCode=200;
       res.setHeader('Content-Type','text/html; charset=utf-8');
       res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');
       if(method==='HEAD') return res.end();
-      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="720"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}">${type==='video'?`<script>location.replace(${JSON.stringify(targetUrl)});</script>`:''}${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px;">🌿 Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header><main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sTitle}</h1>${activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sTitle}" style="max-width:100%;border-radius:10px;height:auto;"></div>`}<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main><footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;"><p style="margin:0 0 8px;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</p><p style="margin:0;"><a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:600;text-decoration:underline;">Criterio Editorial y Rigor Científico</a> &bull; <a href="${origin()}/sitemap.xml" style="color:#6b877f;text-decoration:none;">Mapa del sitio</a> &bull; <a href="${origin()}/" style="color:#6b877f;text-decoration:none;">Inicio</a></p></footer></body></html>`);
+      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="720"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}">${type==='video'?`<script>location.replace(${JSON.stringify(targetUrl)});</script>`:''}${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px;">🌿 Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header><main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sTitle}</h1>${activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sTitle}" style="max-width:100%;border-radius:10px;height:auto;"></div>`}<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main><footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;"><p style="margin:0 0 8px;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</p><p style="margin:0;"><a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:600;text-decoration:underline;">Criterio Editorial y Rigor Científico</a> &bull; <a href="${origin()}/wiki" style="color:#1e6b42;font-weight:600;text-decoration:none;">Wiki Sanantes</a> &bull; <a href="${origin()}/sitemap.xml" style="color:#6b877f;text-decoration:none;">Mapa del sitio</a> &bull; <a href="${origin()}/" style="color:#6b877f;text-decoration:none;">Inicio</a></p></footer></body></html>`);
     }
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
-      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),me:await user(req),ranking:await getRanking()});
+      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),wikiCategories:await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC"),wikiArticles:await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,body,mechanisms,clinical_status,pubmed_citations,status,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC"),me:await user(req),ranking:await getRanking()});
     }
     if(path==='auth/register'&&method==='POST'){
       const b=await body(req);const email=text(b.email,254).toLowerCase();const name=text(b.name,80)||email.split('@')[0];const password=typeof b.password==='string'?b.password:'';
@@ -593,9 +778,70 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
       await query('DELETE FROM rate_limits WHERE expires<?',[now()]);await query('DELETE FROM login_tokens WHERE expires<?',[now()]);await query('DELETE FROM sessions WHERE expires<?',[now()]);return send(res,{results});
     }
     if(path.startsWith('admin')){
-      const me=await requireUser(req,true);
-      if(path==='admin'&&method==='GET')return send(res,{classifierReady:!!process.env.TYPESAFE_API_KEY,classifications:await query('SELECT * FROM classifications ORDER BY created_at DESC LIMIT 100'),sources:await query('SELECT * FROM sources ORDER BY own DESC,name'),videos:await query('SELECT videos.*,media_labels.relevance,media_labels.response editorial_response FROM videos LEFT JOIN media_labels ON videos.id=media_labels.video_id ORDER BY videos.published_at DESC LIMIT 1000'),posts:await query('SELECT * FROM posts ORDER BY updated_at DESC'),users:await query('SELECT users.id,users.email,users.name,users.role,users.created_at,COALESCE(SUM(points.amount),0) points FROM users LEFT JOIN points ON users.id=points.user_id GROUP BY users.id'),settings:await settings(),        donations:await query('SELECT donations.*,users.name user_name,users.email user_email FROM donations LEFT JOIN users ON donations.user_id=users.id ORDER BY donations.created_at DESC'),audit:await query('SELECT * FROM audit ORDER BY created_at DESC LIMIT 50')});
+      const me=await requireEditor(req);
+      if(path==='admin'&&method==='GET'){
+        if(me.role==='editor'){
+          return send(res,{isEditorOnly:true,role:'editor',wikiCategories:await query('SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC'),wikiArticles:await query('SELECT * FROM wiki_articles ORDER BY updated_at DESC'),audit:await query("SELECT * FROM audit WHERE action LIKE 'Wiki%' ORDER BY created_at DESC LIMIT 30")});
+        }
+        return send(res,{role:'admin',wikiCategories:await query('SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC'),wikiArticles:await query('SELECT * FROM wiki_articles ORDER BY updated_at DESC'),classifierReady:!!process.env.TYPESAFE_API_KEY,classifications:await query('SELECT * FROM classifications ORDER BY created_at DESC LIMIT 100'),sources:await query('SELECT * FROM sources ORDER BY own DESC,name'),videos:await query('SELECT videos.*,media_labels.relevance,media_labels.response editorial_response FROM videos LEFT JOIN media_labels ON videos.id=media_labels.video_id ORDER BY videos.published_at DESC LIMIT 1000'),posts:await query('SELECT * FROM posts ORDER BY updated_at DESC'),users:await query('SELECT users.id,users.email,users.name,users.role,users.created_at,COALESCE(SUM(points.amount),0) points FROM users LEFT JOIN points ON users.id=points.user_id GROUP BY users.id'),settings:await settings(),donations:await query('SELECT donations.*,users.name user_name,users.email user_email FROM donations LEFT JOIN users ON donations.user_id=users.id ORDER BY donations.created_at DESC'),audit:await query('SELECT * FROM audit ORDER BY created_at DESC LIMIT 50')});
+      }
       const b=await body(req);
+      if(path==='admin/wiki/article'&&method==='POST'){
+        const title=text(b.title,300),slug=text(b.slug,120);
+        if(!title||!/^[-a-z0-9]+$/.test(slug)||!['draft','published'].includes(b.status))fail('Revisa el título, el slug y el estado del artículo');
+        let pubmedArr=[];
+        if(Array.isArray(b.pubmed_citations))pubmedArr=b.pubmed_citations;
+        else if(typeof b.pubmed_citations==='string'&&b.pubmed_citations.trim()){
+          try{const parsed=JSON.parse(b.pubmed_citations);if(Array.isArray(parsed))pubmedArr=parsed;}catch{pubmedArr=b.pubmed_citations.split(/[,\s]+/).map(s=>s.trim()).filter(Boolean);}
+        }
+        const pubmedJson=JSON.stringify(pubmedArr.map(x=>String(x).trim()));
+        const artId=b.id||id();
+        await query(`INSERT INTO wiki_articles(id,slug,category_id,category,title,subtitle,evidence_level,excerpt,body,mechanisms,clinical_status,pubmed_citations,status,author_id,updated_at)
+          VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
+          ON CONFLICT(id) DO UPDATE SET
+            slug=excluded.slug,category_id=excluded.category_id,category=excluded.category,title=excluded.title,subtitle=excluded.subtitle,
+            evidence_level=excluded.evidence_level,excerpt=excluded.excerpt,body=excluded.body,mechanisms=excluded.mechanisms,
+            clinical_status=excluded.clinical_status,pubmed_citations=excluded.pubmed_citations,status=excluded.status,updated_at=CURRENT_TIMESTAMP`,
+          [artId,slug,text(b.category_id,64)||null,text(b.category,80)||'Medicamentos Reposicionados',title,text(b.subtitle,300),text(b.evidence_level,80)||'Preclínica / In vitro',text(b.excerpt,1000),text(b.body,50000),text(b.mechanisms,5000),text(b.clinical_status,5000),pubmedJson,b.status,me.id]
+        );
+        await audit(me.id,'Wiki artículo guardado: '+title);
+        return send(res,{ok:true,id:artId});
+      }
+      if(path==='admin/wiki/article'&&method==='DELETE'){
+        await query('DELETE FROM wiki_articles WHERE id=?',[b.id]);
+        await audit(me.id,'Wiki artículo eliminado: '+text(b.id,64));
+        return send(res,{ok:true});
+      }
+      if(path==='admin/wiki/category'&&method==='POST'){
+        const name=text(b.name,120),slug=text(b.slug,100);
+        if(!name||!/^[-a-z0-9]+$/.test(slug))fail('Revisa el nombre y el slug del pilar');
+        const catId=b.id||id();
+        const sortOrder=Number.isInteger(Number(b.sort_order))?Number(b.sort_order):0;
+        await query(`INSERT INTO wiki_categories(id,slug,name,icon,description,sort_order)
+          VALUES(?,?,?,?,?,?)
+          ON CONFLICT(id) DO UPDATE SET
+            slug=excluded.slug,name=excluded.name,icon=excluded.icon,description=excluded.description,sort_order=excluded.sort_order`,
+          [catId,slug,name,text(b.icon,20)||'📚',text(b.description,500),sortOrder]
+        );
+        await audit(me.id,'Wiki pilar guardado: '+name);
+        return send(res,{ok:true,id:catId});
+      }
+      if(path==='admin/wiki/category'&&method==='DELETE'){
+        await query('DELETE FROM wiki_categories WHERE id=?',[b.id]);
+        await audit(me.id,'Wiki pilar eliminado: '+text(b.id,64));
+        return send(res,{ok:true});
+      }
+      if(me.role!=='admin')fail('Esta sección es exclusiva del administrador',403);
+      if(path==='admin/user/role'&&method==='POST'){
+        if(!['member','editor','admin'].includes(b.role))fail('Rol inválido');
+        const [targetUser]=(await query('SELECT id,email,role FROM users WHERE id=?',[b.user_id]))||[];
+        if(!targetUser)fail('Usuario no encontrado',404);
+        const adminEmail=(process.env.ADMIN_EMAIL||'artistproco@gmail.com').trim().toLowerCase();
+        if(targetUser.email===adminEmail&&b.role!=='admin')fail('No se puede revocar el rol de administrador al propietario');
+        await query('UPDATE users SET role=? WHERE id=?',[b.role,targetUser.id]);
+        await audit(me.id,`Rol modificado para ${targetUser.email}: ${b.role}`);
+        return send(res,{ok:true});
+      }
       if(path==='admin/organize'&&method==='POST'){await rate('organize:'+me.id,12);try{const r=await organizePending();await audit(me.id,'Organización Jev: '+r.processed+' contenidos');return send(res,r)}catch(e){fail(e.message,502)}}
       if(path==='admin/classify'&&method==='POST'){await rate('classify:'+me.id,12);try{const result=await classifyPending();await audit(me.id,'Clasificación Jev: '+result.processed+' evaluados');return send(res,result)}catch(e){fail(e.message,502)}}
       if(path==='admin/source'&&method==='POST'){if(!platforms.includes(b.platform))fail('Plataforma no válida');mediaURL(b.url,b.platform);if(b.id){await query('UPDATE sources SET name=?,own=?,enabled=? WHERE id=?',[text(b.name,120),b.own?1:0,b.enabled?1:0,b.id]);}else{await query('INSERT INTO sources(id,name,platform,url,own) VALUES(?,?,?,?,?)',[id(),text(b.name,120)||b.platform,b.platform,b.url,b.own?1:0]);}await audit(me.id,'Fuente guardada: '+text(b.name));return send(res,{ok:true});}

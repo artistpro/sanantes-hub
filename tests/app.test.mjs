@@ -152,3 +152,84 @@ test('Vistas previas de redes sociales (/v/:id y /b/:slug) con OpenGraph y redir
   const imgBuf=Buffer.from(await imgRes.arrayBuffer());
   assert.ok(imgBuf.length>0);
 });
+
+test('Wiki Sanantes: Pre-rendering, Schema MedicalWebPage, Sitemap y rol Editor con permisos aislados', async () => {
+  const owner = await login('admin@example.test');
+  const modUser = await login('editor-wiki@example.test');
+  const [modDbUser] = await query("SELECT id, role FROM users WHERE email='editor-wiki@example.test'");
+  assert.equal(modDbUser.role, 'member');
+
+  // 1. Admin changes user role to 'editor'
+  const roleRes = await call('admin/user/role', { user_id: modDbUser.id, role: 'editor' }, owner.cookie);
+  assert.equal(roleRes.status, 200);
+
+  // 2. Editor accesses admin panel
+  const adminRes = await call('admin', null, modUser.cookie);
+  assert.equal(adminRes.status, 200);
+  const adminJson = await adminRes.json();
+  assert.equal(adminJson.isEditorOnly, true);
+  assert.equal(adminJson.role, 'editor');
+  assert.ok(adminJson.wikiCategories.length >= 5);
+  assert.ok(adminJson.wikiArticles.length >= 3);
+  assert.equal(adminJson.donations, undefined, 'Sensitive donations data blocked from editor');
+  assert.equal(adminJson.users, undefined, 'Sensitive users data blocked from editor');
+
+  // 3. Editor cannot access sensitive admin routes
+  assert.equal((await call('admin/donation', { amount: 10 }, modUser.cookie)).status, 403);
+  assert.equal((await call('admin/points', { user_id: modDbUser.id, amount: 10, reason: 'hack' }, modUser.cookie)).status, 403);
+  assert.equal((await call('admin/settings', { title: 'Hack' }, modUser.cookie)).status, 403);
+  assert.equal((await call('admin/user/role', { user_id: modDbUser.id, role: 'admin' }, modUser.cookie)).status, 403);
+
+  // 4. Editor CAN create/edit Wiki articles and categories
+  const newCatRes = await call('admin/wiki/category', {
+    name: 'Pilar Personalizado',
+    slug: 'pilar-personalizado',
+    icon: '🔬',
+    description: 'Pilar dinámico creado por moderador',
+    sort_order: 6
+  }, modUser.cookie);
+  assert.equal(newCatRes.status, 200);
+
+  const newArtRes = await call('admin/wiki/article', {
+    title: 'Monografía de Prueba por Editor',
+    slug: 'monografia-prueba',
+    category: 'Pilar Personalizado',
+    subtitle: 'Prueba clínica',
+    evidence_level: 'Ensayo Clínico Aleatorizado',
+    excerpt: 'Resumen ejecutivo de la monografía',
+    body: '## Mecanismos\n\nTexto científico.',
+    mechanisms: 'Inhibición enzimática',
+    clinical_status: 'Fase II',
+    pubmed_citations: '["12345678"]',
+    status: 'published'
+  }, modUser.cookie);
+  assert.equal(newArtRes.status, 200);
+
+  // 5. Public Wiki Hub rendering (/api/wiki)
+  const hubRes = await fetch(base + '/api/wiki');
+  assert.equal(hubRes.status, 200);
+  const hubHtml = await hubRes.text();
+  assert.ok(hubHtml.includes('Wiki Sanantes'));
+  assert.ok(hubHtml.includes('Medicamentos Reposicionados'));
+  assert.ok(hubHtml.includes('Suplementos y Nutracéuticos'));
+  assert.ok(hubHtml.includes('Ivermectina en Oncología'));
+  assert.ok(hubHtml.includes('/wiki/monografia-prueba'));
+
+  // 6. Public Article rendering (/api/wiki/ivermectina)
+  const artRes = await fetch(base + '/api/wiki/ivermectina');
+  assert.equal(artRes.status, 200);
+  const artHtml = await artRes.text();
+  assert.ok(artHtml.includes('Ivermectina en Oncología'));
+  assert.ok(artHtml.includes('Nivel de Evidencia'));
+  assert.ok(artHtml.includes('pubmed.ncbi.nlm.nih.gov/29054452'));
+  assert.ok(artHtml.includes('MedicalWebPage'));
+
+  // 7. Sitemap includes /wiki and article URLs
+  const sitemapRes = await fetch(base + '/api/sitemap.xml');
+  assert.equal(sitemapRes.status, 200);
+  const sitemapXml = await sitemapRes.text();
+  assert.ok(sitemapXml.includes('<loc>' + base + '/wiki</loc>'));
+  assert.ok(sitemapXml.includes('<loc>' + base + '/wiki/ivermectina</loc>'));
+  assert.ok(sitemapXml.includes('<loc>' + base + '/wiki/monografia-prueba</loc>'));
+});
+
