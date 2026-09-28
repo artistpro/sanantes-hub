@@ -407,32 +407,71 @@ ${videoItems}
       const formatRichText=(raw)=>{
         if(!raw) return '';
         const lines=String(raw).split(/\r?\n/);
-        let html='', inList=false, inPara=false;
+        let html='', inList=false, inBlockquote=false;
+        const inlineFormat=(text)=>{
+          return escHtml(text)
+            .replace(/`([^`]+)`/g, '<code style="background:#eef3f0;padding:2px 6px;border-radius:4px;font-size:0.88em;color:#183d35;">$1</code>')
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*([^\*]+)\*/g, '<em>$1</em>')
+            .replace(/\[([^\]]+)\]\((https?:\/\/[^\s<)]+)\)/g, (m, label, url) => {
+              const rawUrl = url.replace(/&amp;/g, '&');
+              return `<a href="${rawUrl}" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;text-decoration:underline;">${label}</a>`;
+            });
+        };
         for(let line of lines){
-          line=line.trim();
-          if(!line){
+          const trimmed=line.trim();
+          if(!trimmed){
             if(inList){ html+='</ul>'; inList=false; }
-            if(inPara){ html+='</p>'; inPara=false; }
+            if(inBlockquote){ html+='</blockquote>'; inBlockquote=false; }
             continue;
           }
-          const isBullet=/^[•\-\*]\s+/.test(line) || /^\d+\.\s+/.test(line);
-          if(isBullet){
-            if(inPara){ html+='</p>'; inPara=false; }
-            if(!inList){ html+='<ul style="margin:16px 0;padding-left:24px;line-height:1.6;">'; inList=true; }
-            const clean=line.replace(/^[•\-\*]\s+/,'').replace(/^\d+\.\s+/,'');
-            html+=`<li style="margin-bottom:8px;">${escHtml(clean)}</li>`;
-          }else{
+          if(trimmed.startsWith('### ')){
             if(inList){ html+='</ul>'; inList=false; }
-            if(!inPara){
-              html+='<p style="margin:0 0 16px;line-height:1.7;">'+escHtml(line);
-              inPara=true;
-            }else{
-              html+='<br>'+escHtml(line);
-            }
+            if(inBlockquote){ html+='</blockquote>'; inBlockquote=false; }
+            html+=`<h3 style="color:#123d39;margin:24px 0 12px;font-size:1.25rem;">${inlineFormat(trimmed.slice(4))}</h3>`;
+            continue;
           }
+          if(trimmed.startsWith('## ')){
+            if(inList){ html+='</ul>'; inList=false; }
+            if(inBlockquote){ html+='</blockquote>'; inBlockquote=false; }
+            html+=`<h2 style="color:#123d39;margin:28px 0 14px;font-size:1.45rem;border-bottom:1px solid #eef3f0;padding-bottom:8px;">${inlineFormat(trimmed.slice(3))}</h2>`;
+            continue;
+          }
+          if(trimmed.startsWith('# ')){
+            if(inList){ html+='</ul>'; inList=false; }
+            if(inBlockquote){ html+='</blockquote>'; inBlockquote=false; }
+            html+=`<h2 style="color:#123d39;margin:28px 0 14px;font-size:1.55rem;">${inlineFormat(trimmed.slice(2))}</h2>`;
+            continue;
+          }
+          if(trimmed.startsWith('> ') || trimmed === '>'){
+            if(inList){ html+='</ul>'; inList=false; }
+            const content = trimmed.slice(trimmed.startsWith('> ') ? 2 : 1);
+            if(!inBlockquote){
+              html += '<blockquote style="margin:20px 0;padding:16px 20px;border-left:4px solid #1e6b42;background:#f8fbf9;border-radius:0 8px 8px 0;line-height:1.65;color:#183d35;">';
+              inBlockquote = true;
+            } else {
+              html += '<br>';
+            }
+            html += inlineFormat(content);
+            continue;
+          } else if(inBlockquote){
+            html += '</blockquote>';
+            inBlockquote = false;
+          }
+          const isBullet=/^[•\-\*]\s+/.test(trimmed) || /^\d+\.\s+/.test(trimmed);
+          if(isBullet){
+            if(!inList){ html+='<ul style="margin:16px 0;padding-left:24px;line-height:1.7;">'; inList=true; }
+            const clean=trimmed.replace(/^[•\-\*]\s+/,'').replace(/^\d+\.\s+/,'');
+            html+=`<li style="margin-bottom:8px;">${inlineFormat(clean)}</li>`;
+            continue;
+          } else if(inList){
+            html+='</ul>';
+            inList=false;
+          }
+          html+=`<p style="margin:0 0 16px;line-height:1.75;color:#243e37;">${inlineFormat(trimmed)}</p>`;
         }
         if(inList) html+='</ul>';
-        if(inPara) html+='</p>';
+        if(inBlockquote) html+='</blockquote>';
         return html;
       };
       let type=u.searchParams.get('type')||'';
@@ -800,6 +839,48 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
                   return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:12px;"><h4 style="margin:0 0 6px;font-size:0.9rem;line-height:1.35;color:#123d39;font-weight:700;">${escHtml(v.title)}</h4></div></a>`;
                 }).join('') + `</div></div>`;
             }
+            let affiliateCardHtml = '';
+            const isSupp = (art.category||'').toLowerCase().includes('suplemento');
+            if(isSupp){
+              const suppNames = {
+                'berberina': 'Berberina',
+                'curcumina': 'Curcumina / Cúrcuma',
+                'pectina-citrica-modificada': 'Pectina Cítrica Modificada (MCP)',
+                'hongos-medicinales': 'Hongos Medicinales (Reishi, Melena de León, Cola de Pavo)',
+                'te-verde-egcg': 'Extracto de Té Verde EGCG',
+                'aceite-semilla-negra-timoquinona': 'Aceite de Semilla Negra (Timoquinona)',
+                'melatonina-oncologia': 'Melatonina Grado Clínico',
+                'cardo-mariano-silimarina': 'Cardo Mariano (Silimarina)',
+                'omega-3-epa-dha': 'Omega-3 EPA / DHA',
+                'ashwagandha-withania': 'Ashwagandha KSM-66',
+                'graviola-guanabana': 'Graviola / Guanábana',
+                'artemisinina-artemisia-annua': 'Artemisinina Pura'
+              };
+              const suppName = suppNames[art.slug] || art.title.split(':')[0];
+              const bodyMatch = (art.body || '').match(/https?:\/\/(?:www\.)?iherb\.com\/search[^\s\)\>]+/);
+              const searchUrl = bodyMatch ? bodyMatch[0].replace(/&amp;/g, '&') : `https://www.iherb.com/search?kw=${encodeURIComponent(art.slug.replace(/-/g,' '))}&rcode=wUt7svK8`;
+              affiliateCardHtml = `<div id="adquisicion-iherb" class="wiki-affiliate-card" style="margin:28px 0;padding:24px;background:linear-gradient(135deg,#f2f8f4 0%,#e7f4eb 100%);border:2px solid #2e7d32;border-radius:14px;box-shadow:0 4px 16px rgba(46,125,50,0.08);">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                  <span style="font-size:2rem;line-height:1;">🌿</span>
+                  <div>
+                    <h3 style="margin:0;color:#123d39;font-size:1.25rem;font-weight:800;">Adquisición de Grado Terapéutico en iHerb</h3>
+                    <p style="margin:2px 0 0;color:#3b6559;font-size:0.88rem;">Fórmulas verificadas en pureza y biodisponibilidad · Descuento exclusivo de comunidad</p>
+                  </div>
+                </div>
+                <p style="margin:0 0 16px;color:#203c34;font-size:0.95rem;line-height:1.65;">
+                  Puedes adquirir fórmulas seleccionadas de <strong>${escHtml(suppName)}</strong> aplicando nuestro código de descuento de comunidad:
+                  <span style="display:inline-block;background:#ffffff;border:1px dashed #2e7d32;padding:4px 10px;border-radius:6px;color:#1e6b42;font-family:monospace;font-size:1.05rem;font-weight:700;margin-left:4px;">wUt7svK8</span>
+                </p>
+                <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+                  <a href="${searchUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:#2e7d32;color:#ffffff;font-weight:700;padding:12px 24px;border-radius:30px;text-decoration:none;font-size:0.95rem;box-shadow:0 3px 10px rgba(46,125,50,0.25);">
+                    🛒 Ver ${escHtml(suppName)} en iHerb →
+                  </a>
+                  <a href="https://iherb.co/wUt7svK8" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;background:#ffffff;color:#1e6b42;border:1px solid #a3cbb3;font-weight:600;padding:11px 20px;border-radius:30px;text-decoration:none;font-size:0.9rem;">
+                    Enlace directo comunidad (wUt7svK8) ↗
+                  </a>
+                </div>
+              </div>`;
+            }
             const idx = arts.findIndex(x => x.id === art.id || x.slug === art.slug);
             const prevArt = idx > 0 ? arts[idx - 1] : null;
             const nextArt = idx < arts.length - 1 ? arts[idx + 1] : null;
@@ -814,6 +895,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
                 ${art.mechanisms ? `<li><a href="#mecanismos" style="color:#55726a;text-decoration:none;">• Mecanismos Biológicos</a></li>` : ''}
                 ${art.clinical_status ? `<li><a href="#estado-clinico" style="color:#55726a;text-decoration:none;">• Estado Clínico</a></li>` : ''}
                 <li><a href="#investigacion" style="color:#55726a;text-decoration:none;">• Monografía y Análisis</a></li>
+                ${isSupp ? `<li><a href="#adquisicion-iherb" style="color:#1e6b42;font-weight:700;text-decoration:none;">• Adquisición en iHerb</a></li>` : ''}
                 ${citations.length ? `<li><a href="#referencias" style="color:#55726a;text-decoration:none;">• Citas PubMed</a></li>` : ''}
                 ${relatedVideos.length ? `<li><a href="#videos" style="color:#55726a;text-decoration:none;">• Videos Relacionados</a></li>` : ''}
               </ul>
@@ -838,6 +920,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
                   ${art.mechanisms ? `<div id="mecanismos" style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">🧬 Mecanismos Biológicos y Farmacodinámicos</h3><p style="margin:0;line-height:1.7;">${escHtml(art.mechanisms)}</p></div>` : ''}
                   ${art.clinical_status ? `<div id="estado-clinico" style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">📋 Estado Clínico y Regulatorio</h3><p style="margin:0;line-height:1.7;">${escHtml(art.clinical_status)}</p></div>` : ''}
                   <div id="investigacion" style="margin:24px 0;line-height:1.8;">${formatRichText(art.body)}</div>
+                  ${affiliateCardHtml}
                   ${pubmedHtml}
                   ${relatedVideosHtml}
                   ${paginationHtml}
