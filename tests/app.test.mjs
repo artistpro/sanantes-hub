@@ -224,12 +224,30 @@ test('Wiki Sanantes: Pre-rendering, Schema MedicalWebPage, Sitemap y rol Editor 
   assert.ok(artHtml.includes('pubmed.ncbi.nlm.nih.gov/29054452'));
   assert.ok(artHtml.includes('MedicalWebPage'));
 
-  // 7. Sitemap includes /wiki and article URLs
+  // 7. Terapias Complementarias con tarjeta y enlace de Amazon
+  const pbmRes = await fetch(base + '/api/wiki/fotobiomodulacion-luz-roja');
+  assert.equal(pbmRes.status, 200);
+  const pbmHtml = await pbmRes.text();
+  assert.ok(pbmHtml.includes('Fotobiomodulación'));
+  assert.ok(pbmHtml.includes('equipamiento-amazon'));
+  assert.ok(pbmHtml.includes('https://amzn.to/46PTWSA'));
+
+  // 8. Suplementos con tarjeta y enlace de iHerb
+  const bgRes = await fetch(base + '/api/wiki/beta-glucanos-inmunologia-reishi-cola-pavo');
+  assert.equal(bgRes.status, 200);
+  const bgHtml = await bgRes.text();
+  assert.ok(bgHtml.includes('Beta-Glucanos'));
+  assert.ok(bgHtml.includes('adquisicion-iherb'));
+  assert.ok(bgHtml.includes('wUt7svK8'));
+
+  // 9. Sitemap includes /wiki and article URLs
   const sitemapRes = await fetch(base + '/api/sitemap.xml');
   assert.equal(sitemapRes.status, 200);
   const sitemapXml = await sitemapRes.text();
   assert.ok(sitemapXml.includes('<loc>' + base + '/wiki</loc>'));
   assert.ok(sitemapXml.includes('<loc>' + base + '/wiki/ivermectina</loc>'));
   assert.ok(sitemapXml.includes('<loc>' + base + '/wiki/monografia-prueba</loc>'));
+  assert.ok(sitemapXml.includes('<loc>' + base + '/wiki/fotobiomodulacion-luz-roja</loc>'));
+  assert.ok(sitemapXml.includes('<loc>' + base + '/wiki/dieta-cetogenica-oncologia-metabolica</loc>'));
 });
 
