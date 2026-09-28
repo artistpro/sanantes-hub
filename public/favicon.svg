@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#123d39"/><text x="32" y="45" text-anchor="middle" font-size="43" font-family="Georgia,serif" fill="#fff">s</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="16" fill="#123d39"/>
+  <!-- Hojas Oficiales Sanantes -->
+  <g transform="translate(6, 6) scale(0.81)">
+    <!-- Hoja principal -->
+    <path d="M20 54 C18 38 25 20 48 8 C50 27 42 46 20 54 Z" fill="#4db33d"/>
+    <path d="M20 54 C29 38 38 23 48 8" stroke="#80d874" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <!-- Hoja secundaria -->
+    <path d="M30 36 C42 32 56 34 60 20 C60 35 50 48 30 44 Z" fill="#65c84d"/>
+    <path d="M30 40 C43 36 52 30 60 20" stroke="#a5eca0" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

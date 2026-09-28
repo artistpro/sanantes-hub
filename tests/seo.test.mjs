@@ -118,3 +118,30 @@ test('SEO: sitemap.xml incluye landing hubs de autores y temas con alta priorida
   assert.ok(xml.includes('/temas/estrategia-metabolica'), 'Sitemap debe listar /temas/estrategia-metabolica');
 });
 
+test('SEO Técnico: SSR incluye favicon, apple-touch-icon, logo en Organization Schema y longitudes óptimas', async () => {
+  // Test a wiki article
+  await query("INSERT INTO wiki_articles(id,slug,category,title,subtitle,excerpt,body,status) VALUES('test-art','test-art','Suplementos','Título de Prueba para Monografía Científica','Subtítulo','Breve resumen de prueba para verificar longitudes y metadatos','Cuerpo de la monografía','published') ON CONFLICT(id) DO NOTHING");
+  const res = await fetch(`${base}/api/wiki/test-art`);
+  assert.equal(res.status, 200);
+  const html = await res.text();
+
+  // 1. Favicon & Apple Touch Icon
+  assert.ok(html.includes('<link rel="icon" href="/favicon.svg" type="image/svg+xml">'), 'Debe incluir favicon SVG');
+  assert.ok(html.includes('<link rel="apple-touch-icon" href="/logo.png">'), 'Debe incluir apple-touch-icon');
+
+  // 2. Organization Schema with Logo
+  assert.ok(html.includes('"publisher":{'), 'Debe incluir publisher');
+  assert.ok(html.includes('"@type":"Organization"'), 'Publisher debe ser Organization');
+  assert.ok(html.includes('"logo":{'), 'Organization debe incluir logo requerido');
+  assert.ok(html.includes('/logo.png'), 'Logo debe apuntar a /logo.png');
+
+  // 3. Length checks
+  const titleMatch = html.match(/<title>([^<]+)<\/title>/);
+  assert.ok(titleMatch, 'Debe haber etiqueta <title>');
+  assert.ok(titleMatch[1].length <= 60, `Título (${titleMatch[1].length}) no debe exceder 60 caracteres`);
+
+  const descMatch = html.match(/<meta name="description" content="([^"]+)">/);
+  assert.ok(descMatch, 'Debe haber meta description');
+  assert.ok(descMatch[1].length <= 155, `Description (${descMatch[1].length}) no debe exceder 155 caracteres`);
+});
+
