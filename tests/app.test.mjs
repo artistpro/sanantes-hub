@@ -222,7 +222,7 @@ test('Wiki Sanantes: Pre-rendering, Schema MedicalWebPage, Sitemap y rol Editor 
   assert.ok(artHtml.includes('Ivermectina en Oncología'));
   assert.ok(artHtml.includes('Nivel de Evidencia'));
   assert.ok(artHtml.includes('pubmed.ncbi.nlm.nih.gov/29054452'));
-  assert.ok(artHtml.includes('MedicalWebPage'));
+  assert.ok(artHtml.includes('Article'));
 
   // 7. Terapias Complementarias con tarjeta y enlace de Amazon
   const pbmRes = await fetch(base + '/api/wiki/fotobiomodulacion-luz-roja');
@@ -282,7 +282,7 @@ test('Portada / Index: Personalización de destacados desde Admin y SSR enriquec
   assert.ok(html.includes('Directos y Pizarra'));
   assert.ok(html.includes('Muro de Gratitud') || html.includes('Comunidad y Gamificación'));
   assert.ok(html.includes('WebSite'));
-  assert.ok(html.includes('MedicalOrganization'));
+  assert.ok(html.includes('CommunityOrganization'));
 });
 
 

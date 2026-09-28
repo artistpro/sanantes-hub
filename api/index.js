@@ -691,7 +691,7 @@ ${videoItems}
         return (lastSpace > 30 ? cut.slice(0, lastSpace) : cut) + '...';
       };
       const orgPublisher = {
-        "@type": "Organization",
+        "@type": "CommunityOrganization",
         "name": "Comunidad Sanantes",
         "url": origin(),
         "logo": {
@@ -795,15 +795,18 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(p.body||p.excerpt)}</div>`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
-            "@type":"MedicalWebPage",
+            "@type":"Article",
             "headline":p.title,
             "description":desc,
             "image":[image],
             "datePublished":p.updated_at?new Date(p.updated_at).toISOString():undefined,
             "dateModified":p.updated_at?new Date(p.updated_at).toISOString():undefined,
             "publisher":orgPublisher,
-            "medicalSpecialty":"Oncology",
-            "aspect":["Emotional Support","Information"]
+            "articleSection":"Comunidad y Divulgación de Acompañamiento",
+            "audience":{
+              "@type":"Audience",
+              "audienceType":"Pacientes oncológicos, familiares y comunidad de apoyo"
+            }
           });
         }
       }else if(type==='author'&&(targetId==='william-makis'||targetId==='dr-william-makis')){
@@ -860,10 +863,10 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               }
             },
             {
-              "@type":"MedicalWebPage",
+              "@type":"CollectionPage",
               "headline":title,
               "description":desc,
-              "medicalSpecialty":"Oncology",
+              "about":"Divulgación de investigaciones y acompañamiento en oncología integrativa",
               "publisher":orgPublisher
             }
           ]
@@ -900,10 +903,10 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         </div>`;
         schemaJson=JSON.stringify({
           "@context":"https://schema.org",
-          "@type":"MedicalWebPage",
+          "@type":"CollectionPage",
           "headline":title,
           "description":desc,
-          "medicalSpecialty":"Oncology",
+          "about":"Compendio de literatura científica y acompañamiento integrativo",
           "publisher":orgPublisher
         });
       }else if(type==='topic'&&targetId==='estrategia-metabolica'){
@@ -938,10 +941,10 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         </div>`;
         schemaJson=JSON.stringify({
           "@context":"https://schema.org",
-          "@type":"MedicalWebPage",
+          "@type":"CollectionPage",
           "headline":title,
           "description":desc,
-          "medicalSpecialty":"Oncology",
+          "about":"Compendio de oncología metabólica y acompañamiento integrativo",
           "publisher":orgPublisher
         });
       }else if(type==='wiki'){
@@ -1190,11 +1193,15 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             </div>`;
             schemaJson=JSON.stringify({
               "@context":"https://schema.org",
-              "@type":"MedicalWebPage",
+              "@type":"Article",
               "headline":art.title,
               "description":desc,
-              "medicalSpecialty":"Oncology",
-              "about":{"@type":"MedicalEntity","name":art.title},
+              "articleSection":"Biblioteca de Investigación y Acompañamiento",
+              "about":art.title,
+              "audience":{
+                "@type":"Audience",
+                "audienceType":"Pacientes, familias y comunidad de apoyo"
+              },
               "citation":citations.map(c=>`https://pubmed.ncbi.nlm.nih.gov/${c}/`),
               "publisher":orgPublisher
             });
@@ -1357,13 +1364,17 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               "inLanguage":"es"
             },
             {
-              "@type":"MedicalOrganization",
+              "@type":"CommunityOrganization",
               "name":"Comunidad Sanantes",
-              "alternateName":["El Podcast del Cáncer","Podcast del Cáncer"],
+              "alternateName":["El Podcast del Cáncer","Podcast del Cáncer","Sanantes"],
               "url":origin(),
               "logo":origin()+"/logo.png",
-              "medicalSpecialty":"Oncology",
-              "description":"Plataforma de recursos, podcast sobre el cáncer y comunidad de oncología integrativa para pacientes y familias.",
+              "description":"Comunidad de acompañamiento, apoyo mutuo y divulgación científica sobre oncología integrativa para pacientes y familias.",
+              "knowsAbout":["Acompañamiento a pacientes con cáncer","Oncología integrativa","Estrategia metabólica celular","Calidad de vida y bienestar"],
+              "audience":{
+                "@type":"Audience",
+                "audienceType":"Pacientes oncológicos, familiares, cuidadores y comunidad de apoyo"
+              },
               "disclaimer":"Contenido informativo y de acompañamiento. No sustituye la atención médica especializada."
             }
           ]

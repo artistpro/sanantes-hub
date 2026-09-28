@@ -45,7 +45,7 @@ test('SEO: /sitemap.xml genera sitemap con extensión de Google Video', async ()
   assert.ok(xml.includes('<loc>'));
 });
 
-test('SEO & GEO: /v/:id y /b/:slug inyectan Schema.org JSON-LD (VideoObject y MedicalWebPage)', async () => {
+test('SEO & GEO: /v/:id y /b/:slug inyectan Schema.org JSON-LD (VideoObject y Article)', async () => {
   const [vid] = await query("SELECT id FROM videos WHERE status='published' LIMIT 1");
   assert.ok(vid, 'Debe haber al menos un video publicado');
 
@@ -66,8 +66,8 @@ test('SEO & GEO: /v/:id y /b/:slug inyectan Schema.org JSON-LD (VideoObject y Me
   assert.equal(bRes.status, 200);
   const bHtml = await bRes.text();
   assert.ok(bHtml.includes('application/ld+json'));
-  assert.ok(bHtml.includes('"@type":"MedicalWebPage"'));
-  assert.ok(bHtml.includes('Oncology'));
+  assert.ok(bHtml.includes('"@type":"Article"'));
+  assert.ok(bHtml.includes('Comunidad y Divulgación de Acompañamiento'));
   assert.ok(bHtml.includes('Cuerpo informativo sobre oncologia'));
 });
 
@@ -78,7 +78,7 @@ test('Etapa 5: Página institucional E-E-A-T /b/criterio-editorial activa con ri
   assert.ok(html.includes('Criterio Editorial'), 'Debe titular Criterio Editorial');
   assert.ok(html.includes('PubMed'), 'Debe mencionar PubMed como fuente');
   assert.ok(html.includes('Aviso médico informativo:'), 'Debe incluir disclaimer YMYL');
-  assert.ok(html.includes('"@type":"MedicalWebPage"'), 'Debe incluir esquema MedicalWebPage');
+  assert.ok(html.includes('"@type":"Article"'), 'Debe incluir esquema Article');
 });
 
 test('Etapa 5: Malla de clústeres temáticos enlazada en /v/:id', async () => {
@@ -131,7 +131,7 @@ test('SEO Técnico: SSR incluye favicon, apple-touch-icon, logo en Organization 
 
   // 2. Organization Schema with Logo
   assert.ok(html.includes('"publisher":{'), 'Debe incluir publisher');
-  assert.ok(html.includes('"@type":"Organization"'), 'Publisher debe ser Organization');
+  assert.ok(html.includes('"@type":"CommunityOrganization"'), 'Publisher debe ser CommunityOrganization');
   assert.ok(html.includes('"logo":{'), 'Organization debe incluir logo requerido');
   assert.ok(html.includes('/logo.png'), 'Logo debe apuntar a /logo.png');
 
