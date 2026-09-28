@@ -559,22 +559,36 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           "publisher":{"@type":"Organization","name":"Comunidad Sanantes","url":origin()}
         });
       }else if(type==='wiki'){
+        const cats = (await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC")) || [];
+        const arts = (await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC")) || [];
+        const wikiSidebarHtml = `<aside style="background:#fff;border-radius:12px;border:1px solid #dce8df;padding:20px;margin-bottom:24px;position:sticky;top:20px;">
+          <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#55726a;margin-bottom:16px;">Pilares Temáticos</div>
+          <div style="display:flex;flex-direction:column;gap:16px;">` +
+          cats.map(c => {
+            const catArts = arts.filter(a => a.category_id === c.id || a.category === c.name);
+            return `<div>
+              <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#1e6b42;margin-bottom:6px;display:flex;align-items:center;gap:6px;"><span>${c.icon||'📚'}</span> ${escHtml(c.name)}</div>
+              <ul style="list-style:none;margin:0;padding:0 0 0 8px;border-left:2px solid #e2ebe5;display:flex;flex-direction:column;gap:4px;">
+                ${catArts.map(a => `<li style="margin:0;"><a href="${origin()}/wiki/${a.slug}" style="display:block;padding:4px 8px;font-size:0.84rem;color:${targetId===a.slug||targetId===a.id?'#1e6b42':'#27453f'};font-weight:${targetId===a.slug||targetId===a.id?'700':'400'};text-decoration:none;border-radius:5px;background:${targetId===a.slug||targetId===a.id?'#e8f4ec':'transparent'};">${escHtml(a.title)}</a></li>`).join('')}
+                ${!catArts.length ? `<li style="font-size:0.75rem;color:#78938b;padding:2px 8px;">Próximamente</li>` : ''}
+              </ul>
+            </div>`;
+          }).join('') + `</div></aside>`;
+
         if(!targetId){
-          category = 'Wiki Sanantes · Biblioteca Abierta';
+          category = 'Wiki Sanantes · Biblioteca Técnica';
           title = 'Wiki Sanantes: Compendio Científico y Oncología Integrativa';
-          desc = 'Wiki Sanantes: Enciclopedia colaborativa y base de evidencia sobre medicamentos reposicionados, estrategia metabólica, investigadores referentes, suplementos y terapias.';
+          desc = 'Wiki Sanantes: Enciclopedia técnica y base de evidencia sobre medicamentos reposicionados, estrategia metabólica celular, investigadores de referencia, suplementos y terapias.';
           image = origin()+'/favicon.svg';
           targetUrl = origin()+'/#wiki';
           canonicalUrl = origin()+'/wiki';
-          const cats = (await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC")) || [];
-          const arts = (await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC")) || [];
           let pillarsHtml = '';
           for(const c of cats){
             const catArts = arts.filter(a => a.category_id === c.id || a.category === c.name);
-            pillarsHtml += `<div style="margin-bottom:32px;background:#fbfdfc;border:1px solid #dce8df;border-radius:12px;padding:24px;">
+            pillarsHtml += `<section id="pillar-${c.slug||c.id}" style="margin-bottom:32px;background:#fbfdfc;border:1px solid #dce8df;border-radius:12px;padding:24px;">
               <h2 style="color:#123d39;margin:0 0 8px;font-size:1.35rem;display:flex;align-items:center;gap:10px;"><span>${c.icon||'📚'}</span> ${escHtml(c.name)}</h2>
               <p style="color:#55726a;margin:0 0 16px;font-size:0.9rem;line-height:1.5;">${escHtml(c.description||'')}</p>
-              ${catArts.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">` + catArts.map(a => `
+              ${catArts.length ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">` + catArts.map(a => `
                 <a href="${origin()}/wiki/${a.slug}" style="display:block;background:#fff;border:1px solid #d8e5dd;border-radius:10px;padding:16px;text-decoration:none;color:#18322d;transition:box-shadow .15s ease;">
                   <span style="display:inline-block;background:#e8f4ec;color:#1e6b42;font-size:0.75rem;font-weight:700;padding:3px 8px;border-radius:6px;margin-bottom:8px;">⚖️ ${escHtml(a.evidence_level||'Evidencia')}</span>
                   <h3 style="margin:0 0 6px;color:#123d39;font-size:1.05rem;line-height:1.35;">${escHtml(a.title)}</h3>
@@ -582,13 +596,31 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
                   <p style="margin:0;color:#28433d;font-size:0.85rem;line-height:1.5;">${escHtml((a.excerpt||'').slice(0,140))}...</p>
                 </a>
               `).join('') + `</div>` : `<p style="color:#78938b;font-size:0.85rem;font-style:italic;margin:0;">Próximas monografías en desarrollo para este pilar.</p>`}
-            </div>`;
+            </section>`;
           }
-          fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
-            <p style="font-size:1.1rem;color:#233833;margin-bottom:24px;line-height:1.7;">
-              Bienvenido a la <strong>Wiki Sanantes</strong>, un esfuerzo colaborativo y abierto por reunir monografías técnicas, mecanismos de acción farmacodinámicos y referencias indexadas en PubMed sobre oncología integrativa y terapias metabólicas.
-            </p>
-            ${pillarsHtml}
+          const tocHubHtml = `<aside style="background:#fff;border-radius:12px;border:1px solid #dce8df;padding:20px;position:sticky;top:20px;">
+            <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#7a8f87;margin-bottom:12px;">Índice de Pilares</div>
+            <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:0.82rem;">
+              ${cats.map(c=>`<li><a href="#pillar-${c.slug||c.id}" style="color:#55726a;text-decoration:none;">• ${escHtml(c.name)}</a></li>`).join('')}
+            </ul>
+          </aside>`;
+          fullContentHtml = `<div class="wiki-grid">
+            <div class="wiki-left-col">${wikiSidebarHtml}</div>
+            <div class="wiki-center-col">
+              <article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">
+                <nav style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:#6b877f;margin-bottom:16px;"><a href="${origin()}/" style="color:#1e6b42;text-decoration:none;">Inicio</a> <span>/</span> <span style="font-weight:600;color:#18322d;">Wiki Sanantes</span></nav>
+                <span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">BIBLIOTECA ABIERTA Y RIGOR CIENTÍFICO</span>
+                <h1 style="color:#123d39;font-size:1.85rem;margin:0 0 16px;line-height:1.35;">Wiki Sanantes</h1>
+                <p style="font-size:1.1rem;color:#3b5a52;margin-bottom:20px;line-height:1.6;">
+                  Compendio colaborativo y base de evidencia sobre medicamentos reposicionados, estrategia metabólica celular, investigadores referentes, suplementos y terapias integrativas.
+                </p>
+                <div style="background:#f4f8f6;border-left:4px solid #1e6b42;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:0.95rem;line-height:1.65;color:#1d3e36;">
+                  <strong>🧭 Estándar Documental de Evidencia:</strong> Cada monografía clasifica el nivel de investigación disponible con enlaces directos a sus respectivos identificadores <strong>PMID de PubMed</strong>.
+                </div>
+                ${pillarsHtml}
+              </article>
+            </div>
+            <div class="wiki-right-col">${tocHubHtml}</div>
           </div>`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
@@ -611,7 +643,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             try { citations = JSON.parse(art.pubmed_citations||'[]'); } catch(e){}
             let pubmedHtml = '';
             if(citations.length > 0){
-              pubmedHtml = `<div style="margin:28px 0;background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:20px;">
+              pubmedHtml = `<div id="referencias" style="margin:28px 0;background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:20px;">
                 <h3 style="color:#123d39;margin:0 0 14px;font-size:1.15rem;display:flex;align-items:center;gap:8px;">📚 Referencias y Evidencia en MEDLINE / PubMed</h3>
                 <ul style="margin:0;padding-left:20px;line-height:1.8;">
                   ${citations.map(c => `<li style="margin-bottom:8px;"><strong style="color:#183d35;">PMID: ${escHtml(c)}</strong> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/${encodeURIComponent(c)}/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>`).join('')}
@@ -626,24 +658,59 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             }
             let relatedVideosHtml = '';
             if(relatedVideos.length > 0){
-              relatedVideosHtml = `<h3 style="color:#123d39;margin:32px 0 16px;font-size:1.2rem;">Episodios relacionados en El Podcast del Cáncer:</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">` +
+              relatedVideosHtml = `<div id="videos" style="margin-top:32px;"><h3 style="color:#123d39;margin:0 0 16px;font-size:1.2rem;">Episodios relacionados en El Podcast del Cáncer:</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">` +
                 relatedVideos.map(v => {
                   const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
                   return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:12px;"><h4 style="margin:0 0 6px;font-size:0.9rem;line-height:1.35;color:#123d39;font-weight:700;">${escHtml(v.title)}</h4></div></a>`;
-                }).join('') + `</div>`;
+                }).join('') + `</div></div>`;
             }
-            fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
-              <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;">
-                <span style="background:#e8f4ec;color:#1e6b42;font-size:0.85rem;font-weight:700;padding:5px 12px;border-radius:20px;">⚖️ Nivel de Evidencia: ${escHtml(art.evidence_level||'Preclínica')}</span>
-                <span style="background:#eef3f0;color:#35534b;font-size:0.85rem;font-weight:600;padding:5px 12px;border-radius:20px;">🏛️ ${escHtml(art.category||'Wiki')}</span>
+            const idx = arts.findIndex(x => x.id === art.id || x.slug === art.slug);
+            const prevArt = idx > 0 ? arts[idx - 1] : null;
+            const nextArt = idx < arts.length - 1 ? arts[idx + 1] : null;
+            const paginationHtml = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:36px 0 20px;padding-top:20px;border-top:1px solid #eef3f0;">
+              ${prevArt ? `<a href="${origin()}/wiki/${prevArt.slug}" style="padding:14px 18px;border:1px solid #dce8df;border-radius:10px;background:#fff;text-decoration:none;display:flex;flex-direction:column;"><span style="font-size:0.75rem;color:#78938b;font-weight:700;text-transform:uppercase;">← Anterior</span><span style="font-size:0.9rem;font-weight:700;color:#123d39;">${escHtml(prevArt.title)}</span></a>` : '<div></div>'}
+              ${nextArt ? `<a href="${origin()}/wiki/${nextArt.slug}" style="padding:14px 18px;border:1px solid #dce8df;border-radius:10px;background:#fff;text-decoration:none;display:flex;flex-direction:column;text-align:right;"><span style="font-size:0.75rem;color:#78938b;font-weight:700;text-transform:uppercase;">Siguiente →</span><span style="font-size:0.9rem;font-weight:700;color:#123d39;">${escHtml(nextArt.title)}</span></a>` : '<div></div>'}
+            </div>`;
+            const tocArtHtml = `<aside style="background:#fff;border-radius:12px;border:1px solid #dce8df;padding:20px;position:sticky;top:20px;">
+              <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#7a8f87;margin-bottom:12px;">En esta página</div>
+              <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:0.82rem;">
+                ${art.excerpt ? `<li><a href="#resumen" style="color:#55726a;text-decoration:none;">• Resumen Ejecutivo</a></li>` : ''}
+                ${art.mechanisms ? `<li><a href="#mecanismos" style="color:#55726a;text-decoration:none;">• Mecanismos Biológicos</a></li>` : ''}
+                ${art.clinical_status ? `<li><a href="#estado-clinico" style="color:#55726a;text-decoration:none;">• Estado Clínico</a></li>` : ''}
+                <li><a href="#investigacion" style="color:#55726a;text-decoration:none;">• Monografía y Análisis</a></li>
+                ${citations.length ? `<li><a href="#referencias" style="color:#55726a;text-decoration:none;">• Citas PubMed</a></li>` : ''}
+                ${relatedVideos.length ? `<li><a href="#videos" style="color:#55726a;text-decoration:none;">• Videos Relacionados</a></li>` : ''}
+              </ul>
+            </aside>`;
+            fullContentHtml = `<div class="wiki-grid">
+              <div class="wiki-left-col">${wikiSidebarHtml}</div>
+              <div class="wiki-center-col">
+                <article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">
+                  <nav style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:0.82rem;color:#6b877f;margin-bottom:16px;">
+                    <a href="${origin()}/" style="color:#1e6b42;text-decoration:none;">Inicio</a> <span>/</span>
+                    <a href="${origin()}/wiki" style="color:#1e6b42;text-decoration:none;">Wiki Sanantes</a> <span>/</span>
+                    <span>${escHtml(art.category||'Wiki')}</span> <span>/</span>
+                    <span style="font-weight:600;color:#18322d;">${escHtml(art.title)}</span>
+                  </nav>
+                  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;">
+                    <span style="background:#e8f4ec;color:#1e6b42;font-size:0.85rem;font-weight:700;padding:5px 12px;border-radius:20px;">⚖️ Nivel de Evidencia: ${escHtml(art.evidence_level||'Preclínica')}</span>
+                    <span style="background:#eef3f0;color:#35534b;font-size:0.85rem;font-weight:600;padding:5px 12px;border-radius:20px;">🏛️ ${escHtml(art.category||'Wiki')}</span>
+                  </div>
+                  <h1 style="color:#123d39;font-size:1.85rem;margin:0 0 16px;line-height:1.35;">${escHtml(art.title)}</h1>
+                  ${art.subtitle ? `<p style="font-size:1.15rem;color:#395a52;margin:0 0 20px;font-weight:500;line-height:1.5;">${escHtml(art.subtitle)}</p>` : ''}
+                  ${art.excerpt ? `<div id="resumen" style="background:#f4f8f6;border-left:4px solid #1e6b42;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:1.02rem;line-height:1.65;color:#1d3e36;"><strong>Resumen Ejecutivo:</strong> ${escHtml(art.excerpt)}</div>` : ''}
+                  ${art.mechanisms ? `<div id="mecanismos" style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">🧬 Mecanismos Biológicos y Farmacodinámicos</h3><p style="margin:0;line-height:1.7;">${escHtml(art.mechanisms)}</p></div>` : ''}
+                  ${art.clinical_status ? `<div id="estado-clinico" style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">📋 Estado Clínico y Regulatorio</h3><p style="margin:0;line-height:1.7;">${escHtml(art.clinical_status)}</p></div>` : ''}
+                  <div id="investigacion" style="margin:24px 0;line-height:1.8;">${formatRichText(art.body)}</div>
+                  ${pubmedHtml}
+                  ${relatedVideosHtml}
+                  ${paginationHtml}
+                  <div style="text-align:center;margin:32px 0 12px;padding-top:20px;border-top:1px solid #edf2ef;">
+                    <a href="${escHtml(targetUrl)}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:12px 26px;border-radius:30px;text-decoration:none;font-size:0.95rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Abrir en la app de Sanantes</a>
+                  </div>
+                </article>
               </div>
-              ${art.subtitle ? `<p style="font-size:1.2rem;color:#395a52;margin:0 0 20px;font-weight:500;line-height:1.5;">${escHtml(art.subtitle)}</p>` : ''}
-              ${art.excerpt ? `<div style="background:#f4f8f6;border-left:4px solid #1e6b42;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0;font-size:1.05rem;line-height:1.65;color:#1d3e36;"><strong>Resumen Ejecutivo:</strong> ${escHtml(art.excerpt)}</div>` : ''}
-              ${art.mechanisms ? `<div style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">🧬 Mecanismos Biológicos y Farmacodinámicos</h3><p style="margin:0;line-height:1.7;">${escHtml(art.mechanisms)}</p></div>` : ''}
-              ${art.clinical_status ? `<div style="margin:24px 0;padding:18px;background:#fbfdfc;border:1px solid #dce8df;border-radius:10px;"><h3 style="margin:0 0 10px;color:#123d39;font-size:1.15rem;">📋 Estado Clínico y Regulatorio</h3><p style="margin:0;line-height:1.7;">${escHtml(art.clinical_status)}</p></div>` : ''}
-              <div style="margin:24px 0;line-height:1.8;">${formatRichText(art.body)}</div>
-              ${pubmedHtml}
-              ${relatedVideosHtml}
+              <div class="wiki-right-col">${tocArtHtml}</div>
             </div>`;
             schemaJson=JSON.stringify({
               "@context":"https://schema.org",
@@ -663,7 +730,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
       res.setHeader('Content-Type','text/html; charset=utf-8');
       res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');
       if(method==='HEAD') return res.end();
-      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="720"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}">${type==='video'?`<script>location.replace(${JSON.stringify(targetUrl)});</script>`:''}${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px;">🌿 Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header><main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sTitle}</h1>${activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sTitle}" style="max-width:100%;border-radius:10px;height:auto;"></div>`}<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main><footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;"><p style="margin:0 0 8px;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</p><p style="margin:0;"><a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:600;text-decoration:underline;">Criterio Editorial y Rigor Científico</a> &bull; <a href="${origin()}/wiki" style="color:#1e6b42;font-weight:600;text-decoration:none;">Wiki Sanantes</a> &bull; <a href="${origin()}/sitemap.xml" style="color:#6b877f;text-decoration:none;">Mapa del sitio</a> &bull; <a href="${origin()}/" style="color:#6b877f;text-decoration:none;">Inicio</a></p></footer></body></html>`);
+      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="720"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><style>.wiki-grid{display:grid;grid-template-columns:260px minmax(0,1fr) 220px;gap:32px;align-items:start;max-width:1440px;margin:28px auto;padding:0 20px}@media(max-width:1150px){.wiki-grid{grid-template-columns:240px minmax(0,1fr)}.wiki-right-col{display:none}}@media(max-width:768px){.wiki-grid{grid-template-columns:1fr}}</style>${type==='video'?`<script>location.replace(${JSON.stringify(targetUrl)});</script>`:''}${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:${type==='wiki'?'1440px':'860px'};margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 10px;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:8px;">🌿 Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header>${type==='wiki'?fullContentHtml:`<main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sTitle}</h1>${activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sTitle}" style="max-width:100%;border-radius:10px;height:auto;"></div>`}<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main>`}<footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;"><p style="margin:0 0 8px;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</p><p style="margin:0;"><a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:600;text-decoration:underline;">Criterio Editorial y Rigor Científico</a> &bull; <a href="${origin()}/wiki" style="color:#1e6b42;font-weight:600;text-decoration:none;">Wiki Sanantes</a> &bull; <a href="${origin()}/sitemap.xml" style="color:#6b877f;text-decoration:none;">Mapa del sitio</a> &bull; <a href="${origin()}/" style="color:#6b877f;text-decoration:none;">Inicio</a></p></footer></body></html>`);
     }
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
