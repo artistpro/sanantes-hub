@@ -4,6 +4,73 @@ Todas las mejoras y actualizaciones técnicas de **Comunidad Sanantes**.
 
 ---
 
+## [2026-09-28] - Wiki de Oncología Integrativa, SEO & GEO 10/10, Branding Oficial y Modelado Semántico de Comunidad
+
+### 🌟 Nuevas Funcionalidades y Mejoras de Arquitectura
+
+#### 1. Wiki Sanantes de Oncología Integrativa (5 Pilares y Evidencia Médica)
+- **Cinco Pilares Temáticos Fundacionales:**
+  1. `Medicamentos Reposicionados`: Ivermectina, Mebendazol, Fenbendazol, Metformina, etc.
+  2. `Estrategia Metabólica`: Teoría metabólica de Otto Warburg y Dr. Thomas Seyfried, dieta cetogénica oncológica, ayuno intermitente, índice glucosa-cetonas (GKI).
+  3. `Referentes e Investigadores`: Dr. William Makis, Dr. Thomas Seyfried, Dra. Colleen Huber, Dr. Pete Sulack.
+  4. `Suplementación Coadyuvante`: Vitamina C intravenosa, Vitamina D3 + K2, Beta-glucanos, Curcumina liposomal, Boswellia / AKBA, Melatonina en altas dosis.
+  5. `Terapias Integrativas y Equipamiento`: Oxigenoterapia hiperbárica (HBOT), Terapia PEMF (Bemer), Fotobiomodulación (luz roja/infrarroja 660/850nm), Saunas infrarrojos, Estimulación del nervio vago (tVNS).
+- **Rigor Documental y Enlaces Directos a PubMed:**
+  - Cada monografía científica incluye citas directas a identificadores **PMID** con enlace automático a `pubmed.ncbi.nlm.nih.gov`.
+  - Mecanismos celulares detallados (transporte de importinas α/β, mitofagia, fermentación de glutamina, inhibición de tubulina).
+- **Pre-rendering y SSR Completo (`/wiki/:slug` y `/wiki`):**
+  - Servido en servidor con metadatos OpenGraph, tabla de contenidos dinámica ("En esta página"), paginación correlativa ("Anterior" / "Siguiente") y bloques de referencias cruzadas a episodios del Podcast.
+- **Sistema de Roles y Permisos Aislados:**
+  - Nuevos roles de usuario: `admin`, `editor`, `user`.
+  - Los usuarios con rol `editor` tienen acceso exclusivo a la gestión, redacción y actualización de monografías en la Wiki sin acceso a configuraciones críticas de administración general.
+- **Monetización Ética Integrada:**
+  - Tarjetas de equipamiento verificado en Amazon (`amzn.to/46PTWSA`) y suplementos de grado terapéutico en iHerb con cupón oficial de descuento (`wUt7svK8`).
+
+#### 2. Arquitectura SEO & GEO (Generative Engine Optimization)
+- **Sitemap XML Dinámico (`/sitemap.xml`):**
+  - 142 URLs enviadas e indexadas en Google Search Console sin errores ni advertencias.
+  - Extensión oficial de Google Video (`xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"`), con `video:title`, `video:thumbnail_loc` y prioridades estructuradas (1.0 raíz, 0.95 landing hubs, 0.9 monografías).
+- **Robots.txt con Señales para IA (`/robots.txt`):**
+  - Declaración explícita `Content-Signal: search=yes, ai-input=yes, ai-train=no` para habilitar citaciones en motores generativos (Perplexity, ChatGPT Search, Claude) protegiendo el contenido contra entrenamiento indiscriminado.
+- **Landing Hubs de Autoridad E-E-A-T:**
+  - `/autores/william-makis`: Monografía de autoridad médica con `ProfilePage` Schema.
+  - `/temas/medicamentos-reposicionados`: Compendio de fármacos antiparasitarios con `CollectionPage` Schema.
+  - `/temas/estrategia-metabolica`: Compendio de oncología metabólica y protocolo press-pulse.
+- **Página Institucional E-E-A-T (`/b/criterio-editorial`):**
+  - Declaración pública de metodología, criterio de selección de estudios, neutralidad, fuentes primarias en MEDLINE/PubMed y descargos de responsabilidad médica YMYL.
+
+#### 3. Rediseño de Portada (Index) con Curaduría Dinámica desde el Admin
+- **Personalización en Tiempo Real:**
+  - El administrador puede seleccionar desde `#admin` > Ajustes: 4 videos destacados, 1 directo musical/pizarra, 1 post de blog descargable y 1 monografía de la Wiki para la portada.
+- **Indexación y Accesibilidad Dual:**
+  - Catálogo estático HTML enriquecido para que Googlebot y rastreadores comprendan el ecosistema completo en la primera pasada.
+  - Hero interactivo y fluido para usuarios humanos con llamada a la acción de gamificación (+50 puntos de bienvenida).
+
+#### 4. Identidad Visual Oficial y Branding
+- **Logo Oficial de Comunidad Sanantes:**
+  - Integración del emblema gráfico `/logo.png` en el hero de la portada y en los esquemas `Organization.logo`.
+- **Favicon Vectorial de Hojas Orgánicas (`/favicon.svg`):**
+  - Reemplazo de la "S" genérica por el símbolo de hojas orgánicas de Sanantes con squircle y tono verde corporativo `#123d39` en barra lateral y cabecera móvil.
+  - Declaración de `<link rel="apple-touch-icon" href="/logo.png">`.
+
+#### 5. Auditoría GSC Wizard: 10/10 Técnico (0 Issues en Todos los Niveles)
+- **Optimización de Títulos y Metas:**
+  - Title de portada: 42 caracteres (`Comunidad Sanantes · El Podcast del Cáncer`, $\le$ 60).
+  - Meta description de portada: 148 caracteres ($\le$ 155).
+- **Transición Semántica a Comunidad y Apoyo:**
+  - Migración estratégica de `MedicalOrganization` a `CommunityOrganization` con audiencia explícita de *"Pacientes oncológicos, familiares, cuidadores y comunidad de apoyo"* (`Audience`), blindando el portal ante riesgos de intrusismo clínico y alineándolo fielmente con su naturaleza real de acompañamiento y divulgación.
+  - Transición de `MedicalWebPage` a `Article` enriquecido y `CollectionPage`.
+- **Esquema `Article` 100% Homogéneo y Completo:**
+  - Incorporación de `image` (miniatura HD / logo.png), `datePublished` (ISO), `dateModified` (ISO), `author` (unificado con `CommunityOrganization` + `logo`), `publisher` y `mainEntityOfPage`.
+  - Cobertura de atributos `alt` descriptivos en todas las imágenes del sitio.
+- **Resultado de Auditoría con GSC Wizard:**
+  - **0 críticos, 0 altos, 0 medios, 0 bajos (0 issues totales en las 5/5 páginas analizadas).**
+
+### 🧪 Cobertura de Pruebas
+- Suite ampliada a **27 pruebas automatizadas** (`npm test`, 100% pasando en ~1.1 s), cubriendo SEO técnico, esquemas Article y CommunityOrganization, sitemap con Google Video, robots.txt, landing hubs E-E-A-T, persistencia y auth.
+
+---
+
 ## [2026-09-24] - Autenticación Híbrida (Google OAuth + Contraseña) y Google Analytics 4 (GA4)
 
 ### 🌟 Nuevas Funcionalidades
