@@ -40,6 +40,77 @@ async function establishSession(res,member,ref=null){
   setSession(res,session);
   return {session,member:{id:member.id,email:member.email,name:member.name,role:member.role}};
 }
+let productsSchemaChecked=false;
+async function ensureProductsSchema(){
+  if(productsSchemaChecked)return;
+  try{
+    await query(`CREATE TABLE IF NOT EXISTS products(
+      id TEXT PRIMARY KEY,
+      slug TEXT NOT NULL UNIQUE,
+      category TEXT NOT NULL DEFAULT 'Suplementos y Nutracéuticos',
+      category_id TEXT DEFAULT '',
+      title TEXT NOT NULL,
+      subtitle TEXT DEFAULT '',
+      provider TEXT NOT NULL DEFAULT 'iHerb',
+      affiliate_url TEXT NOT NULL,
+      original_price TEXT DEFAULT '',
+      discount_code TEXT DEFAULT 'wUt7svK8',
+      image_url TEXT DEFAULT '',
+      badge TEXT DEFAULT '',
+      description TEXT DEFAULT '',
+      status TEXT NOT NULL DEFAULT 'published' CHECK(status IN ('draft','published')),
+      sort_order INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )`);
+    await query('CREATE INDEX IF NOT EXISTS products_slug ON products(slug)');
+    await query('CREATE INDEX IF NOT EXISTS products_status ON products(status)');
+
+    const countRes=await query('SELECT COUNT(*) count FROM products');
+    if(!countRes[0]?.count){
+      const seedProducts=[
+        {
+          id:'prod-berberina',slug:'berberina-grado-terapeutico',category:'Suplementos y Nutracéuticos',
+          title:'Berberina 500 mg (Grado Terapéutico)',subtitle:'Activador de AMPK y modulación del metabolismo tumoral',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=berberine&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Grado Clínico',
+          description:'Alcaloide vegetal para regular glucemia e insulina. Utilizado en el protocolo del Dr. Pete Sulack.',status:'published',sort_order:1
+        },
+        {
+          id:'prod-curcumina',slug:'curcumina-c3-complex',category:'Suplementos y Nutracéuticos',
+          title:'Curcumina C3 Complex (Alta Biodisponibilidad)',subtitle:'Inhibición NF-kB y apagado del microambiente inflamatorio',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=curcumin%20turmeric&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Descuento Comunidad',
+          description:'Extracto estandarizado de curcuminoides para reducir citoquinas inflamatorias y VEGF.',status:'published',sort_order:2
+        },
+        {
+          id:'prod-mcp',slug:'pectina-citrica-modificada-pectasol',category:'Suplementos y Nutracéuticos',
+          title:'Pectina Cítrica Modificada PectaSol-C',subtitle:'Bloqueo competitivo de Galectina-3 y adhesión celular',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=modified%20citrus%20pectin&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Patente Clínica',
+          description:'Fracción soluble de bajo peso molecular (<15 kDa) para evitar fijación y colonización metastásica.',status:'published',sort_order:3
+        },
+        {
+          id:'prod-luz-roja',slug:'panel-fotobiomodulacion-luz-roja',category:'Equipamiento Terapéutico',
+          title:'Panel de Fotobiomodulación (Luz Roja e Infrarroja)',subtitle:'660nm / 850nm flicker-free para energía mitocondrial',
+          provider:'Amazon',affiliate_url:'https://amzn.to/46PTWSA',discount_code:'',badge:'Equipamiento Verificado',
+          description:'Dispositivo de fotobiomodulación para estimular la respiración celular y citocromo c oxidasa en casa.',status:'published',sort_order:4
+        },
+        {
+          id:'prod-pemf',slug:'esterilla-campos-magneticos-pulsados-pemf',category:'Equipamiento Terapéutico',
+          title:'Esterilla de Campos Magnéticos Pulsados (PEMF)',subtitle:'Repolarización de membrana y microcirculación capilar',
+          provider:'Amazon',affiliate_url:'https://amzn.to/46PTWSA',discount_code:'',badge:'Tecnología Bioeléctrica',
+          description:'Esterilla PEMF para favorecer la oxigenación tisular e intercambio iónico celular.',status:'published',sort_order:5
+        }
+      ];
+      for(const p of seedProducts){
+        await query(`INSERT INTO products(id,slug,category,title,subtitle,provider,affiliate_url,discount_code,badge,description,status,sort_order)
+          VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(slug) DO NOTHING`,
+          [p.id,p.slug,p.category,p.title,p.subtitle,p.provider,p.affiliate_url,p.discount_code,p.badge,p.description,p.status,p.sort_order]
+        );
+      }
+    }
+    productsSchemaChecked=true;
+  }catch(e){console.warn('Auto-migración products:',e.message);}
+}
+
 let authSchemaChecked=false;
 async function ensureAuthSchema(){
   if(authSchemaChecked)return;
@@ -464,7 +535,7 @@ export default async function handler(req,res){
     if(method!=='GET' && method!=='HEAD' && req.headers.origin!==origin())fail('Origen de solicitud no permitido',403);
     if(path==='health')return send(res,{ok:true});
     if(path.startsWith('auth/'))await ensureAuthSchema();
-    if(path.startsWith('wiki')||path.startsWith('admin')||path==='public'||path==='sitemap'||path==='preview')await ensureWikiSchema();
+    if(path.startsWith('wiki')||path.startsWith('admin')||path.startsWith('product')||path==='public'||path==='sitemap'||path==='preview'){await ensureWikiSchema();await ensureProductsSchema();}
     if((path==='post/image'||path.endsWith('/image'))&&(method==='GET'||method==='HEAD')){
       const slugOrId=u.searchParams.get('slug')||u.searchParams.get('id')||path.replace(/^b\//,'').replace(/^blog\//,'').replace(/\/image$/,'');
       const [p]=(await query("SELECT image FROM posts WHERE slug=? OR id=?",[slugOrId,slugOrId]))||[];
@@ -1416,9 +1487,10 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
       if(method==='HEAD') return res.end();
       return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}"><link rel="canonical" href="${sCanon}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/logo.png"><script async src="https://www.googletagmanager.com/gtag/js?id=G-JNXSFX7HF3"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JNXSFX7HF3');</script><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="720"><meta property="og:url" content="${sCanon}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><style>.wiki-grid{display:grid;grid-template-columns:260px minmax(0,1fr) 220px;gap:32px;align-items:start;max-width:1440px;margin:28px auto;padding:0 20px}@media(max-width:1150px){.wiki-grid{grid-template-columns:240px minmax(0,1fr)}.wiki-right-col{display:none}}@media(max-width:768px){.wiki-grid{grid-template-columns:1fr}}</style>${type==='video'?`<script>location.replace(${JSON.stringify(targetUrl)});</script>`:''}${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:${type==='wiki'?'1440px':'860px'};margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 10px;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:10px;"><img src="/favicon.svg" alt="Comunidad Sanantes" style="width:26px;height:26px;border-radius:6px;object-fit:contain;"> Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header>${type==='wiki'?fullContentHtml:`<main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${!type?`<div style="margin-bottom:16px;"><img src="/logo.png" alt="Comunidad Sanantes" style="height:54px;max-width:240px;object-fit:contain;display:block;"></div>`:''}${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sTitle}</h1>${activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sTitle}" style="max-width:100%;border-radius:10px;height:auto;"></div>`}<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main>`}<footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;"><p style="margin:0 0 8px;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</p><p style="margin:0;"><a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:600;text-decoration:underline;">Criterio Editorial y Rigor Científico</a> &bull; <a href="${origin()}/wiki" style="color:#1e6b42;font-weight:600;text-decoration:none;">Wiki Sanantes</a> &bull; <a href="${origin()}/sitemap.xml" style="color:#6b877f;text-decoration:none;">Mapa del sitio</a> &bull; <a href="${origin()}/" style="color:#6b877f;text-decoration:none;">Inicio</a></p></footer></body></html>`);
     }
+        if(path==='products'&&method==='GET'){return send(res,{ok:true,products:await query("SELECT * FROM products WHERE status='published' ORDER BY sort_order ASC, created_at DESC")});}
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
-      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),wikiCategories:await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC"),wikiArticles:await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,body,mechanisms,clinical_status,pubmed_citations,status,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC"),me:await user(req),ranking:await getRanking()});
+      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),wikiCategories:await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC"),wikiArticles:await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,body,mechanisms,clinical_status,pubmed_citations,status,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC"),products:await query("SELECT * FROM products WHERE status='published' ORDER BY sort_order ASC, created_at DESC"),me:await user(req),ranking:await getRanking()});
     }
     if(path==='auth/register'&&method==='POST'){
       const b=await body(req);const email=text(b.email,254).toLowerCase();const name=text(b.name,80)||email.split('@')[0];const password=typeof b.password==='string'?b.password:'';
@@ -1532,9 +1604,9 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
       const me=await requireEditor(req);
       if(path==='admin'&&method==='GET'){
         if(me.role==='editor'){
-          return send(res,{isEditorOnly:true,role:'editor',wikiCategories:await query('SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC'),wikiArticles:await query('SELECT * FROM wiki_articles ORDER BY updated_at DESC'),audit:await query("SELECT * FROM audit WHERE action LIKE 'Wiki%' ORDER BY created_at DESC LIMIT 30")});
+          return send(res,{isEditorOnly:true,role:'editor',wikiCategories:await query('SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC'),wikiArticles:await query('SELECT * FROM wiki_articles ORDER BY updated_at DESC'),products:await query('SELECT * FROM products ORDER BY sort_order ASC, updated_at DESC'),audit:await query("SELECT * FROM audit WHERE action LIKE 'Wiki%' ORDER BY created_at DESC LIMIT 30")});
         }
-        return send(res,{role:'admin',wikiCategories:await query('SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC'),wikiArticles:await query('SELECT * FROM wiki_articles ORDER BY updated_at DESC'),classifierReady:!!process.env.TYPESAFE_API_KEY,classifications:await query('SELECT * FROM classifications ORDER BY created_at DESC LIMIT 100'),sources:await query('SELECT * FROM sources ORDER BY own DESC,name'),videos:await query('SELECT videos.*,media_labels.relevance,media_labels.response editorial_response FROM videos LEFT JOIN media_labels ON videos.id=media_labels.video_id ORDER BY videos.published_at DESC LIMIT 1000'),posts:await query('SELECT * FROM posts ORDER BY updated_at DESC'),users:await query('SELECT users.id,users.email,users.name,users.role,users.created_at,COALESCE(SUM(points.amount),0) points FROM users LEFT JOIN points ON users.id=points.user_id GROUP BY users.id'),settings:await settings(),donations:await query('SELECT donations.*,users.name user_name,users.email user_email FROM donations LEFT JOIN users ON donations.user_id=users.id ORDER BY donations.created_at DESC'),audit:await query('SELECT * FROM audit ORDER BY created_at DESC LIMIT 50')});
+        return send(res,{role:'admin',wikiCategories:await query('SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC'),wikiArticles:await query('SELECT * FROM wiki_articles ORDER BY updated_at DESC'),classifierReady:!!process.env.TYPESAFE_API_KEY,classifications:await query('SELECT * FROM classifications ORDER BY created_at DESC LIMIT 100'),sources:await query('SELECT * FROM sources ORDER BY own DESC,name'),videos:await query('SELECT videos.*,media_labels.relevance,media_labels.response editorial_response FROM videos LEFT JOIN media_labels ON videos.id=media_labels.video_id ORDER BY videos.published_at DESC LIMIT 1000'),posts:await query('SELECT * FROM posts ORDER BY updated_at DESC'),users:await query('SELECT users.id,users.email,users.name,users.role,users.created_at,COALESCE(SUM(points.amount),0) points FROM users LEFT JOIN points ON users.id=points.user_id GROUP BY users.id'),settings:await settings(),donations:await query('SELECT donations.*,users.name user_name,users.email user_email FROM donations LEFT JOIN users ON donations.user_id=users.id ORDER BY donations.created_at DESC'),products:await query('SELECT * FROM products ORDER BY sort_order ASC, updated_at DESC'),audit:await query('SELECT * FROM audit ORDER BY created_at DESC LIMIT 50')});
       }
       const b=await body(req);
       if(path==='admin/wiki/article'&&method==='POST'){
@@ -1576,6 +1648,27 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         );
         await audit(me.id,'Wiki pilar guardado: '+name);
         return send(res,{ok:true,id:catId});
+      }
+            if(path==='admin/product'&&method==='POST'){
+        const title=text(b.title,300),slug=text(b.slug,120);
+        if(!title||!/^[-a-z0-9]+$/.test(slug)||!['draft','published'].includes(b.status))fail('Revisa el título, el slug y el estado del producto');
+        const pId=b.id||id();
+        const sortOrder=Number.isInteger(Number(b.sort_order))?Number(b.sort_order):0;
+        await query(`INSERT INTO products(id,slug,category,title,subtitle,provider,affiliate_url,original_price,discount_code,image_url,badge,description,status,sort_order,updated_at)
+          VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
+          ON CONFLICT(id) DO UPDATE SET
+            slug=excluded.slug,category=excluded.category,title=excluded.title,subtitle=excluded.subtitle,provider=excluded.provider,
+            affiliate_url=excluded.affiliate_url,original_price=excluded.original_price,discount_code=excluded.discount_code,
+            image_url=excluded.image_url,badge=excluded.badge,description=excluded.description,status=excluded.status,sort_order=excluded.sort_order,updated_at=CURRENT_TIMESTAMP`,
+          [pId,slug,text(b.category,80)||'Suplementos y Nutracéuticos',title,text(b.subtitle,300),text(b.provider,50)||'iHerb',text(b.affiliate_url,1000),text(b.original_price,40),text(b.discount_code,40)||'wUt7svK8',text(b.image_url,1000),text(b.badge,80),text(b.description,5000),b.status,sortOrder]
+        );
+        await audit(me.id,'Producto guardado: '+title);
+        return send(res,{ok:true,id:pId});
+      }
+      if(path==='admin/product'&&method==='DELETE'){
+        await query('DELETE FROM products WHERE id=?',[b.id]);
+        await audit(me.id,'Producto eliminado: '+text(b.id,64));
+        return send(res,{ok:true});
       }
       if(path==='admin/wiki/category'&&method==='DELETE'){
         await query('DELETE FROM wiki_categories WHERE id=?',[b.id]);

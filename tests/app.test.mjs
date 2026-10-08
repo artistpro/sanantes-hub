@@ -286,3 +286,61 @@ test('Portada / Index: Personalización de destacados desde Admin y SSR enriquec
 });
 
 
+
+test('Productos / Tienda Ética: API pública, creación, edición y borrado en Admin', async () => {
+  await query("DELETE FROM rate_limits");
+  const owner = await login('admin@example.test');
+  const member = await login('member@example.test');
+
+  // 1. Verificar endpoint público /api/public y /api/products
+  const pub = await (await call('public')).json();
+  assert.ok(Array.isArray(pub.products));
+  assert.ok(pub.products.length >= 5);
+  const berberina = pub.products.find(p => p.slug === 'berberina-grado-terapeutico');
+  assert.ok(berberina);
+  assert.equal(berberina.provider, 'iHerb');
+  assert.equal(berberina.discount_code, 'wUt7svK8');
+
+  // 2. Miembro normal no puede crear producto
+  const memberCreate = await call('admin/product', {
+    title: 'Producto no autorizado',
+    slug: 'prod-no-auth',
+    provider: 'iHerb',
+    affiliate_url: 'https://iherb.com',
+    status: 'published'
+  }, member.cookie);
+  assert.equal(memberCreate.status, 403);
+
+  // 3. Admin crea un nuevo producto
+  const createRes = await call('admin/product', {
+    title: 'Extracto de Té Verde EGCG 400mg',
+    slug: 'te-verde-egcg-descafeinado',
+    category: 'Suplementos y Nutracéuticos',
+    provider: 'iHerb',
+    affiliate_url: 'https://www.iherb.com/search?kw=egcg&rcode=wUt7svK8',
+    discount_code: 'wUt7svK8',
+    badge: 'Grado Clínico',
+    description: 'Extracto estandarizado descafeinado.',
+    status: 'published',
+    sort_order: 6
+  }, owner.cookie);
+  assert.equal(createRes.status, 200);
+  const { id: newId } = await createRes.json();
+  assert.ok(newId);
+
+  // 4. Comprobar que aparece en el catálogo público
+  const updatedPub = await (await call('public')).json();
+  const newProd = updatedPub.products.find(p => p.id === newId);
+  assert.ok(newProd);
+  assert.equal(newProd.title, 'Extracto de Té Verde EGCG 400mg');
+
+  // 5. Admin elimina el producto
+  const delRes = await fetch(base + '/api/admin/product', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json', Origin: base, Cookie: owner.cookie },
+    body: JSON.stringify({ id: newId })
+  });
+  assert.equal(delRes.status, 200);
+  const finalPub = await (await call('public')).json();
+  assert.ok(!finalPub.products.some(p => p.id === newId));
+});
