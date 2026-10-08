@@ -343,7 +343,17 @@ function renderAdmin(){const a=adminData;const isEditor=data.me.role==='editor'|
 }
 async function refresh(){data=await api('public');shell();}
 async function route(){try{if(!data)await refresh();else shell();const [r,id]=(location.hash.slice(1)||'inicio').split('/');if(r==='inicio'||!r)homePage();else if(['podcast','explorar','directos'].includes(r))catalog(r);else if(r==='video')videoPage(id);else if(r==='blog')blog(id);else if(r==='wiki')wikiPage(id);else if(r==='comunidad')await community();else if(r==='apoyar')support();else if(r==='recursos'||r==='tienda')recursos(id);else if(r==='admin')await admin();else if(r==='privacidad')privacy();else homePage();if(typeof gtag==='function')gtag('event','page_view',{page_path:location.pathname+location.hash,page_title:document.title});}catch(e){main.innerHTML=empty('No pudimos cargar este espacio',e.message)}}
-document.addEventListener('click',async event=>{const el=event.target.closest('[data-action]');if(!el)return;const action=el.dataset.action,id=el.dataset.id;try{
+document.addEventListener('click',async event=>{
+  const anchor=event.target.closest('a[href*="iherb.com"],a[href*="amazon.com"]');
+  if(anchor&&typeof gtag==='function'){
+    gtag('event','click_afiliado_recurso',{
+      event_category:'Tienda Ética',
+      event_label:anchor.textContent.trim(),
+      provider:anchor.href.includes('iherb.com')?'iHerb':'Amazon',
+      affiliate_url:anchor.href
+    });
+  }
+  const el=event.target.closest('[data-action]');if(!el)return;const action=el.dataset.action,id=el.dataset.id;try{
  if(action==='menu')return $('#sidebar').classList.toggle('open');
  if(action==='toggle-investigaciones'){
   investigacionesOpen = !investigacionesOpen;

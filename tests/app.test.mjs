@@ -221,7 +221,7 @@ test('Wiki Sanantes: Pre-rendering, Schema MedicalWebPage, Sitemap y rol Editor 
   const artHtml = await artRes.text();
   assert.ok(artHtml.includes('Ivermectina en Oncología'));
   assert.ok(artHtml.includes('Nivel de Evidencia'));
-  assert.ok(artHtml.includes('pubmed.ncbi.nlm.nih.gov/29054452'));
+  assert.ok(artHtml.includes('pubmed.ncbi.nlm.nih.gov/29511601'));
   assert.ok(artHtml.includes('Article'));
 
   // 7. Terapias Complementarias con tarjeta y enlace de Amazon
