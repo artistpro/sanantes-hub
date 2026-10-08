@@ -96,7 +96,7 @@ async function ensureProductsSchema(){
         {
           id:'prod-pemf',slug:'esterilla-campos-magneticos-pulsados-pemf',category:'Equipamiento Terapéutico',
           title:'Esterilla de Campos Magnéticos Pulsados (PEMF)',subtitle:'Repolarización de membrana y microcirculación capilar',
-          provider:'Amazon',affiliate_url:'https://amzn.to/46PTWSA',discount_code:'',badge:'Tecnología Bioeléctrica',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=pemf+mat',discount_code:'',badge:'Tecnología Bioeléctrica',
           description:'Esterilla PEMF para favorecer la oxigenación tisular e intercambio iónico celular.',status:'published',sort_order:5
         }
       ];
