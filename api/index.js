@@ -98,6 +98,96 @@ async function ensureProductsSchema(){
           title:'Esterilla de Campos Magnéticos Pulsados (PEMF)',subtitle:'Repolarización de membrana y microcirculación capilar',
           provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=pemf+mat',discount_code:'',badge:'Tecnología Bioeléctrica',
           description:'Esterilla PEMF para favorecer la oxigenación tisular e intercambio iónico celular.',status:'published',sort_order:5
+        },
+        {
+          id:'prod-timoquinona',slug:'aceite-semilla-negra-timoquinona',category:'Suplementos y Nutracéuticos',
+          title:'Aceite de Semilla Negra (Timoquinona Estandarizada)',subtitle:'Modulación del estrés oxidativo y arresto del ciclo tumoral',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=black%20seed%20oil%20thymoquinone&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Grado Clínico',
+          description:'Extraído de Nigella sativa, rico en timoquinona. Regulador del microambiente tumoral e inmunovigilancia.',status:'published',sort_order:6
+        },
+        {
+          id:'prod-hongos-medicinales',slug:'hongos-medicinales-reishi-melena-cola-pavo',category:'Suplementos y Nutracéuticos',
+          title:'Hongos Medicinales (Cola de Pavo, Reishi, Melena de León)',subtitle:'Activación de Dectina-1 y respuesta de células NK y macrófagos',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=turkey%20tail%20reishi%20lions%20mane&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Beta-Glucanos 1,3/1,6',
+          description:'Extracto orgánico concentrado de cuerpo fructífero para potenciar el sistema inmune innato.',status:'published',sort_order:7
+        },
+        {
+          id:'prod-egcg',slug:'extracto-te-verde-egcg-descafeinado',category:'Suplementos y Nutracéuticos',
+          title:'Extracto de Té Verde (EGCG Descafeinado)',subtitle:'Interferencia en la vía de la glutamina y angiogénesis tumoral',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=egcg%20green%20tea&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Inhibidor VEGF',
+          description:'Galato de epigalocatequina de alta pureza para frenar la formación de nuevos vasos nutricios.',status:'published',sort_order:8
+        },
+        {
+          id:'prod-melatonina',slug:'melatonina-grado-clinico-mitocondrial',category:'Suplementos y Nutracéuticos',
+          title:'Melatonina Grado Clínico (Dosis Oncológica)',subtitle:'Desacoplamiento de la glucólisis tumoral e inmunovigilancia nocturna',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=melatonin%2010mg&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Protección Mitocondrial',
+          description:'Antioxidante mitocondrial clave que revierte el efecto Warburg y modula la aromatasa.',status:'published',sort_order:9
+        },
+        {
+          id:'prod-silimarina',slug:'cardo-mariano-silimarina-estandarizada',category:'Suplementos y Nutracéuticos',
+          title:'Cardo Mariano (Silimarina Estandarizada 80%)',subtitle:'Preservación de glutatión hepático y regeneración del hepatocito',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=milk%20thistle%20silymarin&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Hepatoprotección',
+          description:'Protector hepático de referencia para acompañar protocolos farmacológicos e integrativos.',status:'published',sort_order:10
+        },
+        {
+          id:'prod-omega3',slug:'omega-3-epa-dha-ifos-trigliceridos',category:'Suplementos y Nutracéuticos',
+          title:'Ácidos Grasos Omega-3 EPA/DHA (Certificación IFOS)',subtitle:'Precursor de resolvinas SPMs y prevención de caquexia muscular',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=omega%203%20ifos&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Guías ESPEN',
+          description:'Aceite de pescado ultrapuro en forma de triglicéridos para enfriar la inflamación sistémica.',status:'published',sort_order:11
+        },
+        {
+          id:'prod-ashwagandha',slug:'ashwagandha-ksm66-adaptogeno',category:'Suplementos y Nutracéuticos',
+          title:'Ashwagandha KSM-66 (Withania somnifera)',subtitle:'Reducción de cortisol y acción de withaferina A sobre Hsp90',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=ashwagandha%20ksm-66&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Modulador HPA',
+          description:'Adaptógeno clínico para amortiguar el impacto del estrés sostenido y sostener las defensas.',status:'published',sort_order:12
+        },
+        {
+          id:'prod-artemisinina',slug:'artemisinina-pura-artemisia-annua',category:'Suplementos y Nutracéuticos',
+          title:'Artemisinina Pura (Artemisia annua)',subtitle:'Reacción de endoperóxido con hierro ferroso (Fe2+) tumoral',
+          provider:'iHerb',affiliate_url:'https://www.iherb.com/search?kw=artemisinin&rcode=wUt7svK8',discount_code:'wUt7svK8',badge:'Ciclado 5/2',
+          description:'Lactona sesquiterpénica que desata estrés oxidativo selectivo en células cargadas de hierro.',status:'published',sort_order:13
+        },
+        {
+          id:'prod-hbot',slug:'camara-hiperbarica-portatil-hbot',category:'Equipamiento Terapéutico',
+          title:'Cámara Hiperbárica Portátil (HBOT)',subtitle:'Hiperoxigenación bajo presión para revertir la hipoxia tumoral',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=hyperbaric+chamber+portable',discount_code:'',badge:'Oxigenación Tisular',
+          description:'Cámara de presión atmosférica suplementada con concentración de oxígeno para saturar tejidos.',status:'published',sort_order:14
+        },
+        {
+          id:'prod-sauna-infrarrojo',slug:'sauna-portatil-infrarrojo-lejano-low-emf',category:'Equipamiento Terapéutico',
+          title:'Sauna Portátil de Infrarrojo Lejano (Bajo CEM / Low EMF)',subtitle:'Hipertermia suave, sudoración profunda y depuración de lipotoxinas',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=far+infrared+sauna+low+emf',discount_code:'',badge:'Depuración e Hipertermia',
+          description:'Sauna de radiación infrarroja lejana para activar proteínas de choque térmico (HSPs).',status:'published',sort_order:15
+        },
+        {
+          id:'prod-tvns',slug:'estimulador-nervio-vago-tvns',category:'Equipamiento Terapéutico',
+          title:'Dispositivo de Bioestimulación del Nervio Vago (tVNS)',subtitle:'Regulación del eje vagal, variabilidad cardíaca (HRV) y freno inflamatorio',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=vagus+nerve+stimulation+device',discount_code:'',badge:'Tono Parasimpático',
+          description:'Estimulador transcutáneo auricular para inducir la vía colinérgica antiinflamatoria.',status:'published',sort_order:16
+        },
+        {
+          id:'prod-ketomojo',slug:'kit-medicion-metabolica-keto-mojo-gki',category:'Equipamiento Terapéutico',
+          title:'Kit Medidor de Glucosa y Cetonas Keto-Mojo (Ratio GKI)',subtitle:'Monitor de precisión en sangre para el cálculo del índice GKI',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=keto+mojo+blood+glucose+ketone+meter',discount_code:'',badge:'Ratio GKI',
+          description:'Herramienta de monitorización para validar el estado de cetosis terapéutica en tiempo real.',status:'published',sort_order:17
+        },
+        {
+          id:'prod-juicer',slug:'extractor-lento-prensado-frio-juicer',category:'Equipamiento Terapéutico',
+          title:'Extractor Lento de Prensado en Frío (Cold-Press Juicer)',subtitle:'Prensado helicoidal a bajas revoluciones para preservar enzimas',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=cold+press+masticating+juicer',discount_code:'',badge:'Enzimas Vivas',
+          description:'Extractor de masticación lenta que evita la oxidación térmica de fitonutrientes.',status:'published',sort_order:18
+        },
+        {
+          id:'prod-ozono',slug:'generador-ozono-terapeutico',category:'Equipamiento Terapéutico',
+          title:'Generador de Ozono Terapéutico / Sauna de Ozono',subtitle:'Activación del factor Nrf2, superóxido dismutasa y oxigenación',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=ozone+generator+therapy',discount_code:'',badge:'Estrés Hormético',
+          description:'Equipamiento de generación de ozono de precisión médica para aplicaciones de apoyo.',status:'published',sort_order:19
+        },
+        {
+          id:'prod-traccion-cervical',slug:'dispositivo-traccion-cervical-neuroinmune',category:'Equipamiento Terapéutico',
+          title:'Dispositivo de Tracción Cervical y Descompresión Espinal',subtitle:'Descompresión de raíces nerviosas y flujo cefalorraquídeo',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=cervical+traction+device',discount_code:'',badge:'Alineación Neuroespinal',
+          description:'Equipo de alineación cervical para aliviar interferencia nerviosa y mejorar la conducción autonómica.',status:'published',sort_order:20
         }
       ];
       for(const p of seedProducts){
