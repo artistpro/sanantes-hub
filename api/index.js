@@ -66,9 +66,7 @@ async function ensureProductsSchema(){
     await query('CREATE INDEX IF NOT EXISTS products_slug ON products(slug)');
     await query('CREATE INDEX IF NOT EXISTS products_status ON products(status)');
 
-    const countRes=await query('SELECT COUNT(*) count FROM products');
-    if(!countRes[0]?.count){
-      const seedProducts=[
+    const seedProducts=[
         {
           id:'prod-berberina',slug:'berberina-grado-terapeutico',category:'Suplementos y Nutracéuticos',
           title:'Berberina 500 mg (Grado Terapéutico)',subtitle:'Activador de AMPK y modulación del metabolismo tumoral',
@@ -196,7 +194,6 @@ async function ensureProductsSchema(){
           [p.id,p.slug,p.category,p.title,p.subtitle,p.provider,p.affiliate_url,p.discount_code,p.badge,p.description,p.status,p.sort_order]
         );
       }
-    }
     productsSchemaChecked=true;
   }catch(e){console.warn('Auto-migración products:',e.message);}
 }
