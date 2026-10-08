@@ -148,22 +148,22 @@ async function ensureProductsSchema(){
           description:'Lactona sesquiterpénica que desata estrés oxidativo selectivo en células cargadas de hierro.',status:'published',sort_order:13
         },
         {
-          id:'prod-hbot',slug:'camara-hiperbarica-portatil-hbot',category:'Equipamiento Terapéutico',
-          title:'Cámara Hiperbárica Portátil (HBOT)',subtitle:'Hiperoxigenación bajo presión para revertir la hipoxia tumoral',
-          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=hyperbaric+chamber+portable',discount_code:'',badge:'Oxigenación Tisular',
-          description:'Cámara de presión atmosférica suplementada con concentración de oxígeno para saturar tejidos.',status:'published',sort_order:14
+          id:'prod-filtro-agua',slug:'sistema-filtracion-agua-osmosis-inversa',category:'Equipamiento Terapéutico',
+          title:'Sistema de Filtración de Agua por Ósmosis Inversa (5 Etapas)',subtitle:'Eliminación de flúor, cloro, metales pesados y microplásticos',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=reverse+osmosis+water+filter',discount_code:'',badge:'Hidratación Purificada',
+          description:'Sistema de purificación bajo fregadero para garantizar agua de consumo libre de contaminantes orgánicos e inorgánicos.',status:'published',sort_order:14
         },
         {
-          id:'prod-sauna-infrarrojo',slug:'sauna-portatil-infrarrojo-lejano-low-emf',category:'Equipamiento Terapéutico',
-          title:'Sauna Portátil de Infrarrojo Lejano (Bajo CEM / Low EMF)',subtitle:'Hipertermia suave, sudoración profunda y depuración de lipotoxinas',
-          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=far+infrared+sauna+low+emf',discount_code:'',badge:'Depuración e Hipertermia',
-          description:'Sauna de radiación infrarroja lejana para activar proteínas de choque térmico (HSPs).',status:'published',sort_order:15
+          id:'prod-purificador-aire',slug:'purificador-aire-filtro-true-hepa-h13',category:'Equipamiento Terapéutico',
+          title:'Purificador de Aire con Filtro True HEPA H13',subtitle:'Retención del 99.97% de partículas en suspensión, alérgenos y moho',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=hepa+air+purifier+bedroom',discount_code:'',badge:'Calidad del Aire',
+          description:'Unidad silenciosa con filtrado de carbón activado para eliminar compuestos orgánicos volátiles (COVs) en el hogar.',status:'published',sort_order:15
         },
         {
-          id:'prod-tvns',slug:'estimulador-nervio-vago-tvns',category:'Equipamiento Terapéutico',
-          title:'Dispositivo de Bioestimulación del Nervio Vago (tVNS)',subtitle:'Regulación del eje vagal, variabilidad cardíaca (HRV) y freno inflamatorio',
-          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=vagus+nerve+stimulation+device',discount_code:'',badge:'Tono Parasimpático',
-          description:'Estimulador transcutáneo auricular para inducir la vía colinérgica antiinflamatoria.',status:'published',sort_order:16
+          id:'prod-fototerapia-circadiana',slug:'lampara-fototerapia-brillante-10000-lux',category:'Equipamiento Terapéutico',
+          title:'Lámpara de Fototerapia Brillante 10.000 Lux (Sin UV)',subtitle:'Regulación del ritmo circadiano y supresión de melatonina diurna',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=10000+lux+light+therapy+lamp',discount_code:'',badge:'Ritmo Circadiano',
+          description:'Lámpara espectral de 10.000 lux para usar por las mañanas, sincronizando el reloj biológico y la energía.',status:'published',sort_order:16
         },
         {
           id:'prod-ketomojo',slug:'kit-medicion-metabolica-keto-mojo-gki',category:'Equipamiento Terapéutico',
@@ -178,16 +178,16 @@ async function ensureProductsSchema(){
           description:'Extractor de masticación lenta que evita la oxidación térmica de fitonutrientes.',status:'published',sort_order:18
         },
         {
-          id:'prod-ozono',slug:'generador-ozono-terapeutico',category:'Equipamiento Terapéutico',
-          title:'Generador de Ozono Terapéutico / Sauna de Ozono',subtitle:'Activación del factor Nrf2, superóxido dismutasa y oxigenación',
-          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=ozone+generator+therapy',discount_code:'',badge:'Estrés Hormético',
-          description:'Equipamiento de generación de ozono de precisión médica para aplicaciones de apoyo.',status:'published',sort_order:19
+          id:'prod-blender',slug:'batidora-alta-velocidad-nutricion-celular',category:'Equipamiento Terapéutico',
+          title:'Batidora de Alta Velocidad (Vitamix / NutriBullet 1200W)',subtitle:'Rotura de la pared celular vegetal para la liberación de fitonutrientes',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=high+speed+blender+vitamix',discount_code:'',badge:'Preparación Nutricional',
+          description:'Motor de alta potencia para triturar fibras, semillas y hojas verdes sin desnaturalizar sus principios activos.',status:'published',sort_order:19
         },
         {
-          id:'prod-traccion-cervical',slug:'dispositivo-traccion-cervical-neuroinmune',category:'Equipamiento Terapéutico',
-          title:'Dispositivo de Tracción Cervical y Descompresión Espinal',subtitle:'Descompresión de raíces nerviosas y flujo cefalorraquídeo',
-          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=cervical+traction+device',discount_code:'',badge:'Alineación Neuroespinal',
-          description:'Equipo de alineación cervical para aliviar interferencia nerviosa y mejorar la conducción autonómica.',status:'published',sort_order:20
+          id:'prod-cepillado-seco',slug:'set-cepillado-corporal-seco-drenaje-linfatico',category:'Equipamiento Terapéutico',
+          title:'Set de Cepillado Corporal en Seco (Cerdas Naturales)',subtitle:'Estimulación del drenaje linfático superficial y exfoliación celular',
+          provider:'Amazon',affiliate_url:'https://www.amazon.com/s?k=dry+body+brush+lymphatic+drainage',discount_code:'',badge:'Drenaje Linfático',
+          description:'Cepillo de cerda de jabalí o sisal natural para masajear hacia los ganglios linfáticos antes de la ducha.',status:'published',sort_order:20
         }
       ];
       for(const p of seedProducts){
