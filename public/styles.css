@@ -70,8 +70,18 @@
 .wiki-toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .wiki-toc-list a{font-size:0.82rem;color:#55726a;text-decoration:none;line-height:1.4;transition:color 0.15s;display:block}
 .wiki-toc-list a:hover{color:#1e6b42;text-decoration:underline}
+.wiki-drawer{background:#ffffff;border:1px solid #dce8df;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(18,61,57,0.04);margin-bottom:16px;transition:all 0.2s ease}
+.wiki-drawer-summary{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;list-style:none;background:#fbfdfc;font-weight:700;font-size:0.88rem;color:#123d39;user-select:none;transition:background 0.15s ease,color 0.15s ease}
+.wiki-drawer-summary::-webkit-details-marker,.wiki-drawer-summary::marker{display:none}
+.wiki-drawer-summary:hover{background:#f0f7f3;color:#1e6b42}
+.wiki-drawer-title{display:flex;align-items:center;gap:8px}
+.wiki-drawer-arrow{font-size:0.78rem;color:#55726a;background:#eef4f0;padding:3px 9px;border-radius:12px;font-weight:600}
+.wiki-drawer[open] .wiki-drawer-arrow{background:#e2f0e7;color:#1e6b42}
+.wiki-drawer[open] .wiki-drawer-arrow::after{content:'Recoger ▴'}
+.wiki-drawer:not([open]) .wiki-drawer-arrow::after{content:'Desplegar ▾'}
+.wiki-drawer-content{padding:14px 16px 18px;border-top:1px solid #edf4f0;max-height:calc(100vh - 220px);overflow-y:auto}
 @media(max-width:1180px){.wiki-doc-layout{grid-template-columns:240px minmax(0,1fr);gap:28px}.wiki-toc{display:none}}
-@media(max-width:768px){.wiki-doc-layout{grid-template-columns:1fr;gap:20px}.wiki-sidebar{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line);padding:0 0 20px 0}.wiki-pagination-nav{grid-template-columns:1fr}.wiki-page-link-card.next{grid-column:1;text-align:left}}
+@media(max-width:768px){.wiki-doc-layout{grid-template-columns:1fr;gap:20px}.wiki-sidebar{position:static;max-height:none;border-right:0;border-bottom:none;padding:0 0 10px 0;margin-bottom:4px}.wiki-drawer-content{max-height:55vh}.wiki-pagination-nav{grid-template-columns:1fr}.wiki-page-link-card.next{grid-column:1;text-align:left}}
 
 /* ========================================================
    HOME / INICIO PORTAL STYLES
