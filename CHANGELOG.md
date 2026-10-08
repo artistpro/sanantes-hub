@@ -4,6 +4,33 @@ Todas las mejoras y actualizaciones técnicas de **Comunidad Sanantes**.
 
 ---
 
+## [2026-10-07] - Humanización Integral de la Wiki (Skill Humanizer) e Índice Plegable
+
+### 🌟 Mejoras de UX/UI y Contenido Editorial
+
+#### 1. Índice de Navegación Wiki Plegable (Drawer Colapsado por Defecto)
+- **Problema resuelto:** Al ingresar a cualquier monografía de la Wiki desde dispositivos móviles o PC, el listado completo de artículos se desplegaba ocupando la cabecera superior y dificultando la lectura inmediata del texto solicitado.
+- **Implementación:**
+  - Contenedor interactivo `<details class="wiki-drawer">` con `<summary class="wiki-drawer-summary">`.
+  - Recogido/plegado por defecto para priorizar la lectura del artículo.
+  - Indicador visual animado (flechas y texto dinámico `Desplegar ▾` / `Recoger ▴`).
+  - Auto-despliegue reactivo al escribir en el buscador de la wiki (`input.wiki-search-box`).
+  - Sincronizado tanto en la aplicación cliente interactiva (`public/app.js`, `public/styles.css`) como en el motor SSR (`api/index.js`) para rastreadores web.
+
+#### 2. Humanización de las 33 Monografías de la Wiki (`skill: humanizer`)
+- **Limpieza de "AI slop" y muletillas de IA:**
+  - Eliminación de estructuras sintéticas rígidas, reglas forzadas de tres viñetas y giros verbales cliché (*"en el vasto panorama"*, *"un faro de esperanza"*, *"no solo... sino también"*, *"es crucial destacar"*, *"un tapiz"*, *"orquestar"*).
+  - Eliminación de hipérboles y sensacionalismo (*"asombroso descubrimiento"*, *"revolucionario hallazgo"*).
+  - Tono cálido, directo, transparente y fundamentado clínicamente.
+- **Preservación total del rigor científico:**
+  - Citas completas de identificadores PubMed (PMID).
+  - Explicación de mecanismos moleculares (receptores `α7nAChR`, `dectina-1`, `5-LOX`, `mTOR/AMPK`, `HIF-1α`, etc.).
+  - Protocolos de dosificación y seguridad del Dr. Pete Sulack y enlaces oficiales a iHerb (`wUt7svK8`) y Amazon (`amzn.to/46PTWSA`).
+- **Migración Segura de Base de Datos:**
+  - Cláusula `ON CONFLICT(slug) DO UPDATE` con salvaguarda `WHERE wiki_articles.author_id IS NULL` para preservar intactos los artículos creados o editados manualmente por administradores/editores humanos.
+
+---
+
 ## [2026-09-28] - Wiki de Oncología Integrativa, SEO & GEO 10/10, Branding Oficial y Modelado Semántico de Comunidad
 
 ### 🌟 Nuevas Funcionalidades y Mejoras de Arquitectura
