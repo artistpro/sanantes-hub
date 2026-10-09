@@ -977,7 +977,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         }
       }else if(type==='author'&&(targetId==='william-makis'||targetId==='dr-william-makis')){
         category = 'Autoridad Médica e Investigación';
-        title = cleanTitle('Dr. William Makis en Español: Investigaciones y Cáncer · Sanantes');
+        title = cleanTitle('Dr. William Makis en Español | Oncología e Ivermectina · Sanantes');
         desc = cleanDesc('Biblioteca y análisis científico del Dr. William Makis en español. Protocolos de ivermectina, fenbendazol y estudios indexados en oncología integrativa.');
         image = origin()+'/favicon.svg';
         targetUrl = origin()+'/#podcast';
@@ -992,13 +992,14 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             }).join('') + `</div>`;
         }
         fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
+          <h1 style="color:#123d39;font-size:1.8rem;margin:0 0 16px;line-height:1.3;">Dr. William Makis en Español: Investigaciones y Cáncer</h1>
           <h2 style="color:#123d39;font-size:1.4rem;margin:20px 0 12px;">¿Quién es el Dr. William Makis?</h2>
           <p>El Dr. William Makis, MD, es un médico canadiense especializado en radiología, oncología y medicina nuclear, graduado de la Universidad McGill. A lo largo de su carrera ha supervisado el tratamiento de miles de pacientes con diversas neoplasias y se ha convertido en una de las voces de referencia internacional en la investigación del reposicionamiento de fármacos (<em>drug repurposing</em>) contra el cáncer.</p>
           <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Medicamentos Reposicionados y Vías de Acción Investigadas</h2>
           <p>El trabajo divulgativo y clínico del Dr. Makis se enfoca en moléculas antiparasitarias con décadas de perfil de seguridad farmacológica:</p>
           <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
-            <li style="margin-bottom:10px;"><strong>Ivermectina:</strong> Inhibición del transporte nuclear mediado por importinas alfa/beta, alteración de la mitofagia tumoral y bloqueo de la proteína quinasa PAK1.</li>
-            <li style="margin-bottom:10px;"><strong>Mebendazol y Fenbendazol:</strong> Desestabilización de microtúbulos tumorales, detención del ciclo celular en fase G2/M e inducción de apoptosis selectiva.</li>
+            <li style="margin-bottom:10px;"><strong>Ivermectina:</strong> Inhibición del transporte nuclear mediado por importinas alfa/beta, alteración de la mitofagia tumoral y bloqueo de la proteína quinasa PAK1. Ver <a href="${origin()}/wiki/ivermectina" style="color:#1e6b42;font-weight:700;">Monografía de Ivermectina en la Wiki &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong>Mebendazol y Fenbendazol:</strong> Desestabilización de microtúbulos tumorales, detención del ciclo celular en fase G2/M e inducción de apoptosis selectiva. Ver <a href="${origin()}/wiki/fenbendazol" style="color:#1e6b42;font-weight:700;">Monografía de Fenbendazol &rarr;</a></li>
             <li style="margin-bottom:10px;"><strong>Reversión de la Resistencia Multidroga (MDR):</strong> Modulación de la glicoproteína P (P-gp), facilitando que células refractarias respondan a intervenciones complementarias.</li>
           </ul>
           <blockquote style="margin:24px 0;padding:16px 20px;border-left:4px solid #1e6b42;background:#f9fbf9;border-radius:0 8px 8px 0;font-style:italic;color:#183d35;line-height:1.65;">
@@ -1011,6 +1012,17 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
             <li style="margin-bottom:10px;"><strong style="color:#183d35;">Repurposing Ivermectin for Cancer Treatment: Preclinical and Clinical Evidence</strong> &mdash; <em>Frontiers in Pharmacology</em> (PMID: 33633575) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/33633575/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
             <li style="margin-bottom:10px;"><strong style="color:#183d35;">Mebendazole as a candidate for drug repurposing in oncology</strong> &mdash; <em>Cancers</em> (PMID: 31080350) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31080350/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
           </ul>
+          <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Preguntas Frecuentes sobre el Dr. William Makis</h2>
+          <div style="margin:16px 0;display:flex;flex-direction:column;gap:12px;">
+            <details style="background:#f8faf9;border:1px solid #dce8df;border-radius:8px;padding:12px 16px;" open>
+              <summary style="font-weight:700;color:#123d39;cursor:pointer;">¿Quién es el Dr. William Makis y cuál es su especialidad?</summary>
+              <p style="margin:8px 0 0;font-size:0.95rem;line-height:1.6;color:#28433d;">El Dr. William Makis, MD, es un médico canadiense especialista en medicina nuclear, radiología y oncología graduado de la Universidad McGill, reconocido internacionalmente por sus investigaciones sobre el reposicionamiento de fármacos en oncología integrativa.</p>
+            </details>
+            <details style="background:#f8faf9;border:1px solid #dce8df;border-radius:8px;padding:12px 16px;">
+              <summary style="font-weight:700;color:#123d39;cursor:pointer;">¿Qué investigación realiza el Dr. William Makis sobre la Ivermectina en Cáncer?</summary>
+              <p style="margin:8px 0 0;font-size:0.95rem;line-height:1.6;color:#28433d;">El Dr. Makis analiza la literatura biomédica indexada en PubMed sobre la ivermectina, destacando su capacidad in vitro para bloquear las importinas alfa/beta, frenar la quinasa PAK1 y modular la glicoproteína P (P-gp) contra la resistencia a tratamientos.</p>
+            </details>
+          </div>
           ${videoCardsHtml}
         </div>`;
         schemaJson=JSON.stringify({
@@ -1027,6 +1039,27 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
                 "alumniOf":"McGill University",
                 "knowsAbout":["Oncología Integrativa","Ivermectina","Mebendazol","Fenbendazol","Drug Repurposing"]
               }
+            },
+            {
+              "@type":"FAQPage",
+              "mainEntity":[
+                {
+                  "@type":"Question",
+                  "name":"¿Quién es el Dr. William Makis?",
+                  "acceptedAnswer":{
+                    "@type":"Answer",
+                    "text":"El Dr. William Makis, MD, es un médico canadiense especialista en medicina nuclear, radiología y oncología graduado de la Universidad McGill."
+                  }
+                },
+                {
+                  "@type":"Question",
+                  "name":"¿Qué investigación realiza el Dr. William Makis sobre la Ivermectina en Cáncer?",
+                  "acceptedAnswer":{
+                    "@type":"Answer",
+                    "text":"El Dr. Makis investiga la literatura sobre ivermectina como inhibidor del transporte nuclear por importinas alfa/beta y bloqueador de la proteína quinasa PAK1."
+                  }
+                }
+              ]
             },
             {
               "@type":"CollectionPage",
