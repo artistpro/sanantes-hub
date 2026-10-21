@@ -1216,11 +1216,52 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           </div>`;
           schemaJson=JSON.stringify({
             "@context":"https://schema.org",
-            "@type":"CollectionPage",
-            "name":title,
-            "description":desc,
-            "url":canonicalUrl,
-            "publisher":orgPublisher
+            "@graph":[
+              {
+                "@type":"CollectionPage",
+                "name":title,
+                "description":desc,
+                "url":canonicalUrl,
+                "publisher":orgPublisher
+              },
+              {
+                "@type":"FAQPage",
+                "mainEntity":[
+                  {
+                    "@type":"Question",
+                    "name":"¿Qué significa el nivel de evidencia \"Preclínica / Modelos Animales\"?",
+                    "acceptedAnswer":{
+                      "@type":"Answer",
+                      "text":"Estudios realizados in vitro (cultivos celulares) y en modelos animales (ratones, ratas) que demuestran mecanismos biológicos o efectos antitumorales, pero que no han sido validados en ensayos clínicos con humanos. Es el nivel de evidencia más temprano en la cadena de traducción clínica."
+                    }
+                  },
+                  {
+                    "@type":"Question",
+                    "name":"¿Qué significa \"Preclínica / In vitro y Ensayos Fase I/II\"?",
+                    "acceptedAnswer":{
+                      "@type":"Answer",
+                      "text":"Investigación que combina estudios de laboratorio (in vitro) con ensayos clínicos tempranos en humanos (Fase I: seguridad y farmacocinética; Fase II: eficacia preliminar). Indica que existe evidencia inicial en pacientes, pero aún no hay confirmación en ensayos fase III aleatorizados."
+                    }
+                  },
+                  {
+                    "@type":"Question",
+                    "name":"¿Qué significa \"Ensayos Clínicos en Humanos\"?",
+                    "acceptedAnswer":{
+                      "@type":"Answer",
+                      "text":"Estudios realizados directamente en pacientes con cáncer, incluyendo ensayos fase III aleatorizados, metaanálisis y revisiones sistemáticas. Representa el nivel de evidencia más alto para la toma de decisiones clínicas."
+                    }
+                  },
+                  {
+                    "@type":"Question",
+                    "name":"¿Qué significa \"Ensayos Clínicos Aleatorizados y Revisiones Sistemáticas Cochrane\"?",
+                    "acceptedAnswer":{
+                      "@type":"Answer",
+                      "text":"El estándar oro de evidencia médica: ensayos controlados aleatorizados (ECA) bien diseñados y/o revisiones sistemáticas de la Colaboración Cochrane, que sintetizan la mejor evidencia disponible minimizando sesgos."
+                    }
+                  }
+                ]
+              }
+            ]
           });
         }else{
           const [art]=(await query("SELECT * FROM wiki_articles WHERE (slug=? OR id=?) AND status='published'",[targetId,targetId]))||[];
@@ -1403,7 +1444,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               <div class="wiki-right-col">${tocArtHtml}</div>
             </div>`;
             const pubDate = art.updated_at ? new Date(art.updated_at).toISOString() : new Date('2026-09-28T00:00:00Z').toISOString();
-            schemaJson=JSON.stringify({
+            const articleSchema = {
               "@context":"https://schema.org",
               "@type":"Article",
               "headline":art.title,
@@ -1423,8 +1464,28 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
                 "@type":"Audience",
                 "audienceType":"Pacientes, familias y comunidad de apoyo"
               },
-              "citation":citations.map(c=>`https://pubmed.ncbi.nlm.nih.gov/${c}/`)
-            });
+              "citation":citations.map(c=>`https://pubmed.ncbi.nlm.nih.gov/${c}/`),
+              "speakable":{
+                "@type":"SpeakableSpecification",
+                "cssSelector":["#resumen","#mecanismos","#estado-clinico"]
+              }
+            };
+            if(relatedVideos.length > 0){
+              articleSchema.hasPart = relatedVideos.map(v => {
+                const vThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
+                return {
+                  "@type": "VideoObject",
+                  "name": v.title,
+                  "description": v.description || v.title,
+                  "thumbnailUrl": vThumb,
+                  "contentUrl": `${origin()}/v/${v.id}`,
+                  "embedUrl": `${origin()}/v/${v.id}`,
+                  "uploadDate": v.published_at ? new Date(v.published_at).toISOString() : pubDate,
+                  "publisher": orgPublisher
+                };
+              });
+            }
+            schemaJson=JSON.stringify(articleSchema);
           }
         }
       }else if(!type){
@@ -1596,6 +1657,83 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
                 "audienceType":"Pacientes oncológicos, familiares, cuidadores y comunidad de apoyo"
               },
               "disclaimer":"Contenido informativo y de acompañamiento. No sustituye la atención médica especializada."
+            },
+            {
+              "@type":"ItemList",
+              "name":"Episodios Destacados - El Podcast del Cáncer",
+              "description":"Episodios monográficos e investigaciones de referencia sobre oncología integrativa, reposicionamiento farmacológico y estrategia metabólica.",
+              "itemListOrder":"https://schema.org/ItemListOrderDescending",
+              "numberOfItems":4,
+              "itemListElement":[
+                {
+                  "@type":"ListItem",
+                  "position":1,
+                  "item":{
+                    "@type":"VideoObject",
+                    "name":"CÁNCER: El Fármaco que la CENSURA OCULTÓ (Dr. Makis) ⚠️",
+                    "description":"El Dr. William Makis profundiza en más de 100 publicaciones sobre ivermectina, células madre tumorales y protocolos en oncología integrativa.",
+                    "thumbnailUrl":"https://thumbnails.lbry.com/nLZpUX6ao7k",
+                    "contentUrl":origin()+"/v/a39c7bf6-a2a3-4565-8a82-0b52566e5d94",
+                    "embedUrl":origin()+"/v/a39c7bf6-a2a3-4565-8a82-0b52566e5d94",
+                    "uploadDate":"2026-10-15T00:00:00.000Z",
+                    "duration":"PT21M41S",
+                    "publisher":orgPublisher,
+                    "genre":"Investigación y tratamientos",
+                    "keywords":"Dr. William Makis, Ivermectina, Oncología Integrativa, Cáncer"
+                  }
+                },
+                {
+                  "@type":"ListItem",
+                  "position":2,
+                  "item":{
+                    "@type":"VideoObject",
+                    "name":"¿IVERMECTINA & MEBENDAZOL? El estudio que podría cambiar el cáncer para siempre",
+                    "description":"Análisis del estudio observacional en 197 pacientes oncológicos tratados con régimen complementario de antiparasitarios y tasa de beneficio clínico del 84.4%.",
+                    "thumbnailUrl":"https://thumbnails.lbry.com/K07HjTjU9j4",
+                    "contentUrl":origin()+"/v/od-a14273cead44bf4b87b69500235bc4eac5692ff1",
+                    "embedUrl":origin()+"/v/od-a14273cead44bf4b87b69500235bc4eac5692ff1",
+                    "uploadDate":"2026-10-10T00:00:00.000Z",
+                    "duration":"PT17M10S",
+                    "publisher":orgPublisher,
+                    "genre":"Medicamentos Reposicionados",
+                    "keywords":"Ivermectina, Mebendazol, Reposicionamiento Farmacológico, Estudio Observacional"
+                  }
+                },
+                {
+                  "@type":"ListItem",
+                  "position":3,
+                  "item":{
+                    "@type":"VideoObject",
+                    "name":"Así Descubrí el SECRETO de la Estrategia Metabólica 😱",
+                    "description":"La teoría metabólica del Dr. Thomas Seyfried: Efecto Warburg, fermentación de glucosa y glutamina, y modulación del índice glucosa-cetonas (GKI).",
+                    "thumbnailUrl":"https://i.ytimg.com/vi/VChTote173E/hqdefault.jpg",
+                    "contentUrl":origin()+"/v/yt-VChTote173E",
+                    "embedUrl":origin()+"/v/yt-VChTote173E",
+                    "uploadDate":"2026-10-05T00:00:00.000Z",
+                    "duration":"PT25M00S",
+                    "publisher":orgPublisher,
+                    "genre":"Oncología Metabólica",
+                    "keywords":"Thomas Seyfried, Estrategia Metabólica, Efecto Warburg, GKI, Dieta Cetogénica"
+                  }
+                },
+                {
+                  "@type":"ListItem",
+                  "position":4,
+                  "item":{
+                    "@type":"VideoObject",
+                    "name":"🤯 El CÁNCER Muere Cuando Haces esto. Toda la VERDAD",
+                    "description":"Mecanismos celulares de autofagia, estrés oxidativo selectivo y ayuno terapéutico complementario para el apoyo del paciente oncológico.",
+                    "thumbnailUrl":"https://thumbnails.lbry.com/ae42df578552bac3b04574f6e586900b32be3c92",
+                    "contentUrl":origin()+"/v/91f52b58-647d-4fbb-a0f2-be5f3f5c5439",
+                    "embedUrl":origin()+"/v/91f52b58-647d-4fbb-a0f2-be5f3f5c5439",
+                    "uploadDate":"2026-10-01T00:00:00.000Z",
+                    "duration":"PT30M00S",
+                    "publisher":orgPublisher,
+                    "genre":"Autofagia y Ayuno",
+                    "keywords":"Autofagia, Ayuno Terapéutico, Estrés Oxidativo, Ayuno Prolongado"
+                  }
+                }
+              ]
             }
           ]
         });
