@@ -866,7 +866,7 @@ ${videoItems}
       if(!type&&(path.startsWith('autores/')||path.startsWith('autor/'))){type='author';targetId=path.replace(/^autores\//,'').replace(/^autor\//,'');}
       if(!type&&(path.startsWith('temas/')||path.startsWith('tema/'))){type='topic';targetId=path.replace(/^temas\//,'').replace(/^tema\//,'');}
       if(!type&&(path.startsWith('wiki/')||path==='wiki')){type='wiki';targetId=path==='wiki'?'':path.replace(/^wiki\//,'');}
-      let title=cleanTitle('Comunidad Sanantes · El Podcast del Cáncer');
+      let title=cleanTitle('Sanantes: Oncología Integrativa, Dr. Makis & Estrategia Metabólica');
       let desc=cleanDesc('Sanantes: El Podcast del Cáncer y plataforma de oncología integrativa. Investigaciones científicas, análisis del Dr. William Makis y acompañamiento.');
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
       let targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'');
@@ -1429,7 +1429,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         }
       }else if(!type){
         category = 'Portal de Oncología Integrativa';
-        title = cleanTitle('Comunidad Sanantes · El Podcast del Cáncer');
+        title = cleanTitle('Sanantes: Oncología Integrativa, Dr. Makis & Estrategia Metabólica');
         desc = cleanDesc('Plataforma y podcast de oncología integrativa, medicina metabólica y fármacos reposicionados. Investigaciones, análisis del Dr. William Makis y acompañamiento.', 155);
         image = 'https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
         targetUrl = origin() + (ref ? '/?ref=' + encodeURIComponent(ref) : '/');
