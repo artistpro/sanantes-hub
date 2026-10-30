@@ -6,6 +6,13 @@ import {organizePending} from '../lib/editorial.mjs';
 import {randomUUID} from 'node:crypto';
 import {getGeoEnrichment, renderGeoHtml} from '../lib/geo-enrichment.mjs';
 import {classificationDefaults,classifierSettings,classify,classifyPending} from '../lib/classifier.mjs';
+import fs from 'node:fs';
+let pubmedMetadata = {};
+try {
+  pubmedMetadata = JSON.parse(fs.readFileSync(new URL('../lib/pubmed-metadata.json', import.meta.url), 'utf8'));
+} catch(e) {
+  pubmedMetadata = {};
+}
 const id=()=>randomUUID();
 const safeFileUrl=raw=>{if(typeof raw!=='string'||!raw)return '';if(raw.startsWith('data:application/pdf;')&&raw.length<=4500000)return raw;try{const u=new URL(raw);return u.protocol==='https:'&&!u.username&&!u.password?u.href:''}catch{return ''}};
 const defaults={title:'Comunidad Sanantes',subtitle:'El Podcast del Cáncer',intro:'Un espacio para aprender, escuchar y acompañarnos.',accent:'#d65337',donationGoal:'500',donationUrl:'https://paypal.me/podcastcancer',donationTitle:'Hagamos posible el próximo episodio',welcomePoints:'10',referralPoints:'20',privacyContact:'',privacyText:'',autoPublish:'1',googleClientId:process.env.GOOGLE_CLIENT_ID||'556094809768-t183rn0i6c4k3mkrnj0et9irjphmfd3a.apps.googleusercontent.com',homeFeaturedVideo1:'',homeFeaturedVideo2:'',homeFeaturedVideo3:'',homeFeaturedVideo4:'',homeFeaturedLive:'',homeFeaturedPost:'',homeFeaturedWiki:''};
@@ -1052,9 +1059,9 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           </blockquote>
           <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Evidencia Indexada y Estudios en PubMed Citados</h2>
           <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
-            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Ivermectin as an inhibitor of cancer stem-like cells</strong> &mdash; <em>Pharmacological Research</em> (PMID: 29054452) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/29054452/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
-            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Repurposing Ivermectin for Cancer Treatment: Preclinical and Clinical Evidence</strong> &mdash; <em>Frontiers in Pharmacology</em> (PMID: 33633575) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/33633575/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
-            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Mebendazole as a candidate for drug repurposing in oncology</strong> &mdash; <em>Cancers</em> (PMID: 31080350) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31080350/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Ivermectin as an inhibitor of cancer stem-like cells</strong> &mdash; <em>Molecular Medicine Reports (2018)</em> &bull; <span style="color:#496b63;font-size:0.9rem;">PMID: 29257278</span> &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/29257278/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">The multitargeted drug ivermectin: from an antiparasitic agent to a repositioned cancer drug</strong> &mdash; <em>Pharmacological Research (2018)</em> &bull; <span style="color:#496b63;font-size:0.9rem;">PMID: 29511601</span> &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/29511601/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Mebendazole as a Candidate for Drug Repurposing in Oncology: An Extensive Review</strong> &mdash; <em>Cancers (2019)</em> &bull; <span style="color:#496b63;font-size:0.9rem;">PMID: 31480477</span> &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31480477/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
           </ul>
           <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Preguntas Frecuentes sobre el Dr. William Makis</h2>
           <div style="margin:16px 0;display:flex;flex-direction:column;gap:12px;">
@@ -1139,8 +1146,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           <p><strong>3. Fenbendazol:</strong> Análogo del mebendazol que ha ganado notoriedad por el caso testimonial de Joe Tippens y diversos estudios in vitro sobre daño mitocondrial en células tumorales.</p>
           <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Fuentes Indexadas en MEDLINE / PubMed</h2>
           <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
-            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Antitumor effects of ivermectin: Mechanisms and clinical implications</strong> &mdash; <em>IJMS</em> (PMID: 32415487) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/32415487/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 32415487 &rarr;</a></li>
-            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Mebendazole as a candidate for drug repurposing in oncology</strong> &mdash; <em>Cancers</em> (PMID: 31080350) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31080350/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 31080350 &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Antitumor effects of ivermectin at clinically feasible concentrations support its clinical development</strong> &mdash; <em>Cancer Chemotherapy and Pharmacology (2020)</em> &bull; <span style="color:#496b63;font-size:0.9rem;">PMID: 32474842</span> &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/32474842/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Mebendazole as a Candidate for Drug Repurposing in Oncology: An Extensive Review</strong> &mdash; <em>Cancers (2019)</em> &bull; <span style="color:#496b63;font-size:0.9rem;">PMID: 31480477</span> &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31480477/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
           </ul>
           ${repCardsHtml}
         </div>`;
@@ -1177,8 +1184,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           <p><strong>3. Estrategia Press-Pulse:</strong> Combinación de estrés crónico (dieta cetogénica restringida) con pulsos agudos de intervención terapéutica.</p>
           <h2 style="color:#123d39;font-size:1.4rem;margin:24px 0 12px;">Publicaciones Clave en PubMed</h2>
           <ul style="margin:16px 0;padding-left:24px;line-height:1.7;">
-            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Cancer as a metabolic disease: implications for novel therapeutics</strong> &mdash; <em>Carcinogenesis</em> (PMID: 24657584) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/24657584/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 24657584 &rarr;</a></li>
-            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Press-pulse: a novel strategy for the metabolic management of cancer</strong> &mdash; <em>Nutrition & Metabolism</em> (PMID: 31804968) &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/31804968/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">PubMed 31804968 &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Cancer as a metabolic disease: implications for novel therapeutics</strong> &mdash; <em>Carcinogenesis (2014)</em> &bull; <span style="color:#496b63;font-size:0.9rem;">PMID: 24343361</span> &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/24343361/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
+            <li style="margin-bottom:10px;"><strong style="color:#183d35;">Press-pulse: a novel strategy for the metabolic management of cancer</strong> &mdash; <em>Nutrition & Metabolism (2017)</em> &bull; <span style="color:#496b63;font-size:0.9rem;">PMID: 28250801</span> &bull; <a href="https://pubmed.ncbi.nlm.nih.gov/28250801/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>
           </ul>
           ${metaCardsHtml}
         </div>`;
@@ -1325,7 +1332,10 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               pubmedHtml = `<div id="referencias" style="margin:28px 0;background:#f8faf9;border:1px solid #dce8df;border-radius:10px;padding:20px;">
                 <h3 style="color:#123d39;margin:0 0 14px;font-size:1.15rem;display:flex;align-items:center;gap:8px;">📚 Referencias y Evidencia en MEDLINE / PubMed</h3>
                 <ul style="margin:0;padding-left:20px;line-height:1.8;">
-                  ${citations.map(c => `<li style="margin-bottom:8px;"><strong style="color:#183d35;">PMID: ${escHtml(c)}</strong> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/${encodeURIComponent(c)}/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>`).join('')}
+                  ${citations.map(c => {
+                    const meta = pubmedMetadata[c];
+                    return `<li style="margin-bottom:12px;">${meta ? `<strong style="color:#183d35;">${escHtml(meta.title)}</strong>${meta.journal ? ` &mdash; <em>${escHtml(meta.journal)}${meta.year ? ` (${escHtml(meta.year)})` : ''}</em>` : ''} &bull; ` : ''}<span style="color:#496b63;font-size:0.9rem;">PMID: ${escHtml(c)}</span> &mdash; <a href="https://pubmed.ncbi.nlm.nih.gov/${encodeURIComponent(c)}/" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:600;">Ver estudio en PubMed &rarr;</a></li>`;
+                  }).join('')}
                 </ul>
               </div>`;
             }
@@ -1792,7 +1802,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         if(path==='products'&&method==='GET'){return send(res,{ok:true,products:await query("SELECT * FROM products WHERE status='published' ORDER BY sort_order ASC, created_at DESC")});}
     if(path==='public'&&method==='GET'){
       const s=await settings();const [total]=await query('SELECT COALESCE(SUM(amount),0) total FROM donations');
-      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),wikiCategories:await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC"),wikiArticles:await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,body,mechanisms,clinical_status,pubmed_citations,status,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC"),products:await query("SELECT * FROM products WHERE status='published' ORDER BY sort_order ASC, created_at DESC"),me:await user(req),ranking:await getRanking()});
+      return send(res,{settings:s,donated:total.total,sources:await query('SELECT id,name,platform,url,own,last_sync FROM sources WHERE enabled=1'),videos:(await query("SELECT videos.*,sources.name source_name,sources.own FROM videos LEFT JOIN sources ON sources.id=videos.source_id WHERE videos.status='published' AND videos.kind IN ('video','live') ORDER BY featured DESC,published_at DESC LIMIT 300")).filter(v=>!exclusionReason(v)),posts:await query("SELECT * FROM posts WHERE status='published' ORDER BY updated_at DESC"),wikiCategories:await query("SELECT * FROM wiki_categories ORDER BY sort_order ASC, name ASC"),wikiArticles:await query("SELECT id,slug,category,category_id,title,subtitle,evidence_level,excerpt,body,mechanisms,clinical_status,pubmed_citations,status,updated_at FROM wiki_articles WHERE status='published' ORDER BY title ASC"),products:await query("SELECT * FROM products WHERE status='published' ORDER BY sort_order ASC, created_at DESC"),me:await user(req),ranking:await getRanking(),pubmedMetadata});
     }
     if(path==='auth/register'&&method==='POST'){
       const b=await body(req);const email=text(b.email,254).toLowerCase();const name=text(b.name,80)||email.split('@')[0];const password=typeof b.password==='string'?b.password:'';

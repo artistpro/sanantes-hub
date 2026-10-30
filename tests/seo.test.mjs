@@ -96,7 +96,7 @@ test('Landing Hubs: /autores/william-makis renderiza monografía E-E-A-T y Profi
   const html = await res.text();
   assert.ok(html.includes('Dr. William Makis en Español'), 'Debe incluir título especializado');
   assert.ok(html.includes('McGill University'), 'Debe detallar credenciales médicas');
-  assert.ok(html.includes('29054452') || html.includes('PubMed'), 'Debe citar papers indexados');
+  assert.ok(html.includes('29257278') || html.includes('PubMed'), 'Debe citar papers indexados');
   assert.ok(html.includes('"@type":"ProfilePage"'), 'Debe incluir ProfilePage Schema');
 });
 
@@ -106,7 +106,7 @@ test('Landing Hubs: /temas/medicamentos-reposicionados renderiza compendio de iv
   const html = await res.text();
   assert.ok(html.includes('Medicamentos Reposicionados'), 'Debe titular el compendio');
   assert.ok(html.includes('Ivermectina') && html.includes('Mebendazol'), 'Debe detallar principios activos');
-  assert.ok(html.includes('32415487') || html.includes('PubMed'), 'Debe incluir referencias PubMed');
+  assert.ok(html.includes('32474842') || html.includes('PubMed'), 'Debe incluir referencias PubMed');
 });
 
 test('SEO: sitemap.xml incluye landing hubs de autores y temas con alta prioridad', async () => {
