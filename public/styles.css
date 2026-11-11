@@ -136,6 +136,8 @@
   .platform,.duration{font-size:0.82rem;padding:4px 8px}
   footer a{display:inline-flex;align-items:center;min-height:40px;padding:4px 6px}
   .card-meta button,[data-action="wiki-share"],[data-action="post-share"]{min-width:40px;min-height:40px}
+  [style*="font-size:0.7"],[style*="font-size:0.8"],#static-landing-catalog p,#static-landing-catalog span{font-size:0.875rem!important;line-height:1.5}
+  #static-landing-catalog a{min-height:40px}
 }
 
 

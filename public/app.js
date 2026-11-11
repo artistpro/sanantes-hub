@@ -25,7 +25,7 @@ function shell(){const current=(location.hash.slice(1)||'inicio').split('/')[0];
  document.title=`${data.settings.title} · ${data.settings.subtitle}`;
 }
 const thumbOf=v=>v?.thumbnail||(v?.platform==='youtube'&&v?.external_id?`https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg`:'');
-function image(url,title){return url?`<img src="${esc(url)}" alt="${esc(title)}" loading="lazy" referrerpolicy="no-referrer">`:`<div class="fallback-thumb">${icon('play')}</div>`;}
+function image(url,title){if(!url)return `<div class="fallback-thumb">${icon('play')}</div>`;const yt=String(url).match(/^https:\/\/i\.ytimg\.com\/vi\/([\w-]+)\/hqdefault\.jpg$/);const srcset=yt?` srcset="https://i.ytimg.com/vi/${yt[1]}/mqdefault.jpg 320w, https://i.ytimg.com/vi/${yt[1]}/hqdefault.jpg 480w" sizes="(max-width:768px) 320px, 480px"`:'';return `<img src="${esc(url)}"${srcset} alt="${esc(title)}" width="480" height="360" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;}
 function card(v){return `<article class="card"><a class="thumb" href="#video/${v.id}">${image(thumbOf(v),v.title)}<span class="platform"><em>▶</em> ${names[v.platform]}</span>${v.duration?`<span class="duration">${time(v.duration)}</span>`:''}</a><div class="card-category">${esc(v.category)}</div><h3><a href="#video/${v.id}">${esc(v.title)}</a></h3><div class="card-meta"><span>${esc(v.source_name||names[v.platform])}</span><button data-action="share" data-id="${v.id}" aria-label="Compartir ${esc(v.title)}">${icon('share')}</button></div></article>`;}
 function homePage(){
  const s=data.settings||{};const allVideos=data.videos||[];
@@ -43,7 +43,7 @@ function homePage(){
  if(!featuredWiki&&data.wikiArticles?.length)featuredWiki=data.wikiArticles.find(w=>w.slug==='ivermectina')||data.wikiArticles.find(w=>w.slug==='berberina')||data.wikiArticles[0];
  main.innerHTML=`
   <section class="home-hero">
-    <div style="margin-bottom:16px;"><img src="/logo.png" alt="Comunidad Sanantes" style="height:56px;max-width:260px;object-fit:contain;display:block;"></div>
+    <div style="margin-bottom:16px;"><img src="/logo.webp" alt="Comunidad Sanantes" width="240" height="54" style="height:56px;max-width:260px;object-fit:contain;display:block;"></div>
     <span class="eyebrow">PORTAL Y COMUNIDAD DE ONCOLOGÍA INTEGRATIVA</span>
     <h1>${esc(s.title||'Comunidad Sanantes')}</h1>
     <p>Un espacio de rigor científico, medicina integrativa y acompañamiento humano para pacientes, familiares y profesionales. Investigamos y divulgamos la literatura publicada en MEDLINE/PubMed sobre el reposicionamiento farmacológico, la oncología metabólica, nutracéuticos de grado terapéutico y terapias complementarias.</p>

@@ -361,3 +361,22 @@ test('SEO Técnico Sprint 6 - Frente 4: Backfill de duration para los 4 vídeos 
   assert.equal(v?.duration, 1699, '/api/public debe devolver duration resuelta (1699)');
 });
 
+test('SEO Técnico Sprint 7: logo.webp optimizado, srcset en YouTube, dimensiones JS y !important móvil SSR', async () => {
+  const { existsSync, statSync, readFileSync } = await import('node:fs');
+  assert.ok(existsSync(new URL('../public/logo.webp', import.meta.url)), 'public/logo.webp debe existir');
+  assert.ok(existsSync(new URL('../public/logo.png', import.meta.url)), 'public/logo.png debe conservarse para OG/Schema');
+  assert.ok(statSync(new URL('../public/logo.webp', import.meta.url)).size < 40000, 'logo.webp debe pesar < 40 KB');
+
+  const homeHtml = await (await fetch(`${base}/api/index?route=preview`)).text();
+  assert.ok(homeHtml.includes('src="/logo.webp"'), 'Portada SSR debe usar /logo.webp');
+  assert.ok(homeHtml.includes('font-size:0.875rem!important'), 'SSR móvil debe reforzar tipografía >= 14px sobre inline styles');
+
+  const appSrc = readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
+  assert.ok(appSrc.includes('width="480" height="360" loading="lazy" decoding="async"'), 'image() en app.js debe incluir dimensiones y decoding async');
+  assert.ok(appSrc.includes('mqdefault.jpg 320w'), 'image() en app.js debe emitir srcset para YouTube');
+
+  const shellHtml = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
+  assert.ok(shellHtml.includes('src="/logo.webp"'), 'public/index.html debe mostrar /logo.webp');
+  assert.ok(shellHtml.includes('mqdefault.jpg 320w'), 'public/index.html debe incluir srcset en miniatura YouTube');
+});
+
