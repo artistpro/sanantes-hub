@@ -172,9 +172,11 @@ test('SEO Técnico Sprint 1: player_loc en sitemap, títulos sin "...", un H1 en
   const longRes = await fetch(`${base}/api/wiki/test-long`);
   assert.equal(longRes.status, 200);
   const longHtml = await longRes.text();
-  const renderedTitle = longHtml.match(/<title>([^<]+)<\/title>/)?.[1] || '';
+  const rawTitle = longHtml.match(/<title>([^<]+)<\/title>/)?.[1] || '';
+  const renderedTitle = rawTitle.replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"');
   assert.ok(!renderedTitle.endsWith('...'), 'Título largo no debe terminar en ...');
-  assert.ok(renderedTitle.includes('cáncer'), 'Título largo debe conservar las palabras finales');
+  assert.ok(renderedTitle.length <= 60, `Título <title> de wiki debe medir <= 60 chars, midió ${renderedTitle.length}`);
+  assert.ok(longHtml.includes('cáncer</h1>') || longHtml.includes('sobre cáncer'), 'H1 editorial debe conservar el título completo');
 
   const { readFileSync } = await import('node:fs');
   const vercelCfg = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
@@ -258,5 +260,37 @@ test('SEO Técnico Sprint 4: Directorios SSR /podcast y /blog anti-huérfanas y 
   const pubJson = await pubRes.json();
   const imgPost = pubJson.posts.find(p => p.slug === 'img-post');
   assert.equal(imgPost?.image, '/b/img-post/image', '/api/public debe servir URL /b/:slug/image en lugar de base64 inline');
+});
+
+test('SEO Técnico Sprint 5: <title> <= 60 sin elipsis vs H1 íntegro, dimensiones CLS, fuente externa en /v/ y /blog >= 300 palabras', async () => {
+  await query("INSERT INTO videos(id,external_id,platform,title,description,url,thumbnail,kind,category,status,published_at) VALUES('vid-ellipsis-s5','vid-ellipsis-s5','odysee','Experta oncóloga: Cada día la gente se alimenta peor y no me gusta nada...','Resumen de entrevista sobre nutrición y estrategia metabólica.','https://odysee.com/@Sanantes:1/experta-oncologa','https://thumbnails.lbry.com/test123','video','Oncología','published','2026-11-11T10:00:00Z') ON CONFLICT(id) DO NOTHING");
+  const vRes = await fetch(`${base}/api/v/vid-ellipsis-s5`);
+  assert.equal(vRes.status, 200);
+  const vHtml = await vRes.text();
+  const vTitle = vHtml.match(/<title>(.*?)<\/title>/)?.[1] || '';
+  assert.ok(vTitle.length > 0 && vTitle.length <= 60, `title de /v/ debe medir <= 60 chars, midió ${vTitle.length}: ${vTitle}`);
+  assert.ok(!/(\.\.\.|…)$/.test(vTitle) && !vTitle.includes('...'), 'title no debe contener elipsis literal ...');
+  assert.ok(vHtml.includes('<h1'), 'Debe renderizar H1');
+  assert.ok(vHtml.includes('Experta oncóloga: Cada día la gente se alimenta peor y no me gusta nada</h1>'), 'H1 debe conservar título completo limpio');
+  assert.ok(vHtml.includes('href="https://odysee.com/@Sanantes:1/experta-oncologa"'), 'Ficha /v/ debe incluir enlace externo visible a la fuente');
+  assert.ok(vHtml.includes('rel="noopener noreferrer"'), 'Enlace externo en /v/ debe incluir rel="noopener noreferrer"');
+
+  const homeHtml = await (await fetch(`${base}/api/index?route=preview`)).text();
+  const homeTitle = homeHtml.match(/<title>(.*?)<\/title>/)?.[1] || '';
+  assert.ok(homeTitle.length > 0 && homeTitle.length <= 60, `Home title <= 60 chars: ${homeTitle.length}`);
+  assert.ok(homeHtml.includes('width="240" height="54"'), 'Logo principal debe tener width y height');
+  assert.ok(homeHtml.includes('width="480" height="360" loading="lazy"'), 'Tarjetas deben tener dimensiones y loading="lazy"');
+
+  const blogHtml = await (await fetch(`${base}/api/index?route=preview&type=bloghub`)).text();
+  const mainBlock = (blogHtml.match(/<main[\s\S]*?<\/main>/)?.[0] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const words = mainBlock.split(' ').filter(Boolean);
+  assert.ok(words.length >= 300, `/blog debe tener >= 300 palabras para evitar contenido fino, tiene ${words.length}`);
+
+  const { readFileSync } = await import('node:fs');
+  const shellHtml = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
+  const shellTitle = shellHtml.match(/<title>(.*?)<\/title>/)?.[1] || '';
+  assert.ok(shellTitle.length > 0 && shellTitle.length <= 60, `public/index.html title <= 60 chars: ${shellTitle.length}`);
+  assert.ok(shellHtml.includes('width="240" height="54"'), 'public/index.html logo debe tener width y height');
+  assert.ok(shellHtml.includes('width="480" height="360" loading="lazy" decoding="async"'), 'public/index.html tarjetas deben tener width, height y loading="lazy"');
 });
 

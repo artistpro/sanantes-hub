@@ -914,13 +914,20 @@ ${videoItems}
       };
       const cleanTitle = (str) => {
         if(!str) return 'Comunidad Sanantes';
-        return String(str).replace(/\s+/g,' ').trim();
+        return String(str).replace(/\s+/g,' ').replace(/(?:\s*(?:\.\.\.|…))+$/u,'').trim() || 'Comunidad Sanantes';
       };
-      const formatTitle = (str, suffix='Sanantes', maxWithSuffix=68) => {
-        const clean = cleanTitle(str);
-        if(!suffix) return clean;
-        const withSuffix = `${clean} · ${suffix}`;
-        return Array.from(withSuffix).length <= maxWithSuffix ? withSuffix : clean;
+      const fitTitle = (raw, suffix='Sanantes', max=60) => {
+        const clean = cleanTitle(raw);
+        if(suffix){
+          const withSuffix = `${clean} · ${suffix}`;
+          if(Array.from(withSuffix).length <= max) return withSuffix;
+        }
+        const chars = Array.from(clean);
+        if(chars.length <= max) return clean;
+        const slice = chars.slice(0, max);
+        const lastSpace = slice.lastIndexOf(' ');
+        const trimmed = (lastSpace > 24 ? slice.slice(0, lastSpace) : slice).join('').replace(/[,:;·\-—–]+$/,'').trim();
+        return trimmed || slice.join('').trim();
       };
       const orgPublisher = {
         "@type": "CommunityOrganization",
@@ -963,7 +970,8 @@ ${videoItems}
       if(!type&&(path.startsWith('wiki/')||path==='wiki')){type='wiki';targetId=path==='wiki'?'':path.replace(/^wiki\//,'');}
       if(!type&&path==='podcast'){type='catalog';}
       if(!type&&path==='blog'){type='bloghub';}
-      let title=cleanTitle('Sanantes: Oncología Integrativa, Dr. Makis & Estrategia Metabólica');
+      let title=fitTitle('Sanantes: Oncología Integrativa y Estrategia Metabólica', '');
+      let h1Title='Sanantes: Oncología Integrativa, Dr. Makis & Estrategia Metabólica';
       let desc=cleanDesc('Sanantes: El Podcast del Cáncer y plataforma de oncología integrativa. Investigaciones científicas, análisis del Dr. William Makis y acompañamiento.');
       let image='https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
       let targetUrl=origin()+(ref?'/?ref='+encodeURIComponent(ref):'');
@@ -989,7 +997,8 @@ ${videoItems}
             }
           }
           category = v.category || 'Investigación y tratamientos';
-          title=formatTitle(v.title, 'Sanantes');
+          h1Title = cleanTitle(v.title);
+          title = fitTitle(v.title, 'Sanantes', 60);
           if(v.description)desc=cleanDesc(v.description, 155);
           if(v.platform==='youtube'&&v.external_id){
             image=`https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg`;
@@ -1008,11 +1017,12 @@ ${videoItems}
           if (relatedVideos.length > 0) {
             const cards = relatedVideos.map(r => {
               const rThumb = r.platform==='youtube'&&r.external_id ? `https://i.ytimg.com/vi/${r.external_id}/hqdefault.jpg` : (r.thumbnail || origin()+'/favicon.svg');
-              return `<a href="${origin()}/v/${r.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(r.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:12px;"><span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;margin-bottom:6px;text-transform:uppercase;">${escHtml(r.category||'Investigación')}</span><h4 style="margin:0;font-size:0.9rem;line-height:1.4;color:#123d39;font-weight:600;">${escHtml(r.title)}</h4></div></a>`;
+              return `<a href="${origin()}/v/${r.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(r.title)}" width="480" height="360" loading="lazy" decoding="async" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:12px;"><span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;margin-bottom:6px;text-transform:uppercase;">${escHtml(r.category||'Investigación')}</span><h4 style="margin:0;font-size:0.9rem;line-height:1.4;color:#123d39;font-weight:600;">${escHtml(r.title)}</h4></div></a>`;
             }).join('');
             relatedHtml = `<nav aria-label="Contenidos relacionados" style="margin:32px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><h3 style="color:#123d39;margin:0 0 16px;font-size:1.15rem;font-weight:700;">Investigaciones y contenidos relacionados:</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">${cards}</div></nav>`;
           }
-          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(v.description)}</div>${geoHtml}${relatedHtml}`;
+          const sourceLinkHtml = v.url && /^https?:\/\//i.test(v.url) ? `<p style="margin:14px 0 20px;font-size:0.92rem;color:#496b63;">Fuente audiovisual original: <a href="${escHtml(v.url)}" target="_blank" rel="noopener noreferrer" style="color:#1e6b42;font-weight:700;">Ver episodio en ${escHtml(v.platform==='youtube'?'YouTube':(v.platform==='odysee'?'Odysee':v.platform||'la plataforma original'))} ↗</a></p>` : '';
+          fullContentHtml = `<div style="margin:20px 0;line-height:1.7;color:#233833;font-size:1.05rem;">${formatRichText(v.description)}</div>${sourceLinkHtml}${geoHtml}${relatedHtml}`;
           schemaJson=withBreadcrumbs({
             "@context":"https://schema.org",
             "@type":"VideoObject",
@@ -1060,7 +1070,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         }
         if(p){
           category = p.category || 'Blog Sanantes';
-          title=formatTitle(p.title, 'Sanantes');
+          h1Title = cleanTitle(p.title);
+          title = fitTitle(p.title, 'Sanantes', 60);
           if(p.excerpt)desc=cleanDesc(p.excerpt, 155);
           if(p.image){
             if(p.image.startsWith('https://'))image=p.image;
@@ -1100,7 +1111,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         }
       }else if(!notFound && type==='author'&&(targetId==='william-makis'||targetId==='dr-william-makis')){
         category = 'Autoridad Médica e Investigación';
-        title = cleanTitle('Dr. William Makis en Español | Oncología e Ivermectina · Sanantes');
+        title = 'Dr. William Makis en Español | Oncología e Ivermectina';
+        h1Title = 'Dr. William Makis en Español | Oncología e Ivermectina · Sanantes';
         desc = cleanDesc('Biblioteca y análisis científico del Dr. William Makis en español. Protocolos de ivermectina, fenbendazol y estudios indexados en oncología integrativa.');
         image = origin()+'/favicon.svg';
         targetUrl = origin()+'/#podcast';
@@ -1111,7 +1123,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           videoCardsHtml = `<h2 style="color:#123d39;margin:28px 0 16px;font-size:1.3rem;">Episodios y conferencias del Dr. William Makis en Sanantes:</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">` +
             makisVideos.map(v => {
               const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
-              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3><p style="margin:0;font-size:0.8rem;color:#55726a;line-height:1.4;">${escHtml((v.description||'').slice(0,110))}...</p></div></a>`;
+              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" width="480" height="360" loading="lazy" decoding="async" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3><p style="margin:0;font-size:0.8rem;color:#55726a;line-height:1.4;">${escHtml((v.description||'').slice(0,110))}...</p></div></a>`;
             }).join('') + `</div>`;
         }
         fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
@@ -1211,7 +1223,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           repCardsHtml = `<h2 style="color:#123d39;margin:28px 0 16px;font-size:1.3rem;">Episodios relacionados en Sanantes:</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">` +
             repVideos.map(v => {
               const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
-              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3></div></a>`;
+              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" width="480" height="360" loading="lazy" decoding="async" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3></div></a>`;
             }).join('') + `</div>`;
         }
         fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
@@ -1252,7 +1264,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           metaCardsHtml = `<h2 style="color:#123d39;margin:28px 0 16px;font-size:1.3rem;">Episodios sobre metabolismo y cetosis en Sanantes:</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">` +
             metaVideos.map(v => {
               const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
-              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3></div></a>`;
+              return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" width="480" height="360" loading="lazy" decoding="async" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><h3 style="margin:0 0 8px;font-size:0.95rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h3></div></a>`;
             }).join('') + `</div>`;
         }
         fullContentHtml = `<div style="margin:20px 0;line-height:1.75;color:#233833;font-size:1.05rem;">
@@ -1404,9 +1416,10 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           const [art]=(await query("SELECT * FROM wiki_articles WHERE (slug=? OR id=?) AND status='published'",[targetId,targetId]))||[];
           if(art){
             category = 'Wiki Sanantes · ' + (art.category||'Investigación');
-            title = formatTitle(art.title, 'Wiki Sanantes', 68);
+            h1Title = cleanTitle(art.title) || 'Wiki Sanantes';
+            title = fitTitle(art.title, 'Wiki Sanantes', 60);
             if(title === cleanTitle(art.title)){
-              title = formatTitle(art.title, 'Sanantes', 68);
+              title = fitTitle(art.title, 'Sanantes', 60);
             }
             desc = cleanDesc(art.excerpt || art.title, 155);
             image = origin()+'/logo.png';
@@ -1445,7 +1458,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
               relatedVideosHtml = `<div id="videos" style="margin-top:32px;"><h3 style="color:#123d39;margin:0 0 16px;font-size:1.2rem;">Episodios relacionados en El Podcast del Cáncer:</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">` +
                 relatedVideos.map(v => {
                   const rThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail || origin()+'/favicon.svg');
-                  return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:12px;"><h4 style="margin:0 0 6px;font-size:0.9rem;line-height:1.35;color:#123d39;font-weight:700;">${escHtml(v.title)}</h4></div></a>`;
+                  return `<a href="${origin()}/v/${v.id}" style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;text-decoration:none;color:#18322d;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${rThumb}" alt="${escHtml(v.title)}" width="480" height="360" loading="lazy" decoding="async" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:12px;"><h4 style="margin:0 0 6px;font-size:0.9rem;line-height:1.35;color:#123d39;font-weight:700;">${escHtml(v.title)}</h4></div></a>`;
                 }).join('') + `</div></div>`;
             }
             let affiliateCardHtml = '';
@@ -1637,7 +1650,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         }
       }else if(!notFound && type==='catalog'){
         category = 'Videoteca y Archivo Completo';
-        title = 'Videoteca y Episodios · El Podcast del Cáncer · Sanantes';
+        h1Title = 'Videoteca y Episodios · El Podcast del Cáncer · Sanantes';
+        title = fitTitle('Videoteca · El Podcast del Cáncer', 'Sanantes', 60);
         desc = cleanDesc('Archivo completo de episodios, conferencias del Dr. William Makis, estrategia metabólica y sesiones de bienestar en Comunidad Sanantes.', 155);
         image = origin()+'/logo.png';
         targetUrl = origin()+'/#podcast';
@@ -1645,7 +1659,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         const allCatalog = dedupeVideos(((await query("SELECT id,title,description,thumbnail,external_id,platform,category,kind,duration,published_at FROM videos WHERE status='published' AND kind IN ('video','live') ORDER BY published_at DESC LIMIT 500")) || []).filter(v => !exclusionReason(v)));
         const catalogCards = allCatalog.map(v => {
           const vThumb = v.platform==='youtube'&&v.external_id ? `https://i.ytimg.com/vi/${v.external_id}/hqdefault.jpg` : (v.thumbnail && !String(v.thumbnail).startsWith('data:') ? v.thumbnail : origin()+'/favicon.svg');
-          return `<article style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;"><a href="${origin()}/v/${v.id}" style="text-decoration:none;color:#18322d;display:flex;flex-direction:column;height:100%;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${escHtml(vThumb)}" alt="${escHtml(v.title)}" loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;margin-bottom:6px;text-transform:uppercase;">${escHtml(v.category||'Investigación')}</span><h2 style="margin:0 0 6px;font-size:0.98rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h2><p style="margin:0;font-size:0.84rem;color:#4f6d65;line-height:1.45;">${escHtml((v.description||'').slice(0,115))}</p></div></a></article>`;
+          return `<article style="display:flex;flex-direction:column;background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;overflow:hidden;"><a href="${origin()}/v/${v.id}" style="text-decoration:none;color:#18322d;display:flex;flex-direction:column;height:100%;"><div style="position:relative;padding-bottom:56.25%;background:#0b292b;"><img src="${escHtml(vThumb)}" alt="${escHtml(v.title)}" width="480" height="360" loading="lazy" decoding="async" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></div><div style="padding:14px;"><span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;margin-bottom:6px;text-transform:uppercase;">${escHtml(v.category||'Investigación')}</span><h2 style="margin:0 0 6px;font-size:0.98rem;line-height:1.4;color:#123d39;font-weight:700;">${escHtml(v.title)}</h2><p style="margin:0;font-size:0.84rem;color:#4f6d65;line-height:1.45;">${escHtml((v.description||'').slice(0,115))}</p></div></a></article>`;
         }).join('');
         fullContentHtml = `<div style="margin:12px 0 20px;line-height:1.7;color:#233833;font-size:1.02rem;">
           <p>Explora los <strong>${allCatalog.length} episodios y sesiones verificadas</strong> de El Podcast del Cáncer y la biblioteca audiovisual de Comunidad Sanantes.</p>
@@ -1664,7 +1678,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         ]);
       }else if(!notFound && type==='bloghub'){
         category = 'Blog y Compendios PDF';
-        title = 'Blog y Lecturas · Comunidad Sanantes';
+        h1Title = 'Blog y Lecturas · Comunidad Sanantes';
+        title = fitTitle('Blog y Compendios PDF', 'Sanantes', 60);
         desc = cleanDesc('Artículos de fondo, compendios descargables y criterio editorial sobre oncología integrativa y acompañamiento en Comunidad Sanantes.', 155);
         image = origin()+'/logo.png';
         targetUrl = origin()+'/#blog';
@@ -1675,7 +1690,11 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         }
         const blogCards = blogPosts.map(p => `<article style="background:#f9fbf9;border:1px solid #dce8df;border-radius:10px;padding:18px;"><span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;margin-bottom:6px;text-transform:uppercase;">${escHtml(p.category||'Blog Sanantes')}</span><h2 style="margin:0 0 8px;font-size:1.1rem;line-height:1.4;color:#123d39;"><a href="${origin()}/b/${p.slug}" style="color:inherit;text-decoration:none;">${escHtml(p.title)}</a></h2><p style="margin:0 0 12px;font-size:0.9rem;color:#4f6d65;line-height:1.5;">${escHtml((p.excerpt||'').slice(0,180))}</p><a href="${origin()}/b/${p.slug}" style="color:#d65337;font-weight:700;font-size:0.88rem;text-decoration:none;">Leer artículo completo →</a></article>`).join('');
         fullContentHtml = `<div style="margin:12px 0 20px;line-height:1.7;color:#233833;font-size:1.02rem;">
-          <p>Lecturas divulgativas, análisis documentales y compendios descargables publicados por Comunidad Sanantes.</p>
+          <p>En el archivo editorial de <strong>Comunidad Sanantes</strong> reunimos lecturas divulgativas en español, análisis documentales y compendios PDF descargables centrados en oncología integrativa, fisiología metabólica celular y estrategias de acompañamiento para pacientes y familiares.</p>
+          <p>Cada artículo publicado en esta sección traduce evidencia indexada en literatura biomédica revisada por pares —incluyendo estudios preclínicos y revisiones en PubMed sobre autofagia mitocondrial, inhibición glucólisis-dependiente del efecto Warburg, señalización oxidativa y reposicionamiento de moléculas con amplio historial farmacológico— a un lenguaje claro y estructurado. Cuando un tema requiere una consulta rápida de mecanismos o dosis por peso reportadas en ensayos, las lecturas enlazan directamente con las fichas técnicas de la <a href="${origin()}/wiki" style="color:#1e6b42;font-weight:700;">Wiki Sanantes</a>.</p>
+          <p>Este espacio complementa la biblioteca audiovisual de <a href="${origin()}/podcast" style="color:#1e6b42;font-weight:700;">El Podcast del Cáncer</a> y la colección especializada del <a href="${origin()}/autores/william-makis" style="color:#1e6b42;font-weight:700;">Dr. William Makis en español</a>, permitiendo conservar material de lectura offline y verificar los criterios metodológicos de cada publicación. Antes de explorar protocolos específicos, recomendamos revisar nuestro documento de <a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:700;">Criterio Editorial y Rigor Científico</a>, donde detallamos la verificación de fuentes, los límites informativos frente a la consulta clínica presencial y nuestra política de transparencia comunitaria.</p>
+          <p>Asimismo, quienes acompañan procesos oncológicos desde casa pueden profundizar en nuestros compendios temáticos sobre inmunonutrición, descanso reparador, manejo del estrés neurovegetativo y sinergias metabólicas documentadas en modelos experimentales, integrando evidencia científica internacional con guías prácticas comprensibles para toda la familia.</p>
+          <p>Explora a continuación los ensayos editoriales, guías prácticas y documentos institucionales disponibles:</p>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px;">${blogCards}</div>
         </div>`;
         schemaJson = withBreadcrumbs({
@@ -1693,7 +1712,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
         notFound = true;
       }else if(!type && !notFound){
         category = 'Portal de Oncología Integrativa';
-        title = cleanTitle('Sanantes: Oncología Integrativa, Dr. Makis & Estrategia Metabólica');
+        h1Title = 'Sanantes: Oncología Integrativa, Dr. Makis & Estrategia Metabólica';
+        title = fitTitle('Sanantes: Oncología Integrativa y Estrategia Metabólica', '', 60);
         desc = cleanDesc('Plataforma y podcast de oncología integrativa, medicina metabólica y fármacos reposicionados. Investigaciones, análisis del Dr. William Makis y acompañamiento.', 155);
         image = 'https://i.ytimg.com/vi/008JfHS61Ww/hqdefault.jpg';
         targetUrl = origin() + (ref ? '/?ref=' + encodeURIComponent(ref) : '/');
@@ -1730,7 +1750,7 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           return `<article style="display:flex;flex-direction:column;background:#fff;border:1px solid #dce8df;border-radius:10px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.03);">
             <a href="${origin()}/v/${v.id}" style="text-decoration:none;color:inherit;">
               <div style="position:relative;padding-bottom:56.25%;background:#0b292b;">
-                <img src="${rThumb}" alt="${escHtml(v.title)}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+                <img src="${rThumb}" alt="${escHtml(v.title)}" width="480" height="360" loading="lazy" decoding="async" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
               </div>
               <div style="padding:14px;">
                 <span style="display:inline-block;font-size:0.75rem;font-weight:700;color:#1e6b42;text-transform:uppercase;margin-bottom:6px;">${escHtml(v.category||'Investigación')}</span>
@@ -1943,7 +1963,8 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
       }
       if(notFound){
         category = 'Error 404';
-        title = 'Página no encontrada (404) · Comunidad Sanantes';
+        h1Title = 'Página no encontrada (404) · Comunidad Sanantes';
+        title = fitTitle('Página no encontrada (404)', 'Sanantes', 60);
         desc = 'El recurso o enlace solicitado no existe o ha sido movido. Explora la Wiki Sanantes, el Podcast del Cáncer y nuestras investigaciones.';
         targetUrl = origin() + '/';
         canonicalUrl = '';
@@ -1960,12 +1981,12 @@ Cada uno de los análisis, episodios y contenidos publicados en Sanantes se basa
           </nav>
         </div>`;
       }
-      const sTitle=escHtml(title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl),sCanon=escHtml(canonicalUrl);
+      const sTitle=escHtml(title),sH1=escHtml(h1Title||title),sDesc=escHtml(desc),sImg=escHtml(image),sUrl=escHtml(targetUrl),sCanon=escHtml(canonicalUrl);
       res.statusCode=notFound?404:200;
       res.setHeader('Content-Type','text/html; charset=utf-8');
       res.setHeader('Cache-Control',notFound?'no-store':'public, max-age=60, s-maxage=300');
       if(method==='HEAD') return res.end();
-      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}">${(notFound||isDuplicateMirror)?'<meta name="robots" content="noindex, follow">':''}${notFound?'':`<link rel="canonical" href="${sCanon}">`}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/logo.png"><script async src="https://www.googletagmanager.com/gtag/js?id=G-JNXSFX7HF3"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JNXSFX7HF3');</script><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="720">${sCanon?`<meta property="og:url" content="${sCanon}">`:''}<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><style>.wiki-grid{display:grid;grid-template-columns:260px minmax(0,1fr) 220px;gap:32px;align-items:start;max-width:1440px;margin:28px auto;padding:0 20px}@media(max-width:1150px){.wiki-grid{grid-template-columns:240px minmax(0,1fr)}.wiki-right-col{display:none}}@media(max-width:768px){.wiki-grid{grid-template-columns:1fr}}</style>${!notFound && type==='video'?`<script>location.replace(${JSON.stringify(targetUrl)});</script>`:''}${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:${type==='wiki'&&!notFound?'1440px':'860px'};margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 10px;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:10px;"><img src="/favicon.svg" alt="Comunidad Sanantes" style="width:26px;height:26px;border-radius:6px;object-fit:contain;"> Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header>${type==='wiki'&&!notFound?fullContentHtml:`<main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${!type&&!notFound?`<div style="margin-bottom:16px;"><img src="/logo.png" alt="Comunidad Sanantes" style="height:54px;max-width:240px;object-fit:contain;display:block;"></div>`:''}${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sTitle}</h1>${(notFound||type==='catalog'||type==='bloghub')?'':(activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sTitle}" style="max-width:100%;border-radius:10px;height:auto;"></div>`)}${notFound?'':`<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>`}${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main>`}<footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;"><p style="margin:0 0 8px;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</p><p style="margin:0;"><a href="${origin()}/podcast" style="color:#1e6b42;font-weight:600;text-decoration:none;">Videoteca</a> &bull; <a href="${origin()}/blog" style="color:#1e6b42;font-weight:600;text-decoration:none;">Blog</a> &bull; <a href="${origin()}/wiki" style="color:#1e6b42;font-weight:600;text-decoration:none;">Wiki Sanantes</a> &bull; <a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:600;text-decoration:underline;">Criterio Editorial y Rigor Científico</a> &bull; <a href="${origin()}/sitemap.xml" style="color:#6b877f;text-decoration:none;">Mapa del sitio</a> &bull; <a href="${origin()}/" style="color:#6b877f;text-decoration:none;">Inicio</a></p></footer></body></html>`);
+      return res.end(`<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${sTitle}</title><meta name="description" content="${sDesc}">${(notFound||isDuplicateMirror)?'<meta name="robots" content="noindex, follow">':''}${notFound?'':`<link rel="canonical" href="${sCanon}">`}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/logo.png"><script async src="https://www.googletagmanager.com/gtag/js?id=G-JNXSFX7HF3"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JNXSFX7HF3');</script><meta property="og:type" content="article"><meta property="og:site_name" content="Comunidad Sanantes"><meta property="og:title" content="${sTitle}"><meta property="og:description" content="${sDesc}"><meta property="og:image" content="${sImg}"><meta property="og:image:secure_url" content="${sImg}"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="720">${sCanon?`<meta property="og:url" content="${sCanon}">`:''}<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${sTitle}"><meta name="twitter:description" content="${sDesc}"><meta name="twitter:image" content="${sImg}"><style>.wiki-grid{display:grid;grid-template-columns:260px minmax(0,1fr) 220px;gap:32px;align-items:start;max-width:1440px;margin:28px auto;padding:0 20px}@media(max-width:1150px){.wiki-grid{grid-template-columns:240px minmax(0,1fr)}.wiki-right-col{display:none}}@media(max-width:768px){.wiki-grid{grid-template-columns:1fr}}</style>${!notFound && type==='video'?`<script>location.replace(${JSON.stringify(targetUrl)});</script>`:''}${schemaJson?`<script type="application/ld+json">${schemaJson}</script>`:''}</head><body style="margin:0;padding:0;background:#f3f6f4;color:#18322d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"><header style="background:#123d39;color:#fff;padding:14px 20px;"><div style="max-width:${type==='wiki'&&!notFound?'1440px':'860px'};margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 10px;"><a href="${origin()}/" style="color:#fff;text-decoration:none;font-weight:700;font-size:1.1rem;display:flex;align-items:center;gap:10px;"><img src="/favicon.svg" alt="Comunidad Sanantes" width="26" height="26" style="width:26px;height:26px;border-radius:6px;object-fit:contain;"> Comunidad Sanantes <span style="font-weight:400;opacity:0.85;font-size:0.9rem;">· El Podcast del Cáncer</span></a><a href="${sUrl}" style="background:#d65337;color:#fff;padding:7px 16px;border-radius:20px;text-decoration:none;font-size:0.85rem;font-weight:600;">Abrir en la app</a></div></header>${type==='wiki'&&!notFound?fullContentHtml:`<main style="max-width:860px;margin:32px auto;padding:0 16px;"><article style="background:#ffffff;border-radius:12px;padding:28px;box-shadow:0 2px 12px rgba(18,61,57,0.06);">${!type&&!notFound?`<div style="margin-bottom:16px;"><img src="/logo.png" alt="Comunidad Sanantes" width="240" height="54" style="height:54px;max-width:240px;object-fit:contain;display:block;"></div>`:''}${category?`<span style="display:inline-block;background:#e8f0ec;color:#123d39;padding:4px 12px;border-radius:12px;font-size:0.8rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">${escHtml(category)}</span>`:''}<h1 style="color:#123d39;font-size:1.75rem;margin:0 0 20px;line-height:1.35;letter-spacing:-0.3px;">${sH1}</h1>${(notFound||type==='catalog'||type==='bloghub')?'':(activeEmbed?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:0 0 24px;background:#000;"><iframe src="${activeEmbed}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`:`<div style="text-align:center;margin:0 0 24px;"><img src="${sImg}" alt="${sH1}" width="1280" height="720" style="max-width:100%;border-radius:10px;height:auto;"></div>`)}${notFound?'':`<div style="background:#f7faf8;border-left:4px solid #123d39;padding:12px 18px;margin:20px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:#35534b;line-height:1.5;"><strong>Aviso médico informativo:</strong> Este contenido es de carácter divulgativo y de acompañamiento. No sustituye la consulta médica, el diagnóstico ni el tratamiento oncológico profesional.</div>`}${fullContentHtml}<div style="text-align:center;margin:36px 0 16px;padding-top:24px;border-top:1px solid #edf2ef;"><p style="color:#57746c;font-size:0.95rem;margin-bottom:14px;">Únete a la conversación, guarda tus favoritos y gana puntos en la comunidad.</p><a href="${sUrl}" style="display:inline-block;background:#d65337;color:#fff;font-weight:700;padding:13px 28px;border-radius:30px;text-decoration:none;font-size:1rem;box-shadow:0 3px 10px rgba(214,83,55,0.25);">Participar en Sanantes</a></div></article></main>`}<footer style="text-align:center;padding:24px 16px 40px;color:#6b877f;font-size:0.85rem;"><p style="margin:0 0 8px;">El Podcast del Cáncer · Un espacio de encuentro y esperanza.</p><p style="margin:0;"><a href="${origin()}/podcast" style="color:#1e6b42;font-weight:600;text-decoration:none;">Videoteca</a> &bull; <a href="${origin()}/blog" style="color:#1e6b42;font-weight:600;text-decoration:none;">Blog</a> &bull; <a href="${origin()}/wiki" style="color:#1e6b42;font-weight:600;text-decoration:none;">Wiki Sanantes</a> &bull; <a href="${origin()}/b/criterio-editorial" style="color:#1e6b42;font-weight:600;text-decoration:underline;">Criterio Editorial y Rigor Científico</a> &bull; <a href="${origin()}/sitemap.xml" style="color:#6b877f;text-decoration:none;">Mapa del sitio</a> &bull; <a href="${origin()}/" style="color:#6b877f;text-decoration:none;">Inicio</a></p></footer></body></html>`);
     }
         if(path==='products'&&method==='GET'){return send(res,{ok:true,products:await query("SELECT * FROM products WHERE status='published' ORDER BY sort_order ASC, created_at DESC")});}
     if(path==='public'&&method==='GET'){
