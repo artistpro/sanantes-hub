@@ -218,9 +218,9 @@ test('SEO Técnico Sprint 3: Deduplicación od/yt, BreadcrumbList y autor Person
   assert.ok(smXml.includes('/v/yt-dup-test'), 'Sitemap debe incluir versión YouTube canónica');
   assert.ok(!smXml.includes('/v/od-dup-test'), 'Sitemap debe omitir espejo duplicado Odysee');
 
-  const odHtml = await (await fetch(`${base}/api/v/od-dup-test`)).text();
-  assert.ok(odHtml.includes(`<link rel="canonical" href="${base}/v/yt-dup-test">`), 'Espejo Odysee debe apuntar canonical al YouTube ganador');
-  assert.ok(odHtml.includes('<meta name="robots" content="noindex, follow">'), 'Espejo duplicado debe llevar noindex, follow');
+  const odRes = await fetch(`${base}/api/v/od-dup-test`, { redirect: 'manual' });
+  assert.equal(odRes.status, 301, 'Espejo duplicado Odysee debe redirigir con 301 al YouTube ganador');
+  assert.equal(odRes.headers.get('location'), `${base}/v/yt-dup-test`, 'Location 301 debe apuntar al vídeo canónico');
 
   for (const p of ['/api/v/yt-dup-test', '/api/b/seo-post', '/api/wiki/test-art', '/api/autores/william-makis', '/api/temas/medicamentos-reposicionados']) {
     const html = await (await fetch(`${base}${p}`)).text();
@@ -292,5 +292,72 @@ test('SEO Técnico Sprint 5: <title> <= 60 sin elipsis vs H1 íntegro, dimension
   assert.ok(shellTitle.length > 0 && shellTitle.length <= 60, `public/index.html title <= 60 chars: ${shellTitle.length}`);
   assert.ok(shellHtml.includes('width="240" height="54"'), 'public/index.html logo debe tener width y height');
   assert.ok(shellHtml.includes('width="480" height="360" loading="lazy" decoding="async"'), 'public/index.html tarjetas deben tener width, height y loading="lazy"');
+});
+
+test('SEO Técnico Sprint 6 - Frente 1: /api/public aligerado sin body/descripción larga y endpoints de detalle bajo demanda', async () => {
+  const longText = 'A'.repeat(1200);
+  await query("INSERT INTO videos(id,external_id,platform,title,description,url,thumbnail,kind,category,status,published_at) VALUES('vid-heavy-s6','vid-heavy-s6','youtube','Video Pesado S6',?,'https://youtube.com/watch?v=vid-heavy-s6','','video','Investigación','published','2026-11-11T12:00:00Z') ON CONFLICT(id) DO NOTHING", [longText]);
+  await query("INSERT INTO posts(id,slug,title,excerpt,body,status) VALUES('post-heavy-s6','post-heavy-s6','Post Pesado S6','Resumen corto',?,'published') ON CONFLICT(id) DO NOTHING", [longText]);
+  await query("INSERT INTO wiki_articles(id,slug,category,title,subtitle,excerpt,body,mechanisms,clinical_status,status) VALUES('wiki-heavy-s6','wiki-heavy-s6','Terapias','Wiki Pesada S6','Sub','Resumen corto',?,'Mecanismos completos','Estado clínico','published') ON CONFLICT(id) DO NOTHING", [longText]);
+
+  const pubRes = await fetch(`${base}/api/public`);
+  assert.equal(pubRes.status, 200);
+  const pubJson = await pubRes.json();
+
+  const pubVid = pubJson.videos.find(v => v.id === 'vid-heavy-s6');
+  assert.ok(pubVid, 'Video S6 debe existir en /api/public');
+  assert.ok(pubVid.description.length <= 245, `/api/public debe recortar descripción larga, midió ${pubVid.description.length}`);
+
+  const pubPost = pubJson.posts.find(p => p.slug === 'post-heavy-s6');
+  assert.ok(pubPost, 'Post S6 debe existir en /api/public');
+  assert.equal(pubPost.body, undefined, '/api/public no debe incluir posts.body');
+
+  const pubWiki = pubJson.wikiArticles.find(w => w.slug === 'wiki-heavy-s6');
+  assert.ok(pubWiki, 'Wiki S6 debe existir en /api/public');
+  assert.equal(pubWiki.body, undefined, '/api/public no debe incluir wikiArticles.body');
+
+  const detVid = await (await fetch(`${base}/api/public/video?id=vid-heavy-s6`)).json();
+  assert.equal(detVid.video?.description?.length, 1200, 'Detalle /api/public/video debe devolver descripción íntegra');
+
+  const detPost = await (await fetch(`${base}/api/public/post?slug=post-heavy-s6`)).json();
+  assert.equal(detPost.post?.body?.length, 1200, 'Detalle /api/public/post debe devolver body íntegro');
+
+  const detWiki = await (await fetch(`${base}/api/public/wiki?slug=wiki-heavy-s6`)).json();
+  assert.equal(detWiki.article?.body?.length, 1200, 'Detalle /api/public/wiki debe devolver body íntegro');
+  assert.equal(detWiki.article?.mechanisms, 'Mecanismos completos');
+});
+
+test('SEO Técnico Sprint 6 - Frente 2: Legibilidad móvil >= 14px y targets táctiles >= 36-44px', async () => {
+  const { readFileSync } = await import('node:fs');
+  const css = readFileSync(new URL('../public/styles.css', import.meta.url), 'utf8');
+  assert.ok(css.includes('min-height:40px'), 'styles.css móvil debe definir min-height:40px para targets táctiles');
+  assert.ok(css.includes('min-width:44px;min-height:44px'), 'Botón menú móvil debe medir >= 44x44px');
+  assert.ok(css.includes('font-size:0.875rem'), 'styles.css móvil debe elevar textos secundarios a >= 0.875rem (14px)');
+
+  const homeHtml = await (await fetch(`${base}/api/index?route=preview`)).text();
+  assert.ok(homeHtml.includes('min-height:40px'), 'SSR debe incluir reglas móviles con min-height:40px en enlaces');
+  assert.ok(homeHtml.includes('font-size:0.9375rem'), 'SSR debe elevar tipografía móvil a >= 15px (0.9375rem)');
+});
+
+test('SEO Técnico Sprint 6 - Frente 3: Cabeceras HSTS y Content-Security-Policy válidas en vercel.json', async () => {
+  const { readFileSync } = await import('node:fs');
+  const vercelCfg = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+  const globalHeaders = vercelCfg.headers?.[0]?.headers || [];
+  const csp = globalHeaders.find(h => h.key === 'Content-Security-Policy')?.value || '';
+  const hsts = globalHeaders.find(h => h.key === 'Strict-Transport-Security')?.value || '';
+  assert.ok(hsts.includes('max-age=63072000'), 'Debe incluir HSTS >= 2 años');
+  assert.ok(csp.includes("default-src 'self'"), 'Debe incluir CSP default-src self');
+  assert.ok(csp.includes("frame-ancestors 'none'"), 'CSP debe impedir clickjacking');
+  assert.ok(csp.includes('youtube-nocookie.com') && csp.includes('odysee.com'), 'CSP debe permitir embeds de video');
+});
+
+test('SEO Técnico Sprint 6 - Frente 4: Backfill de duration para los 4 vídeos de YouTube sin duración en sitemap', async () => {
+  await query("INSERT INTO videos(id,platform,external_id,title,description,url,thumbnail,kind,category,status,duration,published_at) VALUES('vid-nodur-s6','youtube','b3jwbY2MAQA','Cáncer, Arte y Ciencia','Desc','https://www.youtube.com/watch?v=b3jwbY2MAQA','','video','Investigación','published',0,'2026-11-11T11:00:00Z') ON CONFLICT(id) DO UPDATE SET duration=0");
+  const smXml = await (await fetch(`${base}/api/sitemap.xml`)).text();
+  const block = smXml.split('<url>').find(u => u.includes('/v/vid-nodur-s6')) || '';
+  assert.ok(block.includes('<video:duration>1699</video:duration>'), 'Sitemap debe resolver y emitir video:duration=1699 para b3jwbY2MAQA');
+  const pubJson = await (await fetch(`${base}/api/public`)).json();
+  const v = pubJson.videos.find(x => x.id === 'vid-nodur-s6');
+  assert.equal(v?.duration, 1699, '/api/public debe devolver duration resuelta (1699)');
 });
 
