@@ -7,6 +7,58 @@
       "maxDuration": 60
     }
   },
+  "redirects": [
+    {
+      "source": "/wiki/",
+      "destination": "/wiki",
+      "statusCode": 301
+    },
+    {
+      "source": "/wiki/:id/",
+      "destination": "/wiki/:id",
+      "statusCode": 301
+    },
+    {
+      "source": "/v/:id/",
+      "destination": "/v/:id",
+      "statusCode": 301
+    },
+    {
+      "source": "/video/:id/",
+      "destination": "/v/:id",
+      "statusCode": 301
+    },
+    {
+      "source": "/b/:id/",
+      "destination": "/b/:id",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/:id/",
+      "destination": "/b/:id",
+      "statusCode": 301
+    },
+    {
+      "source": "/autores/:id/",
+      "destination": "/autores/:id",
+      "statusCode": 301
+    },
+    {
+      "source": "/temas/:id/",
+      "destination": "/temas/:id",
+      "statusCode": 301
+    },
+    {
+      "source": "/podcast/",
+      "destination": "/podcast",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/",
+      "destination": "/blog",
+      "statusCode": 301
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
@@ -53,6 +105,14 @@
       "destination": "/api/index?route=preview&type=blog&id=:id"
     },
     {
+      "source": "/podcast",
+      "destination": "/api/index?route=preview&type=catalog"
+    },
+    {
+      "source": "/blog",
+      "destination": "/api/index?route=preview&type=bloghub"
+    },
+    {
       "source": "/autores/:id",
       "destination": "/api/index?route=preview&type=author&id=:id"
     },
@@ -69,8 +129,12 @@
       "destination": "/api/index?route=preview&type=wiki"
     },
     {
-      "source": "/((?!api/|.*\\.).*)",
+      "source": "/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/((?!api/|.*\\.).*)",
+      "destination": "/api/index?route=preview&notfound=1"
     }
   ],
   "crons": [
