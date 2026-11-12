@@ -212,7 +212,8 @@ test('SEO Técnico Sprint 2: HTTP 404 real y noindex en rutas inexistentes (sin 
 
 test('SEO Técnico Sprint 3: Deduplicación od/yt, BreadcrumbList y autor Person E-E-A-T', async () => {
   await query("INSERT INTO sources(id,name,platform,url,own) VALUES('src-yt-dup','YT','youtube','https://youtube.com/@test',1),('src-od-dup','OD','odysee','https://odysee.com/@test',1) ON CONFLICT(id) DO NOTHING");
-  await query("INSERT INTO videos(id,source_id,platform,external_id,title,description,url,published_at,kind,status) VALUES('yt-dup-test','src-yt-dup','youtube','ytDup123','Episodio Duplicado Estrategia Metabólica 🌿🕊️','Desc YT','https://youtube.com/watch?v=ytDup123','2026-09-10T10:00:00Z','video','published'),('od-dup-test','src-od-dup','odysee','odDup123','Episodio Duplicado Estrategia Metabólica 🌿🤍','Desc OD','https://odysee.com/@test/ep:1','2026-09-10T10:00:00Z','video','published') ON CONFLICT(id) DO NOTHING");
+  const richDupDesc = 'Episodio de análisis científico sobre biología metabólica mitocondrial y estrategias integrativas de acompañamiento para pacientes y familiares. '.repeat(15);
+  await query("INSERT INTO videos(id,source_id,platform,external_id,title,description,url,published_at,kind,status) VALUES('yt-dup-test','src-yt-dup','youtube','ytDup123','Episodio Duplicado Estrategia Metabólica 🌿🕊️',?,'https://youtube.com/watch?v=ytDup123','2026-09-10T10:00:00Z','video','published'),('od-dup-test','src-od-dup','odysee','odDup123','Episodio Duplicado Estrategia Metabólica 🌿🤍','Desc OD','https://odysee.com/@test/ep:1','2026-09-10T10:00:00Z','video','published') ON CONFLICT(id) DO NOTHING", [richDupDesc]);
 
   const smXml = await (await fetch(`${base}/api/sitemap.xml`)).text();
   assert.ok(smXml.includes('/v/yt-dup-test'), 'Sitemap debe incluir versión YouTube canónica');
@@ -352,7 +353,8 @@ test('SEO Técnico Sprint 6 - Frente 3: Cabeceras HSTS y Content-Security-Policy
 });
 
 test('SEO Técnico Sprint 6 - Frente 4: Backfill de duration para los 4 vídeos de YouTube sin duración en sitemap', async () => {
-  await query("INSERT INTO videos(id,platform,external_id,title,description,url,thumbnail,kind,category,status,duration,published_at) VALUES('vid-nodur-s6','youtube','b3jwbY2MAQA','Cáncer, Arte y Ciencia','Desc','https://www.youtube.com/watch?v=b3jwbY2MAQA','','video','Investigación','published',0,'2026-11-11T11:00:00Z') ON CONFLICT(id) DO UPDATE SET duration=0");
+  const richNodurDesc = 'Conversación completa sobre arte, regulación del estrés, biología celular y acompañamiento emocional oncológico con referencias clínicas. '.repeat(15);
+  await query("INSERT INTO videos(id,platform,external_id,title,description,url,thumbnail,kind,category,status,duration,published_at) VALUES('vid-nodur-s6','youtube','b3jwbY2MAQA','Cáncer, Arte y Ciencia',?,'https://www.youtube.com/watch?v=b3jwbY2MAQA','','video','Investigación','published',0,'2026-11-11T11:00:00Z') ON CONFLICT(id) DO UPDATE SET duration=0", [richNodurDesc]);
   const smXml = await (await fetch(`${base}/api/sitemap.xml`)).text();
   const block = smXml.split('<url>').find(u => u.includes('/v/vid-nodur-s6')) || '';
   assert.ok(block.includes('<video:duration>1699</video:duration>'), 'Sitemap debe resolver y emitir video:duration=1699 para b3jwbY2MAQA');
@@ -378,5 +380,25 @@ test('SEO Técnico Sprint 7: logo.webp optimizado, srcset en YouTube, dimensione
   const shellHtml = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
   assert.ok(shellHtml.includes('src="/logo.webp"'), 'public/index.html debe mostrar /logo.webp');
   assert.ok(shellHtml.includes('mqdefault.jpg 320w'), 'public/index.html debe incluir srcset en miniatura YouTube');
+});
+
+test('SEO Técnico Sprint 8: noindex, follow en fichas de vídeo finas (< 200 palabras editoriales) y exclusión del sitemap', async () => {
+  await query("INSERT INTO videos(id,platform,external_id,title,description,url,thumbnail,kind,category,status,published_at) VALUES('vid-thin-s8','youtube','thinS8xyz','Reflexión breve de acompañamiento','Nota corta sobre bienestar diario y respiración consciente.','https://youtube.com/watch?v=thinS8xyz','','video','Acompañamiento','published','2026-11-11T13:00:00Z') ON CONFLICT(id) DO NOTHING");
+  const longBody = 'Análisis detallado sobre metabolismo celular, microbiota, nutrición integrativa, descanso y evidencia clínica publicada en literatura científica revisada por pares. '.repeat(15);
+  await query("INSERT INTO videos(id,platform,external_id,title,description,url,thumbnail,kind,category,status,published_at) VALUES('vid-rich-s8','youtube','richS8xyz','Monografía audiovisual completa de nutrición',?,'https://youtube.com/watch?v=richS8xyz','','video','Investigación','published','2026-11-11T13:30:00Z') ON CONFLICT(id) DO NOTHING", [longBody]);
+
+  const thinRes = await fetch(`${base}/api/v/vid-thin-s8`);
+  assert.equal(thinRes.status, 200, 'La ficha fina debe seguir siendo accesible para usuarios');
+  const thinHtml = await thinRes.text();
+  assert.ok(thinHtml.includes('<meta name="robots" content="noindex, follow">'), 'Ficha fina debe emitir noindex, follow');
+
+  const richRes = await fetch(`${base}/api/v/vid-rich-s8`);
+  assert.equal(richRes.status, 200);
+  const richHtml = await richRes.text();
+  assert.ok(!richHtml.includes('name="robots" content="noindex'), 'Ficha con >= 200 palabras editoriales debe seguir siendo indexable');
+
+  const smXml = await (await fetch(`${base}/api/sitemap.xml`)).text();
+  assert.ok(!smXml.includes('/v/vid-thin-s8'), 'Sitemap debe excluir fichas noindex por contenido fino');
+  assert.ok(smXml.includes('/v/vid-rich-s8'), 'Sitemap debe conservar fichas completas');
 });
 
