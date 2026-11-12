@@ -415,6 +415,8 @@ test('SEO Técnico Sprint 9: Cache-Control ágil en sitemap, HSTS preload y tipo
   const css = readFileSync(new URL('../public/styles.css', import.meta.url), 'utf8');
   const mobileBlock = css.slice(css.indexOf('@media(max-width:768px){'));
   assert.ok(!mobileBlock.includes('0.82rem'), 'Bloque móvil no debe mantener fuentes < 14px (0.82rem)');
-  assert.ok(mobileBlock.includes('.platform,.duration') && mobileBlock.includes('.top-actions .primary'), 'Bloque móvil debe elevar badges y CTA primario >= 14px / 40px');
+  assert.ok(mobileBlock.includes('.platform,.platform em,.duration') && mobileBlock.includes('.top-actions .primary') && mobileBlock.includes('.home-science-card a'), 'Bloque móvil debe elevar badges, CTA primario y enlaces de tarjetas >= 14px / 40px');
+  const indexHtml = readFileSync(new URL('../public/index.html', import.meta.url), 'utf8');
+  assert.ok(indexHtml.includes('/styles.css?v=') && indexHtml.includes('/app.js?v='), 'index.html debe versionar styles.css y app.js para evitar caché vieja');
 });
 

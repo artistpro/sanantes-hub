@@ -133,9 +133,10 @@
   .mobile-menu{min-width:44px;min-height:44px;padding:10px;align-items:center;justify-content:center}
   button,.button,.chip,.linkbutton,.auth-tab,.nav-collapse-btn,.nav-sub a,.wiki-tree-item a,.wiki-drawer-summary,.top-actions .primary,.pwd-toggle,.dialog-head button{min-height:40px;font-size:0.92rem}
   .pwd-toggle,.dialog-head button{min-width:40px}
-  .card-meta,.card-meta span,.card-category,.eyebrow,.home-overview-card p,.home-overview-card .card-link,.wiki-breadcrumbs,.wiki-breadcrumbs a,.wiki-toc-list a,.user-badge,.level-tag,.platform,.duration,.brand small,.nav-label,.side-foot,.side-card p,.top-title,.counter,.feature-meta,.badge,.wiki-evidence-badge,.wiki-category-badge,.wiki-pillar-title,.wiki-page-link-card .dir-label,.wiki-toc-title,.wiki-drawer-arrow,.article-image figcaption,.dl-gate-hint,.player-start p,.auth-divider,.auth-switch,.auth-switch a,table,th,small,footer,footer a{font-size:0.875rem!important;line-height:1.5}
+  .card-meta,.card-meta span,.card-category,.eyebrow,.home-overview-card p,.home-overview-card .card-link,.home-science-card p,.home-science-card span,.wiki-breadcrumbs,.wiki-breadcrumbs a,.wiki-toc-list a,.user-badge,.level-tag,.platform,.platform em,.duration,.brand small,.nav-label,.side-foot,.side-card p,.top-title,.counter,.feature-meta,.badge,.wiki-evidence-badge,.wiki-category-badge,.wiki-pillar-title,.wiki-page-link-card .dir-label,.wiki-toc-title,.wiki-drawer-arrow,.article-image figcaption,.dl-gate-hint,.player-start p,.auth-divider,.auth-switch,.auth-switch a,table,th,small,footer,footer a,footer span{font-size:0.875rem!important;line-height:1.5}
   .platform,.duration{padding:4px 8px}
-  .wiki-breadcrumbs a,.post-card a,.home-overview-card .card-link,.auth-switch a,footer a{display:inline-flex;align-items:center;min-height:40px;padding:4px 6px}
+  .wiki-breadcrumbs a,.post-card a,.home-overview-card .card-link,.home-science-card a,.chip,.auth-switch a,footer a,#static-landing-catalog div>a,#static-landing-catalog p>a{display:inline-flex;align-items:center;min-height:40px;padding:4px 6px}
+  #static-landing-catalog article>a{display:block;min-height:40px}
   .card-meta button,[data-action="wiki-share"],[data-action="post-share"]{min-width:40px;min-height:40px}
   [style*="font-size:0.7"],[style*="font-size:0.8"],#static-landing-catalog p,#static-landing-catalog span{font-size:0.875rem!important;line-height:1.5}
   #static-landing-catalog a{min-height:40px}
