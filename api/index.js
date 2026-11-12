@@ -810,7 +810,7 @@ ${videoItems}
 </urlset>`;
       res.statusCode=200;
       res.setHeader('Content-Type','application/xml; charset=utf-8');
-      res.setHeader('Cache-Control','public, max-age=3600, s-maxage=14400');
+      res.setHeader('Cache-Control','public, max-age=60, s-maxage=300');
       if(method==='HEAD') return res.end();
       return res.end(xml);
     }

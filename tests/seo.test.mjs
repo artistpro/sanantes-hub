@@ -402,3 +402,19 @@ test('SEO Técnico Sprint 8: noindex, follow en fichas de vídeo finas (< 200 pa
   assert.ok(smXml.includes('/v/vid-rich-s8'), 'Sitemap debe conservar fichas completas');
 });
 
+test('SEO Técnico Sprint 9: Cache-Control ágil en sitemap, HSTS preload y tipografía/targets móviles >= 14px / 40px', async () => {
+  const smRes = await fetch(`${base}/api/sitemap.xml`);
+  assert.equal(smRes.status, 200);
+  assert.equal(smRes.headers.get('cache-control'), 'public, max-age=60, s-maxage=300', 'Sitemap debe usar TTL corto para reflejar cambios rápidamente');
+
+  const { readFileSync } = await import('node:fs');
+  const vercelCfg = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+  const hsts = vercelCfg.headers?.[0]?.headers?.find(h => h.key === 'Strict-Transport-Security')?.value || '';
+  assert.ok(hsts.includes('includeSubDomains; preload'), 'HSTS debe incluir includeSubDomains; preload');
+
+  const css = readFileSync(new URL('../public/styles.css', import.meta.url), 'utf8');
+  const mobileBlock = css.slice(css.indexOf('@media(max-width:768px){'));
+  assert.ok(!mobileBlock.includes('0.82rem'), 'Bloque móvil no debe mantener fuentes < 14px (0.82rem)');
+  assert.ok(mobileBlock.includes('.platform,.duration') && mobileBlock.includes('.top-actions .primary'), 'Bloque móvil debe elevar badges y CTA primario >= 14px / 40px');
+});
+
